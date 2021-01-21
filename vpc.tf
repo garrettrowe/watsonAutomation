@@ -37,7 +37,7 @@ resource "ibm_is_instance" "testacc_instance" {
 }
 
 data "ibm_is_instance" "provisioned_server" {
-  inst = ibm_is_instance.testacc_instance.id
+  name = ibm_is_instance.testacc_instance.id
 }
 
 resource "ibm_is_floating_ip" "testacc_floatingip" {
