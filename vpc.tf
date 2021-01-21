@@ -36,7 +36,7 @@ resource "ibm_is_instance" "testacc_instance" {
   user_data = file("nginx.sh")
 }
 
-data "ibm_is_instance" "ds_instance" {
+data "ibm_is_instance" "testacc_instance" {
   name = ibm_is_instance.testacc_instance.name
 }
 
