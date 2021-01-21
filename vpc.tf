@@ -38,7 +38,7 @@ resource "ibm_is_instance" "testacc_instance" {
 
 data "ibm_is_instance" "ds_instance" {
   name = ibm_is_instance.testacc_instance.name
-  private_key = file("~/.ssh/id_rsa")
+  #private_key = file("~/.ssh/id_rsa")
   passphrase  = ""
 }
 
