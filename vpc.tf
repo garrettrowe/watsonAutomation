@@ -36,8 +36,8 @@ resource "ibm_is_instance" "testacc_instance" {
   user_data = file("nginx.sh")
 }
 
-data "ibm_is_instance" "testacc_instance" {
-  name = ibm_is_instance.testacc_instance.name
+data "ibm_is_instance" "provisioned_server" {
+  inst = ibm_is_instance.testacc_instance.id
 }
 
 resource "ibm_is_floating_ip" "testacc_floatingip" {
