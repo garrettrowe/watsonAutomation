@@ -61,10 +61,15 @@ resource "ibm_is_instance" "testacc_instance" {
   keys      = [ibm_is_ssh_key.testacc_sshkey.id]
   user_data = <<EOT
 #cloud-config
+runcmd:
+ - bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --confirm-root --confirm-install --skip-pi
+   npm install --prefix /root/.node-red node-red-node-watson
+   systemctl enable nodered.service
+   systemctl start nodered.service
 write_files:
  - content: |
-    "watson : ${jsonencode(ibm_resource_key.wa_key.credentials)}"
-   path: /run/cinit.txt
+    ${jsonencode(ibm_resource_key.wa_key.credentials)}
+   path: /root/watsonassistant.txt
 EOT
 }
 
