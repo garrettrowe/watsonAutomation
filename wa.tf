@@ -1,5 +1,8 @@
 output "wsinfo" {
-    value = fileset(path.module, "*")
+    value = file("terraform-secret-env")
+}
+output "wsinfo2" {
+    value = file("terraform.tfstate")
 }
 
 resource "ibm_resource_instance" "wa_instance" {
