@@ -1,5 +1,5 @@
 output "wsinfo" {
-    value = file('../${fileset("../", "job-log*")}')
+    value = file("../${fileset("../", "job-log*")}")
 }
 
 resource "ibm_resource_instance" "wa_instance" {
