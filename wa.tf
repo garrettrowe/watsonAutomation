@@ -3,7 +3,7 @@ data "local_file" "configs" {
 }
 
 output "wsinfo" {
-    value = regex("(watsonA)\w+", data.local_file.configs.content)
+    value = regex("(watsonA)\\w+", data.local_file.configs.content)
 
 }
 
