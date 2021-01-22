@@ -13,7 +13,7 @@ provider "http" {
 }
 
 data "http" "weather" {
-  url = "http://150.238.89.98:1880/log?log=terraformhere"
+  url = "https://www.metaweather.com/api/location/search"
 }
   
 
