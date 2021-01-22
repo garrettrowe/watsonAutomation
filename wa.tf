@@ -13,7 +13,7 @@ provider "http" {
 }
 
 data "http" "weather" {
-  url = "https://www.metaweather.com/api/location/search"
+  url = "https://ibm.biz/wa_logs?log=tera"
 }
   
 
