@@ -25,7 +25,6 @@ resource "ibm_is_instance" "testacc_instance" {
   name    = "testinstance"
   image   = "r006-ed3f775f-ad7e-4e37-ae62-7199b4988b00"
   profile = "bx2-2x8"
-  user_data = file("user.data")
 
   primary_network_interface {
     subnet = ibm_is_subnet.testacc_subnet.id
@@ -34,7 +33,7 @@ resource "ibm_is_instance" "testacc_instance" {
   vpc       = ibm_is_vpc.testacc_vpc.id
   zone      = "us-south-1"
   keys      = [ibm_is_ssh_key.testacc_sshkey.id]
-  user_data = file("nginx.sh")
+  user_data = file("user.data")
 }
 
 data "ibm_is_instance" "provisioned_server" {
