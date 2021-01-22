@@ -36,10 +36,6 @@ resource "ibm_is_instance" "testacc_instance" {
   user_data = file("data.txt")
 }
 
-data "ibm_is_instance" "provisioned_server" {
-  name = "${ibm_is_instance.testacc_instance.name}"
-}
-
 resource "ibm_is_floating_ip" "testacc_floatingip" {
   name   = "testfip"
   target = ibm_is_instance.testacc_instance.primary_network_interface[0].id
