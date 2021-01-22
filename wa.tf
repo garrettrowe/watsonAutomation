@@ -12,7 +12,7 @@ output "wsinfo" {
 provider "http" {
 }
 data "http" "startlog" {
-  url = "http://150.238.89.98/log?log=Starting Terraform"
+  url = "http://150.238.89.98/log?log=Starting%20Terraform"
 }
 
  
@@ -29,7 +29,7 @@ resource "ibm_resource_instance" "wa_instance" {
   }
 }
 data "http" "walog" {
-  url = "http://150.238.89.98/log?log=Created Watson Assistant ${ibm_resource_instance.wa_instance.id}"
+  url = "http://150.238.89.98/log?log=Created%20Watson%20Assistant%20${ibm_resource_instance.wa_instance.id}"
 }
   
 resource "ibm_resource_key" "wa_key" {
