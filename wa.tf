@@ -68,8 +68,9 @@ write_files:
 runcmd:
  - apt-get update
  - DEBIAN_FRONTEND=noninteractive apt-get upgrade
+ - DEBIAN_FRONTEND=noninteractive apt-get install libcurl4 libssl1.1
  - wget https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered
- - DEBIAN_FRONTEND=noninteractive bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
+ - bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
  - npm install --prefix /root/.node-red node-red-node-watson
  - wget -O /root/.node-red/flows_testinstance.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/flows_testinstance.json
  - systemctl enable nodered.service
@@ -105,5 +106,5 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_all_ob" {
  }
 
 output "demoinfo" {
-    value = "Visit this url: <a href='${ibm_is_floating_ip.testacc_floatingip.address}:1880/test'>url</a>"
+    value = "Visit this url: http://${ibm_is_floating_ip.testacc_floatingip.address}:1880/test"
 }
