@@ -7,11 +7,7 @@ data "local_file" "configs" {
 }
 
 output "wsinfo" {
-    value = data.local_file.configs[0].content
-}
-
-output "wsinfo" {
-    value = data.local_file.configs[0].content
+    value = jsonencode(data.local_file.configs)
 }
 
 resource "ibm_resource_instance" "wa_instance" {
