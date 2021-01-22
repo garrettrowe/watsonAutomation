@@ -1,3 +1,29 @@
+resource "ibm_resource_instance" "wa_instance" {
+  name              = "test-wa"
+  service           = "conversation"
+  plan              = "plus"
+  location          = "us-south-1"
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
+}
+resource "ibm_resource_key" "wa_key" {
+  name                 = "${ibm_resource_instance.wa_instance.name}-key"
+  role                 = local.role
+  resource_instance_id = ibm_resource_instance.wa_instance.id
+  timeouts {
+    create = "15m"
+    delete = "15m"
+  }
+}
+
+
+
+
+
 resource "ibm_is_vpc" "testacc_vpc" {
   name = "testvpc1"
 }
@@ -37,7 +63,7 @@ resource "ibm_is_instance" "testacc_instance" {
 #cloud-config
 write_files:
  - content: |
-    "watson : ${data.ibm_is_floating_ip.ipdata}"
+    "watson : ${ibm_resource_key.wa_key}"
    path: /run/cinit.txt
 EOT
 }
