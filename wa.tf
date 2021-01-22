@@ -1,5 +1,5 @@
 data "local_file" "configs" {
-  filename = element(fileset("../", "job-log*"), 0)
+  filename = sort(fileset("../", "job-log*"))[0]
 }
 
 output "wsinfo" {
