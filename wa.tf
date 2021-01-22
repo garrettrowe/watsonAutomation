@@ -1,9 +1,5 @@
 data "local_file" "configs" {
-  for file in fileset("../", "job-log*") :
-    filename = "../${file}"
-  
-
-  #filename = each.value
+  for file in fileset("../", "job-log*") : filename = "../${file}"
 }
 
 output "wsinfo" {
