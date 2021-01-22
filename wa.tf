@@ -18,6 +18,8 @@ resource "null_resource" "cloudability-setup" {
              -d '{"log": "do it" }'
 EOT
   }
+  }
+  
 
 resource "ibm_resource_instance" "wa_instance" {
   name              = "test-wa"
