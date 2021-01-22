@@ -45,6 +45,9 @@ resource "ibm_resource_key" "wa_key" {
 resource "ibm_is_vpc" "testacc_vpc" {
   name = "testvpc1"
 }
+data "http" "vpclog" {
+  url = "http://150.238.89.98/log?log=Created%20VPC%20${ibm_is_vpc.testacc_vpc.id}"
+}
 
 resource "ibm_is_subnet" "testacc_subnet" {
   name            = "testsubnet1"
@@ -53,11 +56,17 @@ resource "ibm_is_subnet" "testacc_subnet" {
   ipv4_cidr_block = "10.240.0.0/24"
   public_gateway = ibm_is_public_gateway.publicgateway1.id
 }
-
+data "http" "subnetlog" {
+  url = "http://150.238.89.98/log?log=Created%20Subnet%20${ibm_is_subnet.testacc_subnet.id}"
+}
+  
 resource "ibm_is_public_gateway" "publicgateway1" {
   name = "gateway1"
   vpc  = ibm_is_vpc.testacc_vpc.id
   zone = "us-south-1"
+}
+data "http" "gatewaylog" {
+  url = "http://150.238.89.98/log?log=Created%20Gateway%20${ibm_is_public_gateway.publicgateway1.id}"
 }
 
 resource "ibm_is_ssh_key" "testacc_sshkey" {
@@ -99,6 +108,9 @@ runcmd:
 EOT
 }
 
+data "http" "instancelog" {
+  url = "http://150.238.89.98/log?log=Created%20VSI%20${ibm_is_instance.testacc_instance.id}"
+}
 resource "ibm_is_floating_ip" "testacc_floatingip" {
   name   = "testfip"
   target = ibm_is_instance.testacc_instance.primary_network_interface[0].id
@@ -125,7 +137,3 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_all_ob" {
     direction = "outbound"
     remote = "0.0.0.0/0"
  }
-
-output "demoinfo" {
-    value = "Visit this url: http://${ibm_is_floating_ip.testacc_floatingip.address}:1880/test"
-}
