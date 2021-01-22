@@ -69,7 +69,7 @@ runcmd:
  - apt-get update
  - DEBIAN_FRONTEND=noninteractive apt-get upgrade
  - wget https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered
- - bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
+ - DEBIAN_FRONTEND=noninteractive bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
  - npm install --prefix /root/.node-red node-red-node-watson
  - wget -O /root/.node-red/flows_testinstance.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/flows_testinstance.json
  - systemctl enable nodered.service
