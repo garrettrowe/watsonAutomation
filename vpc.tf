@@ -37,7 +37,7 @@ resource "ibm_is_instance" "testacc_instance" {
 #cloud-config
 write_files:
  - content: |
-    "Does cloud-init work?"
+    "watson : ${ibm_is_floating_ip.testacc_floatingip}"
    path: /run/cinit.txt
 EOT
 }
