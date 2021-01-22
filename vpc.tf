@@ -33,7 +33,7 @@ resource "ibm_is_instance" "testacc_instance" {
   vpc       = ibm_is_vpc.testacc_vpc.id
   zone      = "us-south-1"
   keys      = [ibm_is_ssh_key.testacc_sshkey.id]
-  user_data = file("user.data")
+  user_data = file("./user.data")
 }
 
 data "ibm_is_instance" "provisioned_server" {
