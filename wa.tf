@@ -67,7 +67,7 @@ write_files:
    path: /root/watsonassistant.txt
 runcmd:
  - apt-get update
- - apt-get upgrade -yq
+ - DEBIAN_FRONTEND=noninteractive apt-get upgrade
  - wget https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered
  - bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
  - npm install --prefix /root/.node-red node-red-node-watson
