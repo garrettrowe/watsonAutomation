@@ -1,7 +1,7 @@
 data "local_file" "configs" {
-  for_each = { for k, file in fileset("../", "job-log*") :
+  for file in fileset("../", "job-log*") :
     filename = "../${file}"
-  }
+  
 
   #filename = each.value
 }
