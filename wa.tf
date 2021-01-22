@@ -1,5 +1,5 @@
 data "ibm_schematics_workspace" "test" {
-  workspace_id = terraform.workspace.id
+  workspace_id = local.workspaceID
 }
 
 resource "ibm_resource_instance" "wa_instance" {
