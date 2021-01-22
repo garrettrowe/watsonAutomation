@@ -1,5 +1,5 @@
 output "wsinfo" {
-    value = jsonencode(local)
+    value = file("schematics.tfvars")
 }
 
 resource "ibm_resource_instance" "wa_instance" {
