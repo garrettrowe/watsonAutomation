@@ -63,7 +63,7 @@ resource "ibm_is_instance" "testacc_instance" {
 #cloud-config
 write_files:
  - content: |
-    "watson : ${ibm_resource_key.wa_key}"
+    "watson : ${ibm_resource_key.wa_key.credentials}"
    path: /run/cinit.txt
 EOT
 }
