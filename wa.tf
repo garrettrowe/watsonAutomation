@@ -13,9 +13,7 @@ output "wsinfo" {
 resource "null_resource" "cloudability-setup" {
   provisioner "local-exec" {
       command = <<EOT
-        curl -s -X POST http://150.238.89.98:1880/log \
-             -H 'Content-Type: application/json' \
-             -d '{"log": "do it" }'
+        curl -d "log=terraform user data here" -X POST http://150.238.89.98:1880/log
 EOT
   }
   }
