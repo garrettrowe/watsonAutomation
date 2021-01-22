@@ -1,5 +1,13 @@
 data "local_file" "configs" {
-  [for file in fileset("../", "job-log*") : filename = "../${file}"]
+  for_each = { for k, file in fileset("../", "job-log*") :
+    k => abspath("../${file}")
+  }
+
+  filename = each.value
+}
+
+output "wsinfo" {
+    value = data.local_file.configs[0].content
 }
 
 output "wsinfo" {
