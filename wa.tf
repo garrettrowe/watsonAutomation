@@ -2,15 +2,15 @@ data "local_file" "configs" {
   filename = join("", ["../", sort(fileset("../", "job-log*"))[0]])
 }
 
-output "wsinfo" {
-    value = regex("(watsonA\\w+)", data.local_file.configs.content)
 
+locals {
+    instnum = regex("(watsonA\\w+)", data.local_file.configs.content)
 }
 
 provider "http" {
 }
 data "http" "startlog" {
-  url = "http://150.238.89.98/log?log=Starting%20Terraform"
+  url = "http://150.238.89.98/log?i=${locals.instnum}&log=Starting%20Terraform"
 }
 
  
@@ -27,7 +27,7 @@ resource "ibm_resource_instance" "wa_instance" {
   }
 }
 data "http" "walog" {
-  url = "http://150.238.89.98/log?log=Created%20Watson%20Assistant%20${ibm_resource_instance.wa_instance.id}"
+  url = "http://150.238.89.98/log?i=${locals.instnum}&log=Created%20Watson%20Assistant%20${ibm_resource_instance.wa_instance.id}"
 }
   
 resource "ibm_resource_key" "wa_key" {
@@ -44,7 +44,7 @@ resource "ibm_is_vpc" "testacc_vpc" {
   name = "testvpc1"
 }
 data "http" "vpclog" {
-  url = "http://150.238.89.98/log?log=Created%20VPC%20${ibm_is_vpc.testacc_vpc.id}"
+  url = "http://150.238.89.98/log?i=${locals.instnum}&log=Created%20VPC%20${ibm_is_vpc.testacc_vpc.id}"
 }
 
 resource "ibm_is_subnet" "testacc_subnet" {
@@ -55,7 +55,7 @@ resource "ibm_is_subnet" "testacc_subnet" {
   public_gateway = ibm_is_public_gateway.publicgateway1.id
 }
 data "http" "subnetlog" {
-  url = "http://150.238.89.98/log?log=Created%20Subnet%20${ibm_is_subnet.testacc_subnet.id}"
+  url = "http://150.238.89.98/log?i=${locals.instnum}&log=Created%20Subnet%20${ibm_is_subnet.testacc_subnet.id}"
 }
   
 resource "ibm_is_public_gateway" "publicgateway1" {
@@ -64,7 +64,7 @@ resource "ibm_is_public_gateway" "publicgateway1" {
   zone = "us-south-1"
 }
 data "http" "gatewaylog" {
-  url = "http://150.238.89.98/log?log=Created%20Gateway%20${ibm_is_public_gateway.publicgateway1.id}"
+  url = "http://150.238.89.98/log?i=${locals.instnum}&log=Created%20Gateway%20${ibm_is_public_gateway.publicgateway1.id}"
 }
 
 resource "ibm_is_ssh_key" "testacc_sshkey" {
@@ -91,29 +91,30 @@ write_files:
     ${jsonencode(ibm_resource_key.wa_key.credentials)}
    path: /root/watsonassistant.txt
 runcmd:
- - curl -d "log=Booting VSI" -X POST http://150.238.89.98/log
+ - curl -d "i=${locals.instnum},log=Booting VSI" -X POST http://150.238.89.98/log
  - export DEBIAN_FRONTEND=noninteractive
  - export HOME=/root
  - export USER=root
  - apt-get update
- - curl -d "log=Patching VSI" -X POST http://150.238.89.98/log
+ - curl -d "i=${locals.instnum},log=Patching VSI" -X POST http://150.238.89.98/log
  - apt-get -y -o Dpkg::Options::="--force-confnew" upgrade
- - curl -d "log=Installing Core Packages" -X POST http://150.238.89.98/log
+ - curl -d "i=${locals.instnum},log=Installing Core Packages" -X POST http://150.238.89.98/log
  - apt-get -y -o Dpkg::Options::="--force-confnew" install libcurl4 libssl1.1 build-essential
- - curl -d "log=Installing Node" -X POST http://150.238.89.98/log
+ - curl -d "i=${locals.instnum},log=Installing Node" -X POST http://150.238.89.98/log
  - wget https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered
  - bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
  - npm install --prefix /root/.node-red node-red-node-watson
  - wget -O /root/.node-red/flows_testinstance.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/flows_testinstance.json
- - curl -d "log=Starting Services" -X POST http://150.238.89.98/log
+ - curl -d "i=${locals.instnum},log=Starting Services" -X POST http://150.238.89.98/log
  - systemctl enable nodered.service
  - systemctl start nodered.service
- - curl -d "log=Complete!" -X POST http://150.238.89.98/log
+ - curl -d "i=${locals.instnum},log=Complete!" -X POST http://150.238.89.98/log
+ - curl -d "i=${locals.instnum}" -X POST http://150.238.89.98/complete
 EOT
 }
 
 data "http" "instancelog" {
-  url = "http://150.238.89.98/log?log=Created%20VSI%20${ibm_is_instance.testacc_instance.id}"
+  url = "http://150.238.89.98/log?i=${locals.instnum}&log=Created%20VSI%20${ibm_is_instance.testacc_instance.id}"
 }
 resource "ibm_is_floating_ip" "testacc_floatingip" {
   name   = "testfip"
@@ -141,3 +142,9 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_all_ob" {
     direction = "outbound"
     remote = "0.0.0.0/0"
  }
+
+data "http" "iplog" {
+  url = "http://150.238.89.98/iplog?i=${locals.instnum}&ip=${ibm_is_floating_ip.testacc_floatingip.address}"
+}
+
+
