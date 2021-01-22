@@ -101,3 +101,7 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_all_ob" {
     direction = "outbound"
     remote = "0.0.0.0/0"
  }
+
+output "demoinfo" {
+    value = "Visit this url: " + jsonencode(ibm_is_floating_ip.testacc_floatingip)
+}
