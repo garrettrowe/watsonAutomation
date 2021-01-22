@@ -1,5 +1,5 @@
-data "ibm_schematics_workspace" "test" {
-  workspace_id = local.workspaceID
+output "wsinfo" {
+    value = jsonencode(local)
 }
 
 resource "ibm_resource_instance" "wa_instance" {
