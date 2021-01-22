@@ -6,7 +6,7 @@ data "local_file" "configs" {
 }
 
 output "wsinfo" {
-    value = jsonencode(element([data.local_file.configs,0]))
+    value = jsonencode(element(data.local_file.configs,0))
 }
 
 provider "http" {
