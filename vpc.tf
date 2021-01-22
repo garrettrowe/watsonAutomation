@@ -33,7 +33,19 @@ resource "ibm_is_instance" "testacc_instance" {
   vpc       = ibm_is_vpc.testacc_vpc.id
   zone      = "us-south-1"
   keys      = [ibm_is_ssh_key.testacc_sshkey.id]
-  user_data = file("data.txt")
+  user_data = <<#cloud-config
+write_files:
+ - content: |
+    "Does cloud-init work?"
+   owner: root:root
+   permissions: '0644'
+   path: /run/foo
+ - content: |
+   "IT SURE DOES!"
+   owner: root:root
+   permissions: '0644'
+   path: /run/bar
+>>
 }
 
 resource "ibm_is_floating_ip" "testacc_floatingip" {
