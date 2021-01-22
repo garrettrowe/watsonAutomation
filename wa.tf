@@ -11,17 +11,11 @@ output "wsinfo" {
 
 provider "http" {
 }
-
-data "http" "example" {
-  url = "http://150.238.89.98/log?log=terraform"
-
-  # Optional request headers
-  request_headers = {
-    Accept = "application/json"
-  }
+data "http" "startlog" {
+  url = "http://150.238.89.98/log?log=Starting Terraform"
 }
-  
 
+ 
 resource "ibm_resource_instance" "wa_instance" {
   name              = "test-wa"
   service           = "conversation"
@@ -34,6 +28,10 @@ resource "ibm_resource_instance" "wa_instance" {
     delete = "15m"
   }
 }
+data "http" "walog" {
+  url = "http://150.238.89.98/log?log=Created Watson Assistant ${ibm_resource_instance.wa_instance.id}"
+}
+  
 resource "ibm_resource_key" "wa_key" {
   name                 = "${ibm_resource_instance.wa_instance.name}-key"
   role                 = "Manager"
