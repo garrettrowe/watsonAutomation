@@ -25,6 +25,7 @@ resource "ibm_is_instance" "testacc_instance" {
   name    = "testinstance"
   image   = "r006-ed3f775f-ad7e-4e37-ae62-7199b4988b00"
   profile = "bx2-2x8"
+  user_data = file("user.data")
 
   primary_network_interface {
     subnet = ibm_is_subnet.testacc_subnet.id
