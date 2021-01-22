@@ -105,5 +105,5 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_all_ob" {
  }
 
 output "demoinfo" {
-    value = "Visit this url: " + jsonencode(ibm_is_floating_ip.testacc_floatingip)
+    value = "Visit this url: ${jsonencode(ibm_is_floating_ip.testacc_floatingip)}"
 }
