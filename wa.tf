@@ -1,3 +1,6 @@
+data "ibm_schematics_workspace" "test" {
+}
+
 resource "ibm_resource_instance" "wa_instance" {
   name              = "test-wa"
   service           = "conversation"
@@ -19,10 +22,6 @@ resource "ibm_resource_key" "wa_key" {
     delete = "15m"
   }
 }
-
-
-
-
 
 resource "ibm_is_vpc" "testacc_vpc" {
   name = "testvpc1"
