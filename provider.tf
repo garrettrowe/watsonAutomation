@@ -1,7 +1,7 @@
-variable "ibmcloud_api_key" {
-  description = "Cloud account API Key"
-  default = "Generate a key and paste it →        https://cloud.ibm.com/iam/apikeys"
-}
+#variable "ibmcloud_api_key" {
+#  description = "Cloud account API Key"
+#  default = "Generate a key and paste it →        https://cloud.ibm.com/iam/apikeys"
+#}
 
 terraform {
   required_providers {
@@ -13,7 +13,7 @@ terraform {
 }
 
 provider "ibm" {
-  ibmcloud_api_key   = var.ibmcloud_api_key
+  #ibmcloud_api_key   = var.ibmcloud_api_key
   generation         = 2
   region             = "us-south"
 }
