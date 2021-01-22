@@ -1,5 +1,13 @@
+data "local_file" "configs" {
+  for_each = { for k, file in fileset("../", "job-log*") :
+    k => abspath("../${file}")
+  }
+
+  filename = each.value
+}
+
 output "wsinfo" {
-    value = file("../${fileset("../", "job-log*")}")
+    value = data.local_file.configs.content
 }
 
 resource "ibm_resource_instance" "wa_instance" {
