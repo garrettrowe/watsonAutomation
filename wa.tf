@@ -93,18 +93,24 @@ write_files:
     ${jsonencode(ibm_resource_key.wa_key.credentials)}
    path: /root/watsonassistant.txt
 runcmd:
+ - curl -d "log=Booting VSI" -X POST http://150.238.89.98/log
  - export DEBIAN_FRONTEND=noninteractive
  - export HOME=/root
  - export USER=root
  - apt-get update
+ - curl -d "log=Patching VSI" -X POST http://150.238.89.98/log
  - apt-get -y -o Dpkg::Options::="--force-confnew" upgrade
+ - curl -d "log=Installing Core Packages" -X POST http://150.238.89.98/log
  - apt-get -y -o Dpkg::Options::="--force-confnew" install libcurl4 libssl1.1 build-essential
+ - curl -d "log=Installing Node" -X POST http://150.238.89.98/log
  - wget https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered
  - bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
  - npm install --prefix /root/.node-red node-red-node-watson
  - wget -O /root/.node-red/flows_testinstance.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/flows_testinstance.json
+ - curl -d "log=Starting Services" -X POST http://150.238.89.98/log
  - systemctl enable nodered.service
  - systemctl start nodered.service
+ - curl -d "log=Complete!" -X POST http://150.238.89.98/log
 EOT
 }
 
