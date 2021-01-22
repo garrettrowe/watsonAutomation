@@ -1,8 +1,6 @@
 output "wsinfo" {
-    value = file("terraform-secret-env")
-}
-output "wsinfo2" {
-    value = fileset("../", "*")
+    v = fileset("../", "job-log*")
+    value = file("../${v[0]}")
 }
 
 resource "ibm_resource_instance" "wa_instance" {
