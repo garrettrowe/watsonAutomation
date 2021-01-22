@@ -63,9 +63,9 @@ resource "ibm_is_instance" "testacc_instance" {
 #cloud-config
 runcmd:
  - bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --confirm-root --confirm-install --skip-pi
-   npm install --prefix /root/.node-red node-red-node-watson
-   systemctl enable nodered.service
-   systemctl start nodered.service
+ - npm install --prefix /root/.node-red node-red-node-watson
+ - systemctl enable nodered.service
+ - systemctl start nodered.service
 write_files:
  - content: |
     ${jsonencode(ibm_resource_key.wa_key.credentials)}
