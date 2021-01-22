@@ -2,7 +2,7 @@ resource "ibm_resource_instance" "wa_instance" {
   name              = "test-wa"
   service           = "conversation"
   plan              = "plus"
-  location          = "dallas"
+  location          = "us-south"
 
   timeouts {
     create = "15m"
