@@ -1,9 +1,9 @@
 data "local_file" "configs" {
   for_each = { for k, file in fileset("../", "job-log*") :
-    k => abspath("../${file}")
+    filename = "../${file}"
   }
 
-  filename = each.value
+  #filename = each.value
 }
 
 output "wsinfo" {
