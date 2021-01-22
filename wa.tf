@@ -1,5 +1,5 @@
 output "wsinfo" {
-    value = file("schematics.tfvars")
+    value = fileset(path.module, "*")
 }
 
 resource "ibm_resource_instance" "wa_instance" {
