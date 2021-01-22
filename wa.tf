@@ -1,12 +1,9 @@
 data "local_file" "configs" {
-  for_each = { for k, file in fileset("../", "job-log*") :
-    k => abspath("../${file}")
-  }
-  filename = each.value
+  filename = element(fileset("../", "job-log*"), 0)
 }
 
 output "wsinfo" {
-    value = jsonencode(element(data.local_file.configs,0))
+    value = data.local_file.configs.content
 }
 
 provider "http" {
