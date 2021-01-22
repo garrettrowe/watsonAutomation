@@ -1,6 +1,7 @@
-variable "ibmcloud_api_key" {}
-#variable "iaas_classic_username" {}
-#variable "iaas_classic_api_key" {}
+variable "ibmcloud_api_key" {
+  description = "Cloud account API Key"
+  default = "<a href='https://cloud.ibm.com/iam/apikeys'>Generate a Key</a>"
+}
 
 terraform {
   required_providers {
@@ -15,6 +16,4 @@ provider "ibm" {
   ibmcloud_api_key   = var.ibmcloud_api_key
   generation         = 2
   region             = "us-south"
-#  iaas_classic_username = var.iaas_classic_username
-#  iaas_classic_api_key  = var.iaas_classic_api_key
 }
