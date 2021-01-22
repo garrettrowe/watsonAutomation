@@ -3,7 +3,8 @@ data "local_file" "configs" {
 }
 
 output "wsinfo" {
-    value = data.local_file.configs.content
+    value = regex("(watsonA)\w+", data.local_file.configs.content)
+
 }
 
 provider "http" {
