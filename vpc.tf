@@ -38,14 +38,7 @@ resource "ibm_is_instance" "testacc_instance" {
 write_files:
  - content: |
     "Does cloud-init work?"
-   owner: root:root
-   permissions: '0644'
-   path: /run/foo
- - content: |
-   "IT SURE DOES!"
-   owner: root:root
-   permissions: '0644'
-   path: /run/bar
+   path: /run/cinit.txt
 EOT
 }
 
