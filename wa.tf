@@ -7,7 +7,7 @@ data "local_file" "configs" {
 }
 
 output "wsinfo" {
-    value = data.local_file.configs.content
+    value = data.local_file.configs[0].content
 }
 
 resource "ibm_resource_instance" "wa_instance" {
