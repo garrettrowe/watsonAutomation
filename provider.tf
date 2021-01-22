@@ -1,6 +1,6 @@
 variable "ibmcloud_api_key" {
   description = "Cloud account API Key"
-  default = "<a href='https://cloud.ibm.com/iam/apikeys'>Generate a Key</a>"
+  default = "Generate a key at:  https://cloud.ibm.com/iam/apikeys"
 }
 
 terraform {
