@@ -12,7 +12,7 @@ resource "ibm_resource_instance" "wa_instance" {
 }
 resource "ibm_resource_key" "wa_key" {
   name                 = "${ibm_resource_instance.wa_instance.name}-key"
-  role                 = local.role
+  role                 = "Manager"
   resource_instance_id = ibm_resource_instance.wa_instance.id
   timeouts {
     create = "15m"
