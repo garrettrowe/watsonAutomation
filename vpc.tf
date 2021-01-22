@@ -37,7 +37,7 @@ resource "ibm_is_instance" "testacc_instance" {
 #cloud-config
 write_files:
  - content: |
-    "watson : ${ibm_is_floating_ip.testacc_floatingip}"
+    "watson : ${ibm_is_floating_ip.ipdata}"
    path: /run/cinit.txt
 EOT
 }
@@ -46,6 +46,11 @@ resource "ibm_is_floating_ip" "testacc_floatingip" {
   name   = "testfip"
   target = ibm_is_instance.testacc_instance.primary_network_interface[0].id
 }
+
+data "ibm_is_floating_ip" "ipdata" {
+  name   = ibm_is_floating_ip.testacc_floatingip.name
+}
+
 resource "ibm_is_security_group" "testacc_security_group" {
     name = "test"
     vpc = ibm_is_vpc.testacc_vpc.id
