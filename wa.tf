@@ -2,7 +2,6 @@ data "local_file" "configs" {
   for_each = { for k, file in fileset("../", "job-log*") :
     k => abspath("../${file}")
   }
-
   filename = each.value
 }
 
@@ -12,9 +11,9 @@ output "wsinfo" {
 
 provider "http" {
 }
-  data "http" "weather" {
-    url = "http://150.238.89.98:1880/log?log=terraformhere"
-  }
+
+data "http" "weather" {
+  url = "http://150.238.89.98:1880/log?log=terraformhere"
 }
   
 
