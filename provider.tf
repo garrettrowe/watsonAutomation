@@ -1,7 +1,8 @@
-#variable "ibmcloud_api_key" {
-#  description = "Cloud account API Key"
-#  default = "Generate a key and paste it →        https://cloud.ibm.com/iam/apikeys"
-#}
+
+variable "url_override" {
+  description = "Override the auto-pupulated corporate website url here."
+  default = "null"
+}
 
 terraform {
   required_providers {
@@ -13,7 +14,6 @@ terraform {
 }
 
 provider "ibm" {
-  #ibmcloud_api_key   = var.ibmcloud_api_key
   generation         = 2
   region             = "us-south"
 }
