@@ -62,7 +62,7 @@ async function evaluatel(murl){
 				var out = out.replace(/( )+/gi, " ");
 				var out = out.replace(/([\t\n]| )+([\t\n]| )+/gi, "\n");
 				if (out.length > 200)
-					await fse.outputFile("/root/da/crawl/" + pname + "__" + iterate + ".html", out);
+					await fse.outputFile("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
 		}
 		await page.goto('about:blank');
 		await page.close();
