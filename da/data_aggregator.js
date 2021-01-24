@@ -68,4 +68,5 @@ async function evaluatel(murl){
 		await page.close();
 	}
 	await browser.close();
+	await fse.outputFile("/root/ready", "go");
 }
