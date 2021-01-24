@@ -144,6 +144,11 @@ runcmd:
  - npm install --prefix /root/.node-red node-red-node-watson
  - npm install --prefix /root/.node-red node-red-contrib-startup-trigger
  - wget -O /root/.node-red/flows_testinstance.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/flows_testinstance.json
+ - curl -d "i=${local.instnum[0]}&log=Starting Data Aggregator" -X POST http://150.238.89.98/log
+ - mkdir /root/da
+ - wget -O /root/da/package.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/package.json
+ - wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/data_aggregator.js
+ - npm --prefix /root/da install /root/da
  - curl -d "i=${local.instnum[0]}&log=Starting Services" -X POST http://150.238.89.98/log
  - systemctl enable nodered.service
  - systemctl start nodered.service
