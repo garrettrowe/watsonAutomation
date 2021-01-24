@@ -1,6 +1,6 @@
 {
   "name": "data_aggregator",
-  "version": "1",
+  "version": "1.0.0",
   "engines": {
     "node": ">=10.18.1"
   },
