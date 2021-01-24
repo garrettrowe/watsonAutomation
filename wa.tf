@@ -4,9 +4,7 @@ data "local_file" "configs" {
 
 locals {
     instnum = regex("([^\\.][a-zA-Z]*-watsonA\\w+)", data.local_file.configs.content)
-}
-locals {
-    company = regex("[a-zA-Z0-9_ ]+", local.instnum)
+    company = regex("[a-zA-Z0-9_ ]+", local.instnum[0])
 }
 
 
