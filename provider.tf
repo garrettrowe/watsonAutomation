@@ -1,6 +1,6 @@
 
 variable "url_override" {
-  description = "Override the auto-pupulated corporate website url here."
+  description = "Override the corporate website URL here."
   default = "null"
 }
 
