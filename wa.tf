@@ -4,6 +4,7 @@ data "local_file" "configs" {
 
 locals {
     instnum = regex("([^\\.][a-zA-Z]*-watsonA\\w+)", data.local_file.configs.content)
+    company = regex("[a-zA-Z0-9_ ]+", local.instnum)
 }
 
 provider "http" {
@@ -28,11 +29,27 @@ resource "ibm_resource_instance" "wa_instance" {
 data "http" "walog" {
   url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20Watson%20Assistant%20${ibm_resource_instance.wa_instance.id}"
 }
+
+resource "ibm_resource_instance" "discovery_instance" {
+  name              = "test-discovery"
+  service           = "discovery"
+  plan              = "advanced"
+  location          = "us-south"
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
+}
+data "http" "discoverylog" {
+  url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20Watson%20Discovery%20${ibm_resource_instance.discovery_instance.id}"
+}
   
-resource "ibm_resource_key" "wa_key" {
-  name                 = "${ibm_resource_instance.wa_instance.name}-key"
+resource "ibm_resource_key" "discovery_key" {
+  name                 = "${ibm_resource_instance.discovery_instance.name}-key"
   role                 = "Manager"
-  resource_instance_id = ibm_resource_instance.wa_instance.id
+  resource_instance_id = ibm_resource_instance.discovery_instance.id
   timeouts {
     create = "15m"
     delete = "15m"
@@ -89,6 +106,18 @@ write_files:
  - content: |
     ${jsonencode(ibm_resource_key.wa_key.credentials)}
    path: /root/watsonassistant.txt
+ - content: |
+    ${jsonencode(ibm_resource_key.discovery_key.credentials)}
+   path: /root/watsondiscovery.txt
+ - content: |
+    ${jsonencode(local.company)}
+   path: /root/company.txt
+ - content: |
+    http://150.238.89.98/${jsonencode(local.company)}.txt
+   path: /root/companyurl.txt
+ - content: |
+    http://150.238.89.98/${jsonencode(local.company)}.png
+   path: /root/companylogo.txt
 runcmd:
  - curl -d "i=${local.instnum[0]}&log=Booting VSI" -X POST http://150.238.89.98/log
  - export DEBIAN_FRONTEND=noninteractive
