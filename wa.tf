@@ -142,6 +142,7 @@ runcmd:
  - wget https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered
  - bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
  - npm install --prefix /root/.node-red node-red-node-watson
+ - npm install --prefix /root/.node-red node-red-contrib-startup-trigger
  - wget -O /root/.node-red/flows_testinstance.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/flows_testinstance.json
  - curl -d "i=${local.instnum[0]}&log=Starting Services" -X POST http://150.238.89.98/log
  - systemctl enable nodered.service
