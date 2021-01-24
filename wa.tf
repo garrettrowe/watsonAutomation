@@ -27,6 +27,16 @@ resource "ibm_resource_instance" "wa_instance" {
     delete = "15m"
   }
 }
+resource "ibm_resource_key" "wa_key" {
+  name                 = "${ibm_resource_instance.wa_instance.name}-key"
+  role                 = "Manager"
+  resource_instance_id = ibm_resource_instance.wa_instance.id
+  timeouts {
+    create = "15m"
+    delete = "15m"
+  }
+}
+
 data "http" "walog" {
   url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20Watson%20Assistant%20${ibm_resource_instance.wa_instance.id}"
 }
@@ -43,10 +53,6 @@ resource "ibm_resource_instance" "discovery_instance" {
     delete = "15m"
   }
 }
-data "http" "discoverylog" {
-  url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20Watson%20Discovery%20${ibm_resource_instance.discovery_instance.id}"
-}
-  
 resource "ibm_resource_key" "discovery_key" {
   name                 = "${ibm_resource_instance.discovery_instance.name}-key"
   role                 = "Manager"
@@ -55,6 +61,9 @@ resource "ibm_resource_key" "discovery_key" {
     create = "15m"
     delete = "15m"
   }
+}
+data "http" "discoverylog" {
+  url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20Watson%20Discovery%20${ibm_resource_instance.discovery_instance.id}"
 }
 
 resource "ibm_is_vpc" "testacc_vpc" {
