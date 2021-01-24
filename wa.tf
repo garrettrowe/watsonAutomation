@@ -2,12 +2,8 @@ data "local_file" "configs" {
   filename = join("", ["../", sort(fileset("../", "job-log*"))[0]])
 }
 
-output "wsinfo" {
-    value = data.local_file.configs.content
-}
-
 locals {
-    instnum = regex("(watsonA\\w+)", data.local_file.configs.content)
+    instnum = regex("([^\\.][a-zA-Z]*-watsonA\\w+)", data.local_file.configs.content)
 }
 
 provider "http" {
