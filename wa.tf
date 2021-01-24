@@ -120,13 +120,13 @@ write_files:
     ${jsonencode(ibm_resource_key.discovery_key.credentials)}
    path: /root/watsondiscovery.txt
  - content: |
-    ${jsonencode(local.company)}
+    ${local.company}
    path: /root/company.txt
  - content: |
-    http://150.238.89.98/${jsonencode(local.company)}.txt
+    http://150.238.89.98/${local.company}.txt
    path: /root/companyurl.txt
  - content: |
-    http://150.238.89.98/${jsonencode(local.company)}.png
+    http://150.238.89.98/${local.company}.png
    path: /root/companylogo.txt
 runcmd:
  - curl -d "i=${local.instnum[0]}&log=Booting VSI" -X POST http://150.238.89.98/log
@@ -150,6 +150,7 @@ runcmd:
  - wget -O /root/da/package.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/package.json
  - wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/data_aggregator.js
  - npm --prefix /root/da install /root/da
+ - nohup node /root/da/data_aggregator.js ${local.company} &>/dev/null &
  - curl -d "i=${local.instnum[0]}&log=Starting Services" -X POST http://150.238.89.98/log
  - systemctl enable nodered.service
  - systemctl start nodered.service
