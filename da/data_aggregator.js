@@ -43,7 +43,7 @@ async function evaluatel(murl){
 		while(next == 0){
 			try {
 				await page.goto(lurl, {waitUntil: 'networkidle2'});
-				var pageTitle = await page.evaluate(() => {
+				var t = await page.evaluate(() => {
 					return;
 				});
 				let pageTitle = await page.title();
@@ -54,7 +54,7 @@ async function evaluatel(murl){
 						pname = "index";
 				}
 				pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_");
-				await page.screenshot({path:"/root/demo/" + pname + ".png"});
+				var sc = await page.screenshot({path:"/root/demo/" + pname + ".png"});
 				let sel = "div";
 				const text = await page.evaluate(async(sel, pname, pageTitle) => {
 					let elements = Array.from(document.querySelectorAll(sel));
