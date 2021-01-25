@@ -6,7 +6,7 @@ var iterate = 0;
 var uitems = [];
 
 	
-var crawler = new Crawler("https://"+ myArgs[0]);
+var crawler = new Crawler(myArgs[0]);
 crawler.maxDepth = 2;
 crawler.userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0";
 crawler.respectRobotsTxt = 0;
@@ -44,7 +44,7 @@ async function evaluatel(murl){
 		let pname = lurl.split("/");
 		pname = pname[pname.length-1];
 		if(pname.length < 2)
-			pname = murl.replace(/[.].+/, "");
+			pname = murl.replace(/h.*\/\//, "");
 		let sel = "div";
 		const text = await page.evaluate((sel) => {
 	        let elements = Array.from(document.querySelectorAll(sel));
