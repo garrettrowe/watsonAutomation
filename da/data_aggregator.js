@@ -48,7 +48,7 @@ async function evaluatel(murl){
 				let pname = lurl.split("/");
 				pname = pname[pname.length-1];
 				if(!pname || 0 === pname.length){
-					pname = pageTitle;
+					pname = "index";
 				}
 				pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_");
 
