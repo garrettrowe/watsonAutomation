@@ -60,7 +60,8 @@ async function evaluatel(murl){
 				var out = out.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
 				var out = out.replace(/<.\w*[^>]*>/gi, " ");
 				var out = out.replace(/( )+/gi, " ");
-				var out = out.replace(/([\t\n]| )+([\t\n]| )+/gi, "\n");
+				var out = "<div><p>" + out.replace(/([\t\n]| )+([\t\n]| )+/gi, "</p></div><div><p>") + "</p></div>";
+				var out = out.replace(/(<div><p>) *(</p></div>)/gi, "");
 				if (out.length > 200)
 					await fse.outputFile("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
 		}
