@@ -69,7 +69,7 @@ async function evaluatel(murl){
 				var out = out.replace(/([\t\n])+/gi, "</p></div><div><p>");
 				var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
 				var out = "<html><head><title>" + pname + "</title></head><body>" + out + "</body></html>";
-				if (out.length > 300)
+				if (out.length > 400)
 					await fse.outputFile("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
 		}
 		await page.goto('about:blank');
