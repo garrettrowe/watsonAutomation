@@ -43,8 +43,6 @@ async function evaluatel(murl){
 		await page.goto(lurl);
 		let pname = lurl.split("/");
 		pname = pname[pname.length-1];
-		if(pname.length < 2)
-			pname = murl.replace(/h.*\/\//, "");
 		let sel = "div";
 		const text = await page.evaluate((sel) => {
 	        let elements = Array.from(document.querySelectorAll(sel));
