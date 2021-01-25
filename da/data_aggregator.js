@@ -40,7 +40,7 @@ async function evaluatel(murl){
 		await page.setDefaultNavigationTimeout(0); 
 		await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0');
 	
-		await page.goto(lurl, {waitUntil: 'networkidle2'});
+		await page.goto(lurl, {waitUntil: 'networkidle2', networkIdleTimeout: 2000});
 		let pageTitle = await page.title();
 		pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
 		let pname = lurl.split("/");
