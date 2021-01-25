@@ -98,7 +98,7 @@ resource "ibm_is_ssh_key" "testacc_sshkey" {
 }
 
 resource "ibm_is_instance" "testacc_instance" {
-  name    = "${local.company}-VSI"
+  name    = "${local.company}-vsi"
   image   = "r006-ed3f775f-ad7e-4e37-ae62-7199b4988b00"
   profile = "bx2-2x8"
 
@@ -161,7 +161,7 @@ data "http" "instancelog" {
   url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20VSI%20${ibm_is_instance.testacc_instance.id}"
 }
 resource "ibm_is_floating_ip" "testacc_floatingip" {
-  name   = "${local.company}-VSI-ip"
+  name   = "${local.company}-vsi-ip"
   target = ibm_is_instance.testacc_instance.primary_network_interface[0].id
 }
 
