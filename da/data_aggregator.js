@@ -55,30 +55,29 @@ async function evaluatel(murl){
 				}
 				pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_");
 				var sc = await page.screenshot({path:"/root/demo/" + pname + ".png"});
-				let sel = "div";
-				const text = await page.evaluate((sel, pname, pageTitle) => {
-					let elements = Array.from(document.querySelectorAll(sel));
+				var sel = "div";
+				var links = Array.from(document.querySelectorAll(sel));
 					let links = elements.map(element => {
-						return element.parentElement.innerHTML;
-					});
-					for (let j of links) {
-						iterate +=1;
-						var out = j.replace(/<html([\S\s]*?)>([\S\s]*?)<\/html>/gi, "");
-						var out = j.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
-						var out = j.replace(/<body([\S\s]*?)>([\S\s]*?)<\/body>/gi, "");
-						var out = j.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
-						var out = out.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
-						var out = "<div><p>" + out.replace(/<.\w*[^>]*>/gi, "</p></div><div><p>")+ "</p></div>";
-						var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
-						var out = out.replace(/( )+/gi, " ");
-						var out = out.replace(/([\t\n])+/gi, "</p></div><div><p>");
-						var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
-						var out = "<html><head><title>" + pageTitle + "</title></head><body>" + out + "</body></html>";
-						if (out.length > 400)
-							fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
-					}
-				});
-				
+					    return element.parentElement.innerHTML;
+					})
+					return links;
+				    }, sel);
+				for (let j of links) {
+					iterate +=1;
+					var out = j.replace(/<html([\S\s]*?)>([\S\s]*?)<\/html>/gi, "");
+					var out = out.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
+					var out = out.replace(/<body([\S\s]*?)>([\S\s]*?)<\/body>/gi, "");
+					var out = out.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
+					var out = out.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
+					var out = "<div><p>" + out.replace(/<.\w*[^>]*>/gi, "</p></div><div><p>")+ "</p></div>";
+					var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
+					var out = out.replace(/( )+/gi, " ");
+					var out = out.replace(/([\t\n])+/gi, "</p></div><div><p>");
+					var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
+					var out = "<html><head><title>" + pageTitle + "</title></head><body>" + out + "</body></html>";
+					if (out.length > 400)
+						fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
+				}
 				next = 1;
 			}catch (err) {
 			    console.log("retry: " + lurl + "  error:" +err);
