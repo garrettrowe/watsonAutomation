@@ -43,11 +43,11 @@ async function evaluatel(murl){
 		while(next == 0){
 			try {
 				await page.goto(lurl, {waitUntil: 'networkidle2'});
-				var pageTitle = await page.evaluate(async(lurl,page) => {
-					let pageTitle = await page.title();
-					pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
-					return pageTitle;
+				var pageTitle = await page.evaluate(() => {
+					return;
 				});
+				let pageTitle = await page.title();
+				pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
 				let pname = lurl.split("/");
 				pname = pname[pname.length-1];
 				if(!pname || 0 === pname.length){
