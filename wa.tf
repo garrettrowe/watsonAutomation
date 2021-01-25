@@ -37,7 +37,7 @@ resource "ibm_resource_key" "wa_key" {
 }
 
 data "http" "walog" {
-  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Watson%20Assistant%20${ibm_resource_instance.wa_instance.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Watson%20Assistant:%20${ibm_resource_instance.wa_instance.name}"
 }
 
 resource "ibm_resource_instance" "discovery_instance" {
@@ -62,14 +62,14 @@ resource "ibm_resource_key" "discovery_key" {
   }
 }
 data "http" "discoverylog" {
-  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Watson%20Discovery%20${ibm_resource_instance.discovery_instance.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Watson%20Discovery:%20${ibm_resource_instance.discovery_instance.name}"
 }
 
 resource "ibm_is_vpc" "testacc_vpc" {
   name = "${local.company}-vpc"
 }
 data "http" "vpclog" {
-  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20VPC%20${ibm_is_vpc.testacc_vpc.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20VPC:%20${ibm_is_vpc.testacc_vpc.name}"
 }
 
 resource "ibm_is_subnet" "testacc_subnet" {
@@ -80,7 +80,7 @@ resource "ibm_is_subnet" "testacc_subnet" {
   public_gateway = ibm_is_public_gateway.publicgateway1.id
 }
 data "http" "subnetlog" {
-  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Subnet%20${ibm_is_subnet.testacc_subnet.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Subnet:%20${ibm_is_subnet.testacc_subnet.name}"
 }
   
 resource "ibm_is_public_gateway" "publicgateway1" {
@@ -89,7 +89,7 @@ resource "ibm_is_public_gateway" "publicgateway1" {
   zone = "us-south-1"
 }
 data "http" "gatewaylog" {
-  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Gateway%20${ibm_is_public_gateway.publicgateway1.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Gateway:%20${ibm_is_public_gateway.publicgateway1.name}"
 }
 
 resource "ibm_is_ssh_key" "testacc_sshkey" {
@@ -158,7 +158,7 @@ EOT
 }
 
 data "http" "instancelog" {
-  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20VSI%20${ibm_is_instance.testacc_instance.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20VSI:%20${ibm_is_instance.testacc_instance.name}"
 }
 resource "ibm_is_floating_ip" "testacc_floatingip" {
   name   = "${local.company}-vsi-ip"
