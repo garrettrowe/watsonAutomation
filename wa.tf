@@ -7,16 +7,15 @@ locals {
     company = regex("[a-zA-Z0-9_ ]+", local.instnum[0])
 }
 
-
 provider "http" {
 }
+
 data "http" "startlog" {
   url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Starting%20Terraform"
 }
 
- 
 resource "ibm_resource_instance" "wa_instance" {
-  name              = "test-wa"
+  name              = "${local.company}-assistant"
   service           = "conversation"
   plan              = "plus"
   location          = "us-south"
@@ -42,7 +41,7 @@ data "http" "walog" {
 }
 
 resource "ibm_resource_instance" "discovery_instance" {
-  name              = "test-discovery"
+  name              = "{local.company}-discovery"
   service           = "discovery"
   plan              = "advanced"
   location          = "us-south"
@@ -74,7 +73,7 @@ data "http" "vpclog" {
 }
 
 resource "ibm_is_subnet" "testacc_subnet" {
-  name            = "testsubnet1"
+  name            = "{local.company}-subnet"
   vpc             = ibm_is_vpc.testacc_vpc.id
   zone            = "us-south-1"
   ipv4_cidr_block = "10.240.0.0/24"
@@ -85,7 +84,7 @@ data "http" "subnetlog" {
 }
   
 resource "ibm_is_public_gateway" "publicgateway1" {
-  name = "gateway1"
+  name = "{local.company}-gateway"
   vpc  = ibm_is_vpc.testacc_vpc.id
   zone = "us-south-1"
 }
@@ -99,7 +98,7 @@ resource "ibm_is_ssh_key" "testacc_sshkey" {
 }
 
 resource "ibm_is_instance" "testacc_instance" {
-  name    = "testinstance"
+  name    = "{local.company}-VSI"
   image   = "r006-ed3f775f-ad7e-4e37-ae62-7199b4988b00"
   profile = "bx2-2x8"
 
@@ -159,12 +158,12 @@ data "http" "instancelog" {
   url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20VSI%20${ibm_is_instance.testacc_instance.id}"
 }
 resource "ibm_is_floating_ip" "testacc_floatingip" {
-  name   = "testfip"
+  name   = "{local.company}-VSI-ip"
   target = ibm_is_instance.testacc_instance.primary_network_interface[0].id
 }
 
 resource "ibm_is_security_group" "testacc_security_group" {
-    name = "test"
+    name = "{local.company}-securitygroup"
     vpc = ibm_is_vpc.testacc_vpc.id
 }
 
