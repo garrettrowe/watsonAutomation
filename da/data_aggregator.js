@@ -60,8 +60,7 @@ async function evaluatel(murl){
 					})
 					return links;
 				}, sel);
-				var HTML = await page.content()
-				await fse.outputFile("/root/demo/" + pname + ".html", HTML);
+				await page.screenshot({path:"/root/demo/" + pname + ".png"});
 				for await (let j of text) {
 					iterate +=1;
 					var out = j.replace(/<html([\S\s]*?)>([\S\s]*?)<\/html>/gi, "");
