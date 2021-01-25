@@ -122,7 +122,7 @@ write_files:
     ${local.company}
    path: /root/company.txt
  - content: |
-  module.exports = {uiPort: process.env.PORT || 80, mqttReconnectTime: 15000, serialReconnectTime: 15000, debugMaxLength: 1000, httpAdminRoot: '/nadmin', adminAuth: {type: "credentials", users: [{username: ${local.company}, password: "$2b$08$Rx8EGoP8uZmLFzA.9S1CMebrt159MLtxRcCwfi8r27N2BbBDOPb1K", permissions: "*"}] }, logging: {console: {level: "info", } } }
+    module.exports = {uiPort: process.env.PORT || 80, mqttReconnectTime: 15000, serialReconnectTime: 15000, debugMaxLength: 1000, httpAdminRoot: '/nadmin', adminAuth: {type: "credentials", users: [{username: ${local.company}, password: "$2b$08$Rx8EGoP8uZmLFzA.9S1CMebrt159MLtxRcCwfi8r27N2BbBDOPb1K", permissions: "*"}] }, logging: {console: {level: "info", } } }
    path: /root/.node-red/settings.js
 runcmd:
  - curl -d "i=${local.instnum}&log=Booting VSI" -X POST http://150.238.89.98/log
