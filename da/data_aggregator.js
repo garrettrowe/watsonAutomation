@@ -41,10 +41,12 @@ async function evaluatel(murl){
 		await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0');
 	
 		await page.goto(lurl, {waitUntil: 'networkidle2'});
+		const pageTitle = await page.title();
+		pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
 		let pname = lurl.split("/");
 		pname = pname[pname.length-1];
 		if(!pname || 0 === pname.length){
-			pname = document.title;
+			pname = pageTitle;
 		}
 		pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_");
 		
@@ -70,7 +72,7 @@ async function evaluatel(murl){
 			var out = out.replace(/( )+/gi, " ");
 			var out = out.replace(/([\t\n])+/gi, "</p></div><div><p>");
 			var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
-			var out = "<html><head><title>" + pname.replace("_", " ") + "</title></head><body>" + out + "</body></html>";
+			var out = "<html><head><title>" + pageTitle + "</title></head><body>" + out + "</body></html>";
 			if (out.length > 400)
 				await fse.outputFile("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
 		}
