@@ -43,8 +43,8 @@ async function evaluatel(murl){
 		while(next == 0){
 			try {
 				await page.goto(lurl, {waitUntil: 'networkidle2'});
-				var pageTitle = await page.evaluate((lurl) => {
-					let pageTitle = page.title();
+				var pageTitle = await page.evaluate(async(lurl) => {
+					let pageTitle = await page.title();
 					pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
 					return pageTitle;
 				});
@@ -56,7 +56,7 @@ async function evaluatel(murl){
 				pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_");
 				await page.screenshot({path:"/root/demo/" + pname + ".png"});
 				let sel = "div";
-				const text = await page.evaluate((sel, pname, pageTitle) => {
+				const text = await page.evaluate(async(sel, pname, pageTitle) => {
 					let elements = Array.from(document.querySelectorAll(sel));
 					let links = elements.map(element => {
 						return element.parentElement.innerHTML;
