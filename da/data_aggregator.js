@@ -43,40 +43,42 @@ async function evaluatel(murl){
 		while(next == 0){
 			try {
 				await page.goto(lurl, {waitUntil: 'networkidle2'});
-				var output = await page.evaluate((lurl) => {
-					let pageTitle = await page.title();
+				var pageTitle = await page.evaluate((lurl) => {
+					let pageTitle = page.title();
 					pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
-					let pname = lurl.split("/");
-					pname = pname[pname.length-1];
-					if(!pname || 0 === pname.length){
-						pname = "index";
-					}
-					pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_");
-					await page.screenshot({path:"/root/demo/" + pname + ".png"});
-					let sel = "div";
-					const text = await page.evaluate((sel, pname, pageTitle) => {
-						let elements = Array.from(document.querySelectorAll(sel));
-						let links = elements.map(element => {
-							return element.parentElement.innerHTML;
-						});
-						for (let j of links) {
-							iterate +=1;
-							var out = j.replace(/<html([\S\s]*?)>([\S\s]*?)<\/html>/gi, "");
-							var out = j.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
-							var out = j.replace(/<body([\S\s]*?)>([\S\s]*?)<\/body>/gi, "");
-							var out = j.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
-							var out = out.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
-							var out = "<div><p>" + out.replace(/<.\w*[^>]*>/gi, "</p></div><div><p>")+ "</p></div>";
-							var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
-							var out = out.replace(/( )+/gi, " ");
-							var out = out.replace(/([\t\n])+/gi, "</p></div><div><p>");
-							var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
-							var out = "<html><head><title>" + pageTitle + "</title></head><body>" + out + "</body></html>";
-							if (out.length > 400)
-								await fse.outputFile("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
-						}
-					});
+					return pageTitle;
 				});
+				let pname = lurl.split("/");
+				pname = pname[pname.length-1];
+				if(!pname || 0 === pname.length){
+						pname = "index";
+				}
+				pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_");
+				await page.screenshot({path:"/root/demo/" + pname + ".png"});
+				let sel = "div";
+				const text = await page.evaluate((sel, pname, pageTitle) => {
+					let elements = Array.from(document.querySelectorAll(sel));
+					let links = elements.map(element => {
+						return element.parentElement.innerHTML;
+					});
+					for (let j of links) {
+						iterate +=1;
+						var out = j.replace(/<html([\S\s]*?)>([\S\s]*?)<\/html>/gi, "");
+						var out = j.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
+						var out = j.replace(/<body([\S\s]*?)>([\S\s]*?)<\/body>/gi, "");
+						var out = j.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
+						var out = out.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
+						var out = "<div><p>" + out.replace(/<.\w*[^>]*>/gi, "</p></div><div><p>")+ "</p></div>";
+						var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
+						var out = out.replace(/( )+/gi, " ");
+						var out = out.replace(/([\t\n])+/gi, "</p></div><div><p>");
+						var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
+						var out = "<html><head><title>" + pageTitle + "</title></head><body>" + out + "</body></html>";
+						if (out.length > 400)
+							await fse.outputFile("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
+					}
+				});
+				
 				next = 1;
 			}catch (err) {
 			    console.log("retry: " + lurl);
