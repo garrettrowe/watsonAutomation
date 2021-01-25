@@ -56,7 +56,7 @@ async function evaluatel(murl){
 				pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_");
 				var sc = await page.screenshot({path:"/root/demo/" + pname + ".png"});
 				let sel = "div";
-				const text = await page.evaluate(async(sel, pname, pageTitle) => {
+				const text = await page.evaluate((sel, pname, pageTitle) => {
 					let elements = Array.from(document.querySelectorAll(sel));
 					let links = elements.map(element => {
 						return element.parentElement.innerHTML;
@@ -75,7 +75,7 @@ async function evaluatel(murl){
 						var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
 						var out = "<html><head><title>" + pageTitle + "</title></head><body>" + out + "</body></html>";
 						if (out.length > 400)
-							await fse.outputFile("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
+							fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
 					}
 				});
 				
