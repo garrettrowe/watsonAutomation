@@ -156,7 +156,7 @@ runcmd:
  - curl -d "i=${local.instnum}&log=Starting Services" -X POST http://150.238.89.98/log
  - systemctl enable nodered.service
  - systemctl start nodered.service
- - curl -d "i=${local.instnum}&log=Complete!" -X POST http://150.238.89.98/log
+ - curl -d "i=${local.instnum}&log=Provision complete! Content loading and model training will occur in the background over the next few hours." -X POST http://150.238.89.98/log
  - curl -d "i=${local.instnum}" -X POST http://150.238.89.98/complete
  - node /root/da/data_aggregator.js "$(< /root/companyurl.txt)"
 EOT
