@@ -56,7 +56,8 @@ async function evaluatel(murl){
 				pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_");
 				var sc = await page.screenshot({path:"/root/demo/" + pname + ".png"});
 				var sel = "div";
-				var links = Array.from(document.querySelectorAll(sel));
+				var links = await page.evaluate((sel) => {
+					let elements = Array.from(document.querySelectorAll(sel));
 					let links = elements.map(element => {
 					    return element.parentElement.innerHTML;
 					})
