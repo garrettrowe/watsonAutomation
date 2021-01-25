@@ -56,7 +56,8 @@ async function evaluatel(murl){
 				iterate +=1;
 				var out = j.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
 				var out = out.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
-				var out = out.replace(/<.\w*[^>]*>/gi, " ");
+				var out = "<div><p>" + out.replace(/<.\w*[^>]*>/gi, "</p></div><div><p>")+ "</p></div>";
+				var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
 				var out = out.replace(/( )+/gi, " ");
 				var out = "<div><p>" + out.replace(/([\t\n]| )+([\t\n]| )+/gi, "</p></div><div><p>") + "</p></div>";
 				var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
