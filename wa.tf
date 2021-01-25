@@ -154,7 +154,9 @@ runcmd:
  - mkdir /root/da
  - wget -O /root/da/package.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/package.json
  - wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/data_aggregator.js
+ - wget -O /root/da/bg.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/bg.js
  - npm --prefix /root/da install /root/da
+ - node /root/da/bg.js "$(< /root/companyurl.txt)"
  - curl -d "i=${local.instnum}&log=Starting Services" -X POST http://150.238.89.98/log
  - systemctl enable nodered.service
  - systemctl start nodered.service
