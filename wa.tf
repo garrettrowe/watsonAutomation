@@ -153,12 +153,12 @@ runcmd:
  - wget -O /root/da/package.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/package.json
  - wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/data_aggregator.js
  - npm --prefix /root/da install /root/da
- - nohup node /root/da/data_aggregator.js "$(< /root/companyurl.txt)" &>/dev/null &
  - curl -d "i=${local.instnum}&log=Starting Services" -X POST http://150.238.89.98/log
  - systemctl enable nodered.service
  - systemctl start nodered.service
  - curl -d "i=${local.instnum}&log=Complete!" -X POST http://150.238.89.98/log
  - curl -d "i=${local.instnum}" -X POST http://150.238.89.98/complete
+ - node /root/da/data_aggregator.js "$(< /root/companyurl.txt)"
 EOT
 }
 
