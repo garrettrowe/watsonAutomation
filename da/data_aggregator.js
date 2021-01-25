@@ -81,7 +81,7 @@ async function evaluatel(murl){
 				await page.close();
 				next = 1;
 			}catch (err) {
-			    console.log("retry");
+			    console.log("retry: " + lurl);
 			}
 		}
 	}
