@@ -6,7 +6,7 @@ locals {
     instnum = regex("([^\\.][a-zA-Z]*-watsonA\\w+)", data.local_file.configs.content)[0]
   company = "qad"
 }
-output {
+output "myout"{
     value = jsonencode(regex("[a-zA-Z0-9_ ]+", local.instnum))
 }
 
