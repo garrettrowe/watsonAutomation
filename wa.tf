@@ -3,15 +3,15 @@ data "local_file" "configs" {
 }
 
 locals {
-    instnum = regex("([^\\.][a-zA-Z]*-watsonA\\w+)", data.local_file.configs.content)
-    company = regex("[a-zA-Z0-9_ ]+", local.instnum[0])
+    instnum = regex("([^\\.][a-zA-Z]*-watsonA\\w+)", data.local_file.configs.content)[0]
+    company = regex("[a-zA-Z0-9_ ]+", local.instnum)[0]
 }
 
 provider "http" {
 }
 
 data "http" "startlog" {
-  url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Starting%20Terraform"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Starting%20Terraform"
 }
 
 resource "ibm_resource_instance" "wa_instance" {
@@ -37,7 +37,7 @@ resource "ibm_resource_key" "wa_key" {
 }
 
 data "http" "walog" {
-  url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20Watson%20Assistant%20${ibm_resource_instance.wa_instance.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Watson%20Assistant%20${ibm_resource_instance.wa_instance.id}"
 }
 
 resource "ibm_resource_instance" "discovery_instance" {
@@ -62,14 +62,14 @@ resource "ibm_resource_key" "discovery_key" {
   }
 }
 data "http" "discoverylog" {
-  url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20Watson%20Discovery%20${ibm_resource_instance.discovery_instance.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Watson%20Discovery%20${ibm_resource_instance.discovery_instance.id}"
 }
 
 resource "ibm_is_vpc" "testacc_vpc" {
   name = "${local.company}-vpc"
 }
 data "http" "vpclog" {
-  url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20VPC%20${ibm_is_vpc.testacc_vpc.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20VPC%20${ibm_is_vpc.testacc_vpc.id}"
 }
 
 resource "ibm_is_subnet" "testacc_subnet" {
@@ -80,7 +80,7 @@ resource "ibm_is_subnet" "testacc_subnet" {
   public_gateway = ibm_is_public_gateway.publicgateway1.id
 }
 data "http" "subnetlog" {
-  url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20Subnet%20${ibm_is_subnet.testacc_subnet.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Subnet%20${ibm_is_subnet.testacc_subnet.id}"
 }
   
 resource "ibm_is_public_gateway" "publicgateway1" {
@@ -89,7 +89,7 @@ resource "ibm_is_public_gateway" "publicgateway1" {
   zone = "us-south-1"
 }
 data "http" "gatewaylog" {
-  url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20Gateway%20${ibm_is_public_gateway.publicgateway1.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20Gateway%20${ibm_is_public_gateway.publicgateway1.id}"
 }
 
 resource "ibm_is_ssh_key" "testacc_sshkey" {
@@ -125,22 +125,22 @@ write_files:
   module.exports = {uiPort: process.env.PORT || 80, mqttReconnectTime: 15000, serialReconnectTime: 15000, debugMaxLength: 1000, httpAdminRoot: '/nadmin', adminAuth: {type: "credentials", users: [{username: ${local.company}, password: "$2b$08$Rx8EGoP8uZmLFzA.9S1CMebrt159MLtxRcCwfi8r27N2BbBDOPb1K", permissions: "*"}] }, logging: {console: {level: "info", } } }
    path: /root/.node-red/settings.js
 runcmd:
- - curl -d "i=${local.instnum[0]}&log=Booting VSI" -X POST http://150.238.89.98/log
+ - curl -d "i=${local.instnum}&log=Booting VSI" -X POST http://150.238.89.98/log
  - export DEBIAN_FRONTEND=noninteractive
  - export HOME=/root
  - export USER=root
  - apt-get update
- - curl -d "i=${local.instnum[0]}&log=Patching VSI" -X POST http://150.238.89.98/log
+ - curl -d "i=${local.instnum}&log=Patching VSI" -X POST http://150.238.89.98/log
  - apt-get -y -o Dpkg::Options::="--force-confnew" upgrade
- - curl -d "i=${local.instnum[0]}&log=Installing Core Packages" -X POST http://150.238.89.98/log
+ - curl -d "i=${local.instnum}&log=Installing Core Packages" -X POST http://150.238.89.98/log
  - apt-get -y -o Dpkg::Options::="--force-confnew" install libcurl4 libssl1.1 build-essential
- - curl -d "i=${local.instnum[0]}&log=Installing Node" -X POST http://150.238.89.98/log
+ - curl -d "i=${local.instnum}&log=Installing Node" -X POST http://150.238.89.98/log
  - wget https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered
  - bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
  - npm install --prefix /root/.node-red node-red-node-watson
  - npm install --prefix /root/.node-red node-red-contrib-startup-trigger
  - wget -O /root/.node-red/flows_testinstance.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/flows_testinstance.json
- - curl -d "i=${local.instnum[0]}&log=Starting Data Aggregator" -X POST http://150.238.89.98/log
+ - curl -d "i=${local.instnum}&log=Starting Data Aggregator" -X POST http://150.238.89.98/log
  - apt-get install -y -o Dpkg::Options::="--force-confnew" libgbm-dev libpangocairo-1.0-0 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libgconf2-4 libasound2 libatk1.0-0 libgtk-3-0
  - wget -O /root/companylogo.txt ${join("http://150.238.89.98/",local.company,".png")}
  - wget -O /root/companyurl.txt ${join("http://150.238.89.98/",local.company,".txt")}
@@ -149,16 +149,16 @@ runcmd:
  - wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/data_aggregator.js
  - npm --prefix /root/da install /root/da
  - nohup node /root/da/data_aggregator.js ${local.company} &>/dev/null &
- - curl -d "i=${local.instnum[0]}&log=Starting Services" -X POST http://150.238.89.98/log
+ - curl -d "i=${local.instnum}&log=Starting Services" -X POST http://150.238.89.98/log
  - systemctl enable nodered.service
  - systemctl start nodered.service
- - curl -d "i=${local.instnum[0]}&log=Complete!" -X POST http://150.238.89.98/log
- - curl -d "i=${local.instnum[0]}" -X POST http://150.238.89.98/complete
+ - curl -d "i=${local.instnum}&log=Complete!" -X POST http://150.238.89.98/log
+ - curl -d "i=${local.instnum}" -X POST http://150.238.89.98/complete
 EOT
 }
 
 data "http" "instancelog" {
-  url = "http://150.238.89.98/log?i=${local.instnum[0]}&log=Created%20VSI%20${ibm_is_instance.testacc_instance.id}"
+  url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20VSI%20${ibm_is_instance.testacc_instance.id}"
 }
 resource "ibm_is_floating_ip" "testacc_floatingip" {
   name   = "${local.company}-VSI-ip"
@@ -188,7 +188,7 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_all_ob" {
  }
 
 data "http" "iplog" {
-  url = "http://150.238.89.98/iplog?i=${local.instnum[0]}&ip=${ibm_is_floating_ip.testacc_floatingip.address}"
+  url = "http://150.238.89.98/iplog?i=${local.instnum}&ip=${ibm_is_floating_ip.testacc_floatingip.address}"
 }
 
 
