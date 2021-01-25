@@ -56,14 +56,18 @@ async function evaluatel(murl){
 
 			for await (let j of text) {
 				iterate +=1;
+				var out = j.replace(/<html([\S\s]*?)>([\S\s]*?)<\/html>/gi, "");
+				var out = j.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
+				var out = j.replace(/<body([\S\s]*?)>([\S\s]*?)<\/body>/gi, "");
 				var out = j.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
 				var out = out.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
 				var out = "<div><p>" + out.replace(/<.\w*[^>]*>/gi, "</p></div><div><p>")+ "</p></div>";
 				var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
 				var out = out.replace(/( )+/gi, " ");
-				var out = "<div><p>" + out.replace(/([\t\n]| )+([\t\n]| )+/gi, "</p></div><div><p>") + "</p></div>";
+				var out = "<div><p>" + out.replace(/([\t\n])+/gi, "</p></div><div><p>") + "</p></div>";
 				var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
-				if (out.length > 200)
+				var out = "<html><head><title>" + pname + "</title></head><body>" + out + "</body></html>";
+				if (out.length > 300)
 					await fse.outputFile("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
 		}
 		await page.goto('about:blank');
