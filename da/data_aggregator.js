@@ -43,8 +43,10 @@ async function evaluatel(murl){
 		await page.goto(lurl);
 		let pname = lurl.split("/");
 		pname = pname[pname.length-1];
-		if(!pname || 0 === pname.length)
+		if(!pname || 0 === pname.length){
+			pname = lurl.split("/");
 			pname = pname[pname.length-2];
+		}
 		let sel = "div";
 		const text = await page.evaluate((sel) => {
 	        let elements = Array.from(document.querySelectorAll(sel));
@@ -64,7 +66,7 @@ async function evaluatel(murl){
 				var out = "<div><p>" + out.replace(/<.\w*[^>]*>/gi, "</p></div><div><p>")+ "</p></div>";
 				var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
 				var out = out.replace(/( )+/gi, " ");
-				var out = "<div><p>" + out.replace(/([\t\n])+/gi, "</p></div><div><p>") + "</p></div>";
+				var out = out.replace(/([\t\n])+/gi, "</p></div><div><p>");
 				var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
 				var out = "<html><head><title>" + pname + "</title></head><body>" + out + "</body></html>";
 				if (out.length > 300)
