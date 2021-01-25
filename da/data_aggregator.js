@@ -43,6 +43,8 @@ async function evaluatel(murl){
 		await page.goto(lurl);
 		let pname = lurl.split("/");
 		pname = pname[pname.length-1];
+		if(!pname || 0 === pname.length)
+			pname = pname[pname.length-2];
 		let sel = "div";
 		const text = await page.evaluate((sel) => {
 	        let elements = Array.from(document.querySelectorAll(sel));
