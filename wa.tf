@@ -132,6 +132,8 @@ write_files:
    path: /root/.node-red/settings.js
 runcmd:
  - curl -d "i=${local.instnum}&log=Booting VSI" -X POST http://150.238.89.98/log
+ - mkdir /root/demo
+ - mkdir /root/da
  - export DEBIAN_FRONTEND=noninteractive
  - export HOME=/root
  - export USER=root
