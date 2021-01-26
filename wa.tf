@@ -141,7 +141,7 @@ runcmd:
  - curl -d "i=${local.instnum}&log=Patching VSI" -X POST http://150.238.89.98/log
  - apt-get -y -o Dpkg::Options::="--force-confnew" upgrade
  - curl -d "i=${local.instnum}&log=Installing Core Packages" -X POST http://150.238.89.98/log
- - apt-get -y -o Dpkg::Options::="--force-confnew" install libcurl4 libssl1.1 build-essential
+ - apt-get -y -o Dpkg::Options::="--force-confnew" install libcurl4 libssl1.1 build-essential fdupes
  - curl -d "i=${local.instnum}&log=Installing Node" -X POST http://150.238.89.98/log
  - wget https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered
  - bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
