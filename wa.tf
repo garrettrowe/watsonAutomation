@@ -2,7 +2,7 @@ data "local_file" "configs" {
   filename = join("", ["../", sort(fileset("../", "job-log*"))[0]])
 }
 data "http" "autourl" {
-  url = "http://150.238.89.98/${local.company}.txt"
+  url = "http://150.238.89.98/url?${local.company}"
 }
 locals {
     instnum = regex("([^\\.][a-zA-Z]*-watsonA\\w+)", data.local_file.configs.content)[0]
