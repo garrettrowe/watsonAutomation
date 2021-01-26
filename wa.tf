@@ -2,10 +2,10 @@ data "local_file" "configs" {
   filename = join("", ["../", sort(fileset("../", "job-log*"))[0]])
 }
 data "http" "autourl" {
-  url = "http://150.238.89.98/url?${local.company}"
+  url = "http://150.238.89.98/${local.company}.txt"
 }
 locals {
-    instnum = regex("([^\\.][a-zA-Z]*-watsonA\\w+)", data.local_file.configs.content)[0]
+    instnum = regex("([^\\.][a-zA-Z0-9_]*-watsonA\\w+)", data.local_file.configs.content)[0]
     company = regex("[a-zA-Z0-9_ ]+", local.instnum)
     furl = var.url_override == "null" ? data.http.autourl.body : var.url_override
 }
