@@ -7,6 +7,7 @@ data "http" "autourl" {
 locals {
     instnum = regex("([^\\.][a-zA-Z0-9_]*-watsonA\\w+)", data.local_file.configs.content)[0]
     company = regex("[a-zA-Z0-9_ ]+", local.instnum)
+    companysafe = replace(local.company, "_", "-")
     furl = var.url_override == "null" ? data.http.autourl.body : var.url_override
 }
 
@@ -18,7 +19,7 @@ data "http" "startlog" {
 }
 
 resource "ibm_resource_instance" "wa_instance" {
-  name              = "${local.company}-assistant"
+  name              = "${local.companysafe}-assistant"
   service           = "conversation"
   plan              = "plus"
   location          = "us-south"
@@ -44,7 +45,7 @@ data "http" "walog" {
 }
 
 resource "ibm_resource_instance" "discovery_instance" {
-  name              = "${local.company}-discovery"
+  name              = "${local.companysafe}-discovery"
   service           = "discovery"
   plan              = "advanced"
   location          = "us-south"
@@ -69,14 +70,14 @@ data "http" "discoverylog" {
 }
 
 resource "ibm_is_vpc" "testacc_vpc" {
-  name = "${local.company}-vpc"
+  name = "${local.companysafe}-vpc"
 }
 data "http" "vpclog" {
   url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20VPC:%20${ibm_is_vpc.testacc_vpc.name}"
 }
 
 resource "ibm_is_subnet" "testacc_subnet" {
-  name            = "${local.company}-subnet"
+  name            = "${local.companysafe}-subnet"
   vpc             = ibm_is_vpc.testacc_vpc.id
   zone            = "us-south-1"
   ipv4_cidr_block = "10.240.0.0/24"
@@ -87,7 +88,7 @@ data "http" "subnetlog" {
 }
   
 resource "ibm_is_public_gateway" "publicgateway1" {
-  name = "${local.company}-gateway"
+  name = "${local.companysafe}-gateway"
   vpc  = ibm_is_vpc.testacc_vpc.id
   zone = "us-south-1"
 }
@@ -101,7 +102,7 @@ resource "ibm_is_ssh_key" "testacc_sshkey" {
 }
 
 resource "ibm_is_instance" "testacc_instance" {
-  name    = "${local.company}-vsi"
+  name    = "${local.companysafe}-vsi"
   image   = "r006-ed3f775f-ad7e-4e37-ae62-7199b4988b00"
   profile = "bx2-2x8"
 
@@ -170,12 +171,12 @@ data "http" "instancelog" {
   url = "http://150.238.89.98/log?i=${local.instnum}&log=Created%20VSI:%20${ibm_is_instance.testacc_instance.name}"
 }
 resource "ibm_is_floating_ip" "testacc_floatingip" {
-  name   = "${local.company}-vsi-ip"
+  name   = "${local.companysafe}-vsi-ip"
   target = ibm_is_instance.testacc_instance.primary_network_interface[0].id
 }
 
 resource "ibm_is_security_group" "testacc_security_group" {
-    name = "${local.company}-securitygroup"
+    name = "${local.companysafe}-securitygroup"
     vpc = ibm_is_vpc.testacc_vpc.id
 }
 
