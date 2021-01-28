@@ -148,7 +148,7 @@ runcmd:
  - bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
  - npm install --prefix /root/.node-red node-red-node-watson
  - npm install --prefix /root/.node-red node-red-contrib-startup-trigger
- - wget -O /root/.node-red/flows_${local.company}-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/flows.json
+ - wget -O /root/.node-red/flows_${local.companysafe}-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/flows.json
  - curl -d "i=${local.instnum}&log=Starting Data Aggregator" -X POST https://daidemos.com/log
  - apt-get install -y -o Dpkg::Options::="--force-confnew" libgbm-dev libpangocairo-1.0-0 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libgconf2-4 libasound2 libatk1.0-0 libgtk-3-0
  - wget -O /root/companylogo.png https://daidemos.com/${local.company}.png
