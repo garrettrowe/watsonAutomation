@@ -41,7 +41,7 @@ resource "ibm_resource_key" "wa_key" {
 }
 
 data "http" "walog" {
-  url = "https://daidemos.com/log?i=${local.instnum}&log=Created%20Watson%20Assistant:%20${ibm_resource_instance.wa_instance.name}"
+  url = "https://daidemos.com/log?i=${local.instnum}&log=Created%20Watson%20Assistant:%20${ibm_resource_instance.wa_instance.name}&wa=1&waid=${ibm_resource_instance.wa_instance.id}"
 }
 
 resource "ibm_resource_instance" "discovery_instance" {
