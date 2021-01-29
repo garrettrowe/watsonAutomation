@@ -13,6 +13,9 @@ terraform {
   }
 }
 
+provider "http" {
+}
+
 provider "ibm" {
   generation         = 2
   region             = "us-south"
