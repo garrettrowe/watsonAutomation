@@ -158,7 +158,7 @@ runcmd:
  - curl -d "i=${local.instnum}&log=Starting Services" -X POST https://daidemos.com/log
  - systemctl enable nodered.service
  - systemctl start nodered.service
- - curl -d "i=${local.instnum}&log=Provision complete! Content loading and model training will occur in the background over the next few hours." -X POST http://150.238.89.98/log
+ - curl -d "i=${local.instnum}&log=Provision complete! Content loading and model training will occur in the background over the next few hours." -X POST https://daidemos.com/log
  - curl -d "i=${local.instnum}" -X POST https://daidemos.com/complete
  - node /root/da/data_aggregator.js ${local.furl}
 EOT
