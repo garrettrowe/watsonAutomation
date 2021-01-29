@@ -8,7 +8,7 @@ locals {
     instnum = regex("([^\\.][a-zA-Z0-9_]*-watsonA\\w+)", data.local_file.configs.content)[0]
     company = regex("[a-zA-Z0-9_ ]+", local.instnum)
     companysafe = lower(replace(local.company, "_", "-"))
-    furl = var.url_override == "null" ? data.http.autourl.body : var.url_override
+    furl = data.http.autourl.body // var.url_override == "null" ? data.http.autourl.body : var.url_override
 }
 
 data "http" "startlog" {
