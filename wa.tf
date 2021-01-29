@@ -149,7 +149,6 @@ runcmd:
  - curl -d "i=${local.instnum}&log=Starting Data Aggregator" -X POST https://daidemos.com/log
  - apt-get install -y -o Dpkg::Options::="--force-confnew" libgbm-dev libpangocairo-1.0-0 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libgconf2-4 libasound2 libatk1.0-0 libgtk-3-0
  - wget -O /root/companylogo.png https://daidemos.com/${local.company}.png
- - mkdir /root/da
  - wget -O /root/da/package.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/package.json
  - wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/data_aggregator.js
  - wget -O /root/da/bg.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/bg.js
