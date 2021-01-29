@@ -153,13 +153,11 @@ runcmd:
  - wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/data_aggregator.js
  - wget -O /root/da/bg.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/bg.js
  - npm --prefix /root/da install /root/da
- - node /root/da/bg.js "${local.furl}"
  - curl -d "i=${local.instnum}&log=Starting Services" -X POST https://daidemos.com/log
  - systemctl enable nodered.service
  - systemctl start nodered.service
  - curl -d "i=${local.instnum}&log=Provision complete! Content loading and model training will occur in the background over the next few hours." -X POST https://daidemos.com/log
  - curl -d "i=${local.instnum}" -X POST https://daidemos.com/complete
- - node /root/da/data_aggregator.js "${local.furl}"
 EOT
 }
 
