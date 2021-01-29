@@ -11,9 +11,6 @@ locals {
     furl = var.url_override == "null" ? data.http.autourl.body : var.url_override
 }
 
-provider "http" {
-}
-
 data "http" "startlog" {
   url = "https://daidemos.com/log?i=${local.instnum}&log=Starting%20Terraform"
 }
