@@ -66,15 +66,13 @@ resource "ibm_iam_user_invite" "invite_user" {
     iam_policy {
       roles  = ["Manager", "Viewer", "Administrator"]
       resources {
-          {
           service              = "conversation"
           resource_instance_id = element(split(":",ibm_resource_instance.wa_instance.id),7)
           }
-          {
+      resources {
           service              = "discovery"
           resource_instance_id = element(split(":",ibm_resource_instance.discovery_instance.id),7)
           }
-        }
       }
 }
 
