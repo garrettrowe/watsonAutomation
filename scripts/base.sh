@@ -1,5 +1,5 @@
 #!/bin/bash
-while [ ! -f /var/lib/cloud/instance/boot-finished ]; do
+while [ ! -f /root/instnum.txt ]; do
     sleep 1
 done
 curl -d "Instance=$(< instnum.txt)&Log=Booting VSI" -X POST https://daidemos.com/log
