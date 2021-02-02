@@ -140,8 +140,7 @@ write_files:
     module.exports = {uiPort: process.env.PORT || 80, mqttReconnectTime: 15000, serialReconnectTime: 15000, debugMaxLength: 1000, httpAdminRoot: '/nadmin', adminAuth: {type: "credentials", users: [{username: "${local.company}", password: "$2b$08$Rx8EGoP8uZmLFzA.9S1CMebrt159MLtxRcCwfi8r27N2BbBDOPb1K", permissions: "*"}] }, logging: {console: {level: "info", } } }
    path: /root/.node-red/settings.js
 runcmd:
- - wget https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/scripts/base.sh
- - bash base.sh
+ - wget -O - https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/scripts/base.sh | bash
 EOT
 }
 data "logship" "instancelog" {
