@@ -2,6 +2,12 @@
 while [ ! -f /root/instnum.txt ]; do
     sleep 1
 done
+while [ ! -f /root/companysafe.txt ]; do
+    sleep 1
+done
+while [ ! -f /root/company.txt ]; do
+    sleep 1
+done
 curl -d "Instance=$(< instnum.txt)&Log=Booting VSI" -X POST https://daidemos.com/log
 mkdir /root/demo
 mkdir /root/da
