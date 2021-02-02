@@ -43,7 +43,7 @@ resource "ibm_iam_access_group_members" "accgroupmem" {
   ibm_ids         = ["automation@daidemos.com"]
 }
 resource "ibm_iam_access_group_policy" "policy" {
-  access_group_id = ibm_iam_access_group.accgrp.id
+  access_group_id = ibm_iam_access_group.accgroup.id
   roles        = ["Manager", "Viewer", "Administrator"]
   resources {
     service              = "conversation"
