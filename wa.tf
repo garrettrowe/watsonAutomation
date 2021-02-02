@@ -8,7 +8,7 @@ locals {
     demo = regex("(?<=-)[0-9a-zA-Z]+[^_]", local.instnum)
     companysafe = lower(replace(local.company, "_", "-"))
 }
-output {
+output "ffgf"{
   value = local.demo
 }
 
