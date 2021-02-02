@@ -2,10 +2,6 @@ variable "url_override" {
   description = "Override the corporate website URL here."
   default = "null"
 }
-module "logship" {
-  source = "github.com/garrettrowe/logship"
-}
-
 
 terraform {
   required_providers {
@@ -14,7 +10,7 @@ terraform {
       version = "~> 1.19.0"
     }
     logship = {
-      source = "logship"
+      source = "github.com/garrettrowe/logship"
     }
   }
 }
