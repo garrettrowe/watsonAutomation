@@ -11,14 +11,14 @@ done
 while [ ! -f /root/company.txt ]; do
     sleep 1
 done
-curl -d "Instance=$(< instnum.txt)&Log=Booting VSI" -X POST https://daidemos.com/log
+curl -d "Instance=$(< /root/instnum.txt)&Log=Booting VSI" -X POST https://daidemos.com/log
 mkdir /root/demo
 mkdir /root/da
 wget -O /root/companylogo.png https://daidemos.com/$(< /root/company.txt).png
 wget -O /root/companyurl.txt https://daidemos.com/$(< /root/company.txt).txt
 
 apt-get update
-curl -d "Instance=$(< /root/instnum.txt)&Log=Patching VSI" -X https://daidemos.com/log
+curl -d "Instance=$(< /root/instnum.txt)&Log=Patching VSI" -X POST https://daidemos.com/log
 apt-get -y -o Dpkg::Options::="--force-confnew" upgrade
 curl -d "i=$(< /root/instnum.txt)&Log=Installing Core Packages" -X POST https://daidemos.com/log
 apt-get -y -o Dpkg::Options::="--force-confnew" install libcurl4 libssl1.1 build-essential fdupes libgbm-dev libpangocairo-1.0-0 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libgconf2-4 libasound2 libatk1.0-0 libgtk-3-0
