@@ -14,44 +14,6 @@ data "logship" "startlog" {
   instance = local.instnum
 }
 
-resource "ibm_resource_instance" "wa_instance" {
-  name              = "${local.companysafe}-assistant"
-  service           = "conversation"
-  plan              = "plus"
-  location          = "us-south"
-
-  timeouts {
-    create = "15m"
-    update = "15m"
-    delete = "15m"
-  }
-}
-resource "ibm_resource_key" "wa_key" {
-  name                 = "${ibm_resource_instance.wa_instance.name}-key"
-  role                 = "Manager"
-  resource_instance_id = ibm_resource_instance.wa_instance.id
-  timeouts {
-    create = "15m"
-    delete = "15m"
-  }
-}
-resource "ibm_iam_user_invite" "invite_user" {
-    users = ["automation@daidemos.com"]
-    iam_policy {
-      roles  = ["Manager", "Viewer", "Administrator"]
-      resources {
-        service              = "conversation"
-        resource_instance_id = element(split(":",ibm_resource_instance.wa_instance.id),7)
-      }
-      }
-}
-
-data "logship" "walog" {
-  log = "Created Watson Assistant: ${ibm_resource_instance.wa_instance.name}"
-  ip = ibm_resource_instance.wa_instance.id
-  instance = local.instnum
-}
-
 resource "ibm_resource_instance" "discovery_instance" {
   name              = "${local.companysafe}-discovery"
   service           = "discovery"
@@ -77,6 +39,50 @@ data "logship" "discoverylog" {
   log = "Created Watson Discovery: ${ibm_resource_instance.discovery_instance.name}"
   instance = local.instnum
 }
+
+resource "ibm_resource_instance" "wa_instance" {
+  name              = "${local.companysafe}-assistant"
+  service           = "conversation"
+  plan              = "plus"
+  location          = "us-south"
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
+}
+resource "ibm_resource_key" "wa_key" {
+  name                 = "${ibm_resource_instance.wa_instance.name}-key"
+  role                 = "Manager"
+  resource_instance_id = ibm_resource_instance.wa_instance.id
+  timeouts {
+    create = "15m"
+    delete = "15m"
+  }
+}
+resource "ibm_iam_user_invite" "invite_user" {
+    users = ["automation@daidemos.com"]
+    iam_policy {
+      roles  = ["Manager", "Viewer", "Administrator"]
+      resources {[
+        service              = "conversation"
+        resource_instance_id = element(split(":",ibm_resource_instance.wa_instance.id),7)
+        ][
+        service              = "discovery"
+        resource_instance_id = element(split(":",ibm_resource_instance.discovery_instance.id),7)
+        ]
+      }
+      }
+}
+
+data "logship" "walog" {
+  log = "Created Watson Assistant: ${ibm_resource_instance.wa_instance.name}"
+  ip = ibm_resource_instance.wa_instance.id
+  instance = local.instnum
+}
+
+
 
 resource "ibm_is_vpc" "testacc_vpc" {
   name = "${local.companysafe}-vpc"
