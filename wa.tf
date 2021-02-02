@@ -1,23 +1,16 @@
 data "local_file" "configs" {
   filename = join("", ["../", sort(fileset("../", "job-log*"))[0]])
 }
-data "http" "autourl" {
-  url = "https://daidemos.com/${local.company}.txt"
-}
+
 locals {
     instnum = regex("([^\\.][a-zA-Z0-9_]*-watsonA\\w+)", data.local_file.configs.content)[0]
     company = regex("[a-zA-Z0-9_ ]+", local.instnum)
     companysafe = lower(replace(local.company, "_", "-"))
-    furl = data.http.autourl.body // var.url_override == "null" ? data.http.autourl.body : var.url_override
 }
 
-data "logship" "psl" {
-  log = "my test log"
+data "logship" "startlog" {
+  log = "Starting Terraform"
   instance = local.instnum
-}
-
-data "http" "startlog" {
-  url = "https://daidemos.com/log?i=${local.instnum}&log=Starting%20Terraform"
 }
 
 resource "ibm_resource_instance" "wa_instance" {
@@ -42,8 +35,10 @@ resource "ibm_resource_key" "wa_key" {
   }
 }
 
-data "http" "walog" {
-  url = "https://daidemos.com/log?i=${local.instnum}&log=Created%20Watson%20Assistant:%20${ibm_resource_instance.wa_instance.name}&wa=1&waid=${ibm_resource_instance.wa_instance.id}"
+data "logship" "walog" {
+  log = "Created Watson Assistant: ${ibm_resource_instance.wa_instance.name}"
+  ip = ibm_resource_instance.wa_instance.id
+  instance = local.instnum
 }
 
 resource "ibm_resource_instance" "discovery_instance" {
@@ -67,15 +62,17 @@ resource "ibm_resource_key" "discovery_key" {
     delete = "15m"
   }
 }
-data "http" "discoverylog" {
-  url = "https://daidemos.com/log?i=${local.instnum}&log=Created%20Watson%20Discovery:%20${ibm_resource_instance.discovery_instance.name}"
+data "logship" "discoverylog" {
+  log = "Created Watson Discovery: ${ibm_resource_instance.discovery_instance.name}"
+  instance = local.instnum
 }
 
 resource "ibm_is_vpc" "testacc_vpc" {
   name = "${local.companysafe}-vpc"
 }
-data "http" "vpclog" {
-  url = "https://daidemos.com/log?i=${local.instnum}&log=Created%20VPC:%20${ibm_is_vpc.testacc_vpc.name}"
+data "logship" "vpclog" {
+  log = "Created VPC: ${ibm_is_vpc.testacc_vpc.name}"
+  instance = local.instnum
 }
 
 resource "ibm_is_subnet" "testacc_subnet" {
@@ -85,8 +82,9 @@ resource "ibm_is_subnet" "testacc_subnet" {
   ipv4_cidr_block = "10.240.0.0/24"
   public_gateway = ibm_is_public_gateway.publicgateway1.id
 }
-data "http" "subnetlog" {
-  url = "https://daidemos.com/log?i=${local.instnum}&log=Created%20Subnet:%20${ibm_is_subnet.testacc_subnet.name}"
+data "logship" "subnetlog" {
+  log = "Created Subnet: ${ibm_is_subnet.testacc_subnet.name}"
+  instance = local.instnum
 }
   
 resource "ibm_is_public_gateway" "publicgateway1" {
@@ -94,8 +92,9 @@ resource "ibm_is_public_gateway" "publicgateway1" {
   vpc  = ibm_is_vpc.testacc_vpc.id
   zone = "us-south-1"
 }
-data "http" "gatewaylog" {
-  url = "https://daidemos.com/log?i=${local.instnum}&log=Created%20Gateway:%20${ibm_is_public_gateway.publicgateway1.name}"
+data "logship" "gatewaylog" {
+  log = "Created Gateway: ${ibm_is_public_gateway.publicgateway1.name}"
+  instance = local.instnum
 }
 
 resource "ibm_is_ssh_key" "testacc_sshkey" {
@@ -128,8 +127,8 @@ write_files:
     ${local.company}
    path: /root/company.txt
  - content: |
-    ${local.furl}
-   path: /root/companyurl.txt
+    ${var.url_override}
+   path: /root/companyurloverride.txt
  - content: |
     module.exports = {uiPort: process.env.PORT || 80, mqttReconnectTime: 15000, serialReconnectTime: 15000, debugMaxLength: 1000, httpAdminRoot: '/nadmin', adminAuth: {type: "credentials", users: [{username: "${local.company}", password: "$2b$08$Rx8EGoP8uZmLFzA.9S1CMebrt159MLtxRcCwfi8r27N2BbBDOPb1K", permissions: "*"}] }, logging: {console: {level: "info", } } }
    path: /root/.node-red/settings.js
@@ -150,13 +149,14 @@ runcmd:
  - bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
  - npm install --prefix /root/.node-red node-red-node-watson
  - npm install --prefix /root/.node-red node-red-contrib-startup-trigger
- - wget -O /root/.node-red/flows_${local.companysafe}-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/flows.json
+ - wget -O /root/.node-red/flows_${local.companysafe}-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/flows.json
  - curl -d "i=${local.instnum}&log=Starting Data Aggregator" -X POST https://daidemos.com/log
  - apt-get install -y -o Dpkg::Options::="--force-confnew" libgbm-dev libpangocairo-1.0-0 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libgconf2-4 libasound2 libatk1.0-0 libgtk-3-0
  - wget -O /root/companylogo.png https://daidemos.com/${local.company}.png
- - wget -O /root/da/package.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/package.json
- - wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/data_aggregator.js
- - wget -O /root/da/bg.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/da/bg.js
+ - wget -O /root/companyurl.txt https://daidemos.com/${local.company}.txt
+ - wget -O /root/da/package.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/package.json
+ - wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/data_aggregator.js
+ - wget -O /root/da/bg.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/bg.js
  - npm --prefix /root/da install /root/da
  - curl -d "i=${local.instnum}&log=Starting Services" -X POST https://daidemos.com/log
  - systemctl enable nodered.service
@@ -165,10 +165,11 @@ runcmd:
  - curl -d "i=${local.instnum}" -X POST https://daidemos.com/complete
 EOT
 }
-
-data "http" "instancelog" {
-  url = "https://daidemos.com/log?i=${local.instnum}&log=Created%20VSI:%20${ibm_is_instance.testacc_instance.name}"
+data "logship" "instancelog" {
+  log = "Created VSI: ${ibm_is_instance.testacc_instance.name}"
+  instance = local.instnum
 }
+
 resource "ibm_is_floating_ip" "testacc_floatingip" {
   name   = "${local.companysafe}-vsi-ip"
   target = ibm_is_instance.testacc_instance.primary_network_interface[0].id
@@ -195,9 +196,8 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_all_ob" {
     direction = "outbound"
     remote = "0.0.0.0/0"
  }
-
-data "http" "iplog" {
-  url = "https://daidemos.com/iplog?i=${local.instnum}&ip=${ibm_is_floating_ip.testacc_floatingip.address}"
+data "logship" "iplog" {
+  ip = ibm_is_floating_ip.testacc_floatingip.address
+  instance = local.instnum
 }
-
 
