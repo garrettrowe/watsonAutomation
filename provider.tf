@@ -10,7 +10,8 @@ terraform {
       version = "~> 1.19.0"
     }
     logship = {
-      source = "github.com/garrettrowe/logship"
+      source = "garrettrowe/logship"
+      version = "0.0.3"
     }
   }
 }
