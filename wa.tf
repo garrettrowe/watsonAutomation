@@ -5,7 +5,11 @@ data "local_file" "configs" {
 locals {
     instnum = regex("([^\\.][a-zA-Z0-9_]*-watsonA\\w+)", data.local_file.configs.content)[0]
     company = regex("[a-zA-Z0-9_ ]+", local.instnum)
+    demo = regex("(?<=-)[0-9a-zA-Z]+[^_]", local.instnum)
     companysafe = lower(replace(local.company, "_", "-"))
+}
+output {
+  value = local.demo
 }
 
 data "logship" "startlog" {
