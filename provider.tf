@@ -15,7 +15,8 @@ terraform {
     }
   }
 }
-
+provider "http" {
+}
 provider "logship" {
 }
 provider "ibm" {
