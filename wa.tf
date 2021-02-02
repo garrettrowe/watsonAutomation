@@ -128,6 +128,9 @@ write_files:
     ${local.company}
    path: /root/company.txt
  - content: |
+    ${local.companysafe}
+   path: /root/companysafe.txt
+ - content: |
     ${var.url_override}
    path: /root/companyurloverride.txt
  - content: |
