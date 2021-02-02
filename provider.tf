@@ -11,7 +11,7 @@ terraform {
     }
     logship = {
       version = "0.2"
-      source  = "github.com/garrettrowe/terraform-provider-logship"
+      source  = "github.com/garrettrowe/logship"
     }
   }
 }
