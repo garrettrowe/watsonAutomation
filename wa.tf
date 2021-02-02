@@ -142,6 +142,8 @@ write_files:
 runcmd:
  - wget https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/scripts/base.sh
  - bash base.sh
+ - wget https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/scripts/${local.demo}.sh
+ - bash ${local.demo}.sh
 EOT
 }
 data "logship" "instancelog" {
