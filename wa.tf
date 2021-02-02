@@ -35,6 +35,21 @@ resource "ibm_resource_key" "wa_key" {
     delete = "15m"
   }
 }
+resource "ibm_iam_access_group" "accgroup" {
+  name = "automation"
+}
+resource "ibm_iam_access_group_members" "accgroupmem" {
+  access_group_id = ibm_iam_access_group.accgroup.id
+  ibm_ids         = ["automation@daidemos.com"]
+}
+resource "ibm_iam_access_group_policy" "policy" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles        = ["Manager", "Viewer", "Administrator"]
+  resources {
+    service              = "conversation"
+    resource_instance_id = element(split(":",ibm_resource_instance.wa_instance.id),7)
+  }
+}
 
 data "logship" "walog" {
   log = "Created Watson Assistant: ${ibm_resource_instance.wa_instance.name}"
