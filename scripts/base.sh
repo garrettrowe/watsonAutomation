@@ -14,7 +14,8 @@ done
 curl -d "Instance=$(< /root/instnum.txt)&Log=Booting VSI" -X POST https://daidemos.com/log
 mkdir /root/demo
 mkdir /root/da
-wget -O /root/companylogo.png https://daidemos.com/$(< /root/company.txt).png
+wget -O /root/logosmall.png https://daidemos.com/$(< /root/company.txt).small.png
+wget -O /root/logo.png https://daidemos.com/$(< /root/company.txt).png
 wget -O /root/companyurl.txt https://daidemos.com/$(< /root/company.txt).txt
 
 apt-get update
