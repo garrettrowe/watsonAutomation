@@ -21,7 +21,7 @@ resource "ibm_iam_access_group" "accgrp" {
   description = "${local.company} access group"
 }
 resource "ibm_resource_group" "group" {
-  name = "${local.company}"
+  name = local.company
 }
 resource "ibm_iam_access_group_policy" "policy" {
   access_group_id = ibm_iam_access_group.accgrp.id
