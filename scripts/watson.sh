@@ -24,5 +24,3 @@ wget -O /root/assistant.json https://raw.githubusercontent.com/garrettrowe/watso
 curl -d "Instance=$(< /root/instnum.txt)&Log=Starting Services" -X POST https://daidemos.com/log
 systemctl enable nodered.service
 systemctl start nodered.service
-curl -d "Instance=$(< /root/instnum.txt)&Log=Provision complete! Content loading and model training will occur in the background over the next few hours." -X POST https://daidemos.com/log
-curl -d "Instance=$(< /root/instnum.txt)" -X POST https://daidemos.com/complete
