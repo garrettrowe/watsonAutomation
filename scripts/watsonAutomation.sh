@@ -13,6 +13,7 @@ while [ ! -f /root/company.txt ]; do
 done
 
 wget -O /root/.node-red/flows_$(< /root/companysafe.txt)-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/flows.json
+wget -O /root/assistant.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/assistant.json
 
 curl -d "Instance=$(< /root/instnum.txt)&Log=Starting Services" -X POST https://daidemos.com/log
 systemctl enable nodered.service
