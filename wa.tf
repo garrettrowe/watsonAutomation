@@ -25,7 +25,7 @@ resource "ibm_resource_group" "group" {
 }
 resource "ibm_iam_access_group_policy" "policy" {
   access_group_id = ibm_iam_access_group.accgrp.id
-  roles        = ["Operator", "Writer", "Manager", "Viewer", "Administrator"]
+  roles        = ["Operator", "Writer", "Reader", "Viewer", "Editor"]
 
   resources {
     resource_group_id = ibm_resource_group.group.id
