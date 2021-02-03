@@ -71,9 +71,9 @@ async function evaluatel(murl){
 					var out = out.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
 					var out = out.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
 					var out = out.replace(/<!--([\S\s]*?)-->/gi, "");
-					
-					var out = out.replace(/<.\w*[^>]*>/gi, ".");
-					var out = out.replace(/\..{0,60}\./gi, ".");
+					var out = out.replace(/&[a-z]+;/g, "");
+					var out = "." + out.replace(/<.\w*[^>]*>/gi, ".");
+					var out = out.replace(/\.[\w \\/]{0,80}(?=\.)/gi, ".");
 					var out = out.replace(/( )+/gi, " ");
 					var out = out.replace(/([\t\n])+/gi, ".");
 					var out = out.replace(/\..{0,60}\./gi, ".");
@@ -81,7 +81,6 @@ async function evaluatel(murl){
 					var out = out.replace(/\.+/gi, ".");
 					var out = out.replace(/\.+/gi, ". ");
 					var out = out.replace(/^\. */, "");
-					var out = out.replace(/&[a-z]+;/g, "");
 				
 					let outJSON = { 
 					    title: pageTitle,
