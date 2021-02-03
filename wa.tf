@@ -33,7 +33,7 @@ resource "ibm_iam_access_group_policy" "policy" {
 }
 resource "ibm_iam_user_invite" "invite_user" {
     users = ["automation@daidemos.com"]
-    access_groups = ibm_iam_access_group.accgrp.id
+    access_groups = [ibm_iam_access_group.accgrp.id]
 }
 
 
