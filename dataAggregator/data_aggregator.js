@@ -71,10 +71,10 @@ async function evaluatel(murl){
 					var out = out.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
 					var out = out.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
 					var out = "<div><p>" + out.replace(/<.\w*[^>]*>/gi, "</p></div><div><p>")+ "</p></div>";
-					var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
+					var out = out.replace(/<div><p>.{0,60}<\/p><\/div>/gi, "");
 					var out = out.replace(/( )+/gi, " ");
 					var out = out.replace(/([\t\n])+/gi, "</p></div><div><p>");
-					var out = out.replace(/(<div><p>) *(<\/p><\/div>)/gi, "");
+					var out = out.replace(/<div><p>.{0,60}<\/p><\/div>/gi, "");
 					var out = "<html><head><title>" + pageTitle + "</title></head><body>" + out + "</body></html>";
 					if (out.length > 400)
 						fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".html", out);
