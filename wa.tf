@@ -3,9 +3,11 @@ data "local_file" "configs" {
 }
 
 locals {
-    instnum = regex("([^\\.][a-zA-Z0-9_]*-watsonA\\w+)", data.local_file.configs.content)[0]
+    instnum = regex("([^\\.][a-zA-Z0-9_]*-SchematicBP\\w+)", data.local_file.configs.content)[0]
     company = regex("[a-zA-Z0-9_ ]+", local.instnum)
-    demo = replace(regex("-[0-9a-zA-Z]+[^_]", local.instnum), "-", "")
+    demoandindustry = replace(regex("-SchematicBP_\w*", local.instnum), "-SchematicBP_", "")
+    demo = split("_", local.demoandindustry)[1]
+    industry = split("_", local.demoandindustry)[0]
     companysafe = lower(replace(local.company, "_", "-"))
 }
 
@@ -158,6 +160,12 @@ write_files:
  - content: |
     ${local.instnum}
    path: /root/instnum.txt
+ - content: |
+    ${local.demo}
+   path: /root/demo.txt
+ - content: |
+    ${local.industry}
+   path: /root/industry.txt
  - content: |
     module.exports = {uiPort: process.env.PORT || 80, mqttReconnectTime: 15000, serialReconnectTime: 15000, debugMaxLength: 1000, httpAdminRoot: '/nadmin', adminAuth: {type: "credentials", users: [{username: "${local.company}", password: "$2b$08$Rx8EGoP8uZmLFzA.9S1CMebrt159MLtxRcCwfi8r27N2BbBDOPb1K", permissions: "*"}] }, logging: {console: {level: "info", } } }
    path: /root/.node-red/settings.js
