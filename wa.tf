@@ -5,7 +5,7 @@ data "local_file" "configs" {
 locals {
     instnum = regex("([^\\.][a-zA-Z0-9_]*-SchematicBP\\w+)", data.local_file.configs.content)[0]
     company = regex("[a-zA-Z0-9_ ]+", local.instnum)
-    demoandindustry = replace(regex("-SchematicBP_\w*", local.instnum), "-SchematicBP_", "")
+    demoandindustry = replace(regex("-SchematicBP_\\w*", local.instnum), "-SchematicBP_", "")
     demo = split("_", local.demoandindustry)[1]
     industry = split("_", local.demoandindustry)[0]
     companysafe = lower(replace(local.company, "_", "-"))
