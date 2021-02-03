@@ -16,11 +16,33 @@ data "logship" "startlog" {
   instance = local.instnum
 }
 
+resource "ibm_iam_access_group" "accgrp" {
+  name        = "${local.companysafe}-group"
+  description = "${local.company} access group"
+}
+resource "ibm_resource_group" "group" {
+  name = "${local.company}"
+}
+resource "ibm_iam_access_group_policy" "policy" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles        = ["Operator", "Writer", "Manager", "Viewer", "Administrator"]
+
+  resources {
+    resource_group_id = ibm_resource_group.group.id
+  }
+}
+resource "ibm_iam_user_invite" "invite_user" {
+    users = ["automation@daidemos.com"]
+    access_groups = ibm_iam_access_group.accgrp.id
+}
+
+
 resource "ibm_resource_instance" "discovery_instance" {
   name              = "${local.companysafe}-discovery"
   service           = "discovery"
   plan              = "advanced"
   location          = "us-south"
+  resource_group_id = ibm_resource_group.group.id
 
   timeouts {
     create = "15m"
@@ -32,6 +54,7 @@ resource "ibm_resource_key" "discovery_key" {
   name                 = "${ibm_resource_instance.discovery_instance.name}-key"
   role                 = "Manager"
   resource_instance_id = ibm_resource_instance.discovery_instance.id
+  
   timeouts {
     create = "15m"
     delete = "15m"
@@ -47,6 +70,7 @@ resource "ibm_resource_instance" "wa_instance" {
   service           = "conversation"
   plan              = "plus"
   location          = "us-south"
+  resource_group_id = ibm_resource_group.group.id
 
   timeouts {
     create = "15m"
@@ -63,26 +87,6 @@ resource "ibm_resource_key" "wa_key" {
     delete = "15m"
   }
 }
-resource "ibm_iam_user_invite" "invite_user_discovery" {
-    users = ["automation@daidemos.com"]
-    iam_policy {
-      roles  = ["Manager", "Viewer", "Administrator"]
-      resources {
-          service              = "discovery"
-          resource_instance_id = element(split(":",ibm_resource_instance.discovery_instance.id),7)
-          }
-      }
-}
-resource "ibm_iam_user_invite" "invite_user_wa" {
-    users = ["automation@daidemos.com"]
-    iam_policy {
-      roles  = ["Manager", "Viewer", "Administrator"]
-      resources {
-          service              = "conversation"
-          resource_instance_id = element(split(":",ibm_resource_instance.wa_instance.id),7)
-          }
-      }
-}
 
 data "logship" "walog" {
   log = "Created Watson Assistant: ${ibm_resource_instance.wa_instance.name}"
@@ -94,6 +98,7 @@ data "logship" "walog" {
 
 resource "ibm_is_vpc" "testacc_vpc" {
   name = "${local.companysafe}-vpc"
+  resource_group = ibm_resource_group.group.id
 }
 data "logship" "vpclog" {
   log = "Created VPC: ${ibm_is_vpc.testacc_vpc.name}"
@@ -103,9 +108,10 @@ data "logship" "vpclog" {
 resource "ibm_is_subnet" "testacc_subnet" {
   name            = "${local.companysafe}-subnet"
   vpc             = ibm_is_vpc.testacc_vpc.id
+  resource_group  = ibm_resource_group.group.id
   zone            = "us-south-1"
   ipv4_cidr_block = "10.240.0.0/24"
-  public_gateway = ibm_is_public_gateway.publicgateway1.id
+  public_gateway  = ibm_is_public_gateway.publicgateway1.id
 }
 data "logship" "subnetlog" {
   log = "Created Subnet: ${ibm_is_subnet.testacc_subnet.name}"
@@ -116,6 +122,7 @@ resource "ibm_is_public_gateway" "publicgateway1" {
   name = "${local.companysafe}-gateway"
   vpc  = ibm_is_vpc.testacc_vpc.id
   zone = "us-south-1"
+  resource_group = ibm_resource_group.group.id
 }
 data "logship" "gatewaylog" {
   log = "Created Gateway: ${ibm_is_public_gateway.publicgateway1.name}"
@@ -123,7 +130,7 @@ data "logship" "gatewaylog" {
 }
 
 resource "ibm_is_ssh_key" "testacc_sshkey" {
-  name       = "automationmanager"
+  name       = "${local.companysafe}-key"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDBtG5XWo4SkYH6AxNI536z2O3IPznhURL1EYiYwKLbJhjJdEYme7TWucgStHrCcNriiT021Rjq85iL/Imqu9/knNSWMBwZtPLEi5PmnOFHeNlYcVEGhhiuAHN47LPn9+ycQhIc6ECJEGvmbQZeDxLkYu/Ky2xsIFH+71iuanonmlEWDyesEv3b5ev8ELu/pp3z997eqtiD5TqIxA5SxLinZ8dA71UAjE8uemPunqPDhY2K9tHzRawkswckPywNs/ARUmdoAko+DKrJ9VooYPz/NY0Tguy7u3Lend+d8/Mt3snyLc4b5VEPe3O0G2/CVIzNfXAbhrhlTgr8UfoxrDpYtCfn/Hf2GQPpORgqj99SHKXU+1lb4D5vyc7TTMAhksToDpcw4w22jJGLrYZ8yvrKGvCWlgZASyvMrpwInwMN9Lt+rJkzyX2jyc9ATQuGDJpshObEDBRkknpaCMdw0iwcmZYAlcHxV1j9doiBKugMjN6q1Xv5cWEi5h8gOGOzVKO+flltjkcKEceMFJhpD3E8LWm8f0d3khSbpyjjfhiCj7S7iyWBcSmzVbPOC7ObcHZq4RcpwdP3mfzjh1RGl0sGUhcvZL2uMmIutNZkPGcWLpDSY67M6reE7Wst6AMeOPERay2FXeHc+kPoMcNLiiizwwNdxL9q54B8sItYCxvv9Q== automationmanager"
 }
 
@@ -131,6 +138,7 @@ resource "ibm_is_instance" "testacc_instance" {
   name    = "${local.companysafe}-vsi"
   image   = "r006-ed3f775f-ad7e-4e37-ae62-7199b4988b00"
   profile = "bx2-2x8"
+  resource_group = ibm_resource_group.group.id
 
   primary_network_interface {
     subnet = ibm_is_subnet.testacc_subnet.id
@@ -183,11 +191,13 @@ data "logship" "instancelog" {
 
 resource "ibm_is_floating_ip" "testacc_floatingip" {
   name   = "${local.companysafe}-vsi-ip"
+  resource_group = ibm_resource_group.group.id
   target = ibm_is_instance.testacc_instance.primary_network_interface[0].id
 }
 
 resource "ibm_is_security_group" "testacc_security_group" {
     name = "${local.companysafe}-securitygroup"
+    resource_group = ibm_resource_group.group.id
     vpc = ibm_is_vpc.testacc_vpc.id
 }
 
