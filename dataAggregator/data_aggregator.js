@@ -81,6 +81,7 @@ async function evaluatel(murl){
 					var out = out.replace(/\.+/gi, ".");
 					var out = out.replace(/\.+/gi, ". ");
 					var out = out.replace(/^\. */, "");
+					var out = out.replace(/&[a-z]+;/g, "");
 				
 					let outJSON = { 
 					    title: pageTitle,
