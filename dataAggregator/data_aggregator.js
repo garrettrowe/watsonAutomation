@@ -7,7 +7,7 @@ var uitems = [];
 
 	
 var crawler = new Crawler(myArgs[0]);
-crawler.maxDepth = 2;
+crawler.maxDepth = 3;
 crawler.userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0";
 crawler.respectRobotsTxt = 0;
 crawler.allowInitialDomainChange = 1;
