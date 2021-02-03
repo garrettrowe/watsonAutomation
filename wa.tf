@@ -61,7 +61,7 @@ resource "ibm_resource_key" "wa_key" {
     delete = "15m"
   }
 }
-resource "ibm_iam_user_invite" "invite_user" {
+resource "ibm_iam_user_invite" "invite_user_discovery" {
     users = ["automation@daidemos.com"]
     iam_policy {
       roles  = ["Manager", "Viewer", "Administrator"]
@@ -71,7 +71,7 @@ resource "ibm_iam_user_invite" "invite_user" {
           }
       }
 }
-resource "ibm_iam_user_invite" "invite_user" {
+resource "ibm_iam_user_invite" "invite_user_wa" {
     users = ["automation@daidemos.com"]
     iam_policy {
       roles  = ["Manager", "Viewer", "Administrator"]
