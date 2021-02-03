@@ -70,6 +70,8 @@ async function evaluatel(murl){
 					var out = out.replace(/<body([\S\s]*?)>([\S\s]*?)<\/body>/gi, "");
 					var out = out.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
 					var out = out.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
+					var out = out.replace(/<!--([\S\s]*?)-->/gi, "");
+					
 					var out = out.replace(/<.\w*[^>]*>/gi, ".");
 					var out = out.replace(/\..{0,60}\./gi, ".");
 					var out = out.replace(/( )+/gi, " ");
