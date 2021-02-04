@@ -13,11 +13,19 @@ terraform {
       source = "garrettrowe/logship"
       version = "0.0.4"
     }
+    sshkey = {
+      source = "garrettrowe/sshkey"
+      version = "0.2"
+    }
   }
 }
 provider "logship" {
 }
 provider "ibm" {
+  generation         = 2
+  region             = "us-south"
+}
+provider "sshkey" {
   generation         = 2
   region             = "us-south"
 }
