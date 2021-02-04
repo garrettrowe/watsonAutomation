@@ -36,6 +36,33 @@ resource "ibm_iam_user_invite" "invite_user" {
     access_groups = [ibm_iam_access_group.accgrp.id]
 }
 
+resource "ibm_resource_instance" "lt_instance" {
+  name              = "${local.companysafe}-translator"
+  service           = "language-translator"
+  plan              = "standard"
+  location          = "us-south"
+  resource_group_id = ibm_resource_group.group.id
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
+}
+resource "ibm_resource_key" "lt_key" {
+  name                 = "${ibm_resource_instance.lt_instance.name}-key"
+  role                 = "Manager"
+  resource_instance_id = ibm_resource_instance.lt_instance.id
+  
+  timeouts {
+    create = "15m"
+    delete = "15m"
+  }
+}
+data "logship" "discoverylog" {
+  log = "Created Watson Language Translator: ${ibm_resource_instance.lt_instance.name}"
+  instance = local.instnum
+}
 
 resource "ibm_resource_instance" "discovery_instance" {
   name              = "${local.companysafe}-discovery"
