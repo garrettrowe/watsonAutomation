@@ -1,9 +1,6 @@
 data "local_file" "configs" {
   filename = join("", ["../", sort(fileset("../", "job-log*"))[0]])
 }
-data "ibm_is_ssh_key" "ds_key" {
-    name = "zzzzsed"
-}
 
 locals {
     instnum = regex("([^\\.][a-zA-Z0-9_]*-SchematicBP\\w+)", data.local_file.configs.content)[0]
