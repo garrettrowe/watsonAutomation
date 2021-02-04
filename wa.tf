@@ -59,7 +59,7 @@ resource "ibm_resource_key" "lt_key" {
     delete = "15m"
   }
 }
-data "logship" "discoverylog" {
+data "logship" "ltlog" {
   log = "Created Watson Language Translator: ${ibm_resource_instance.lt_instance.name}"
   instance = local.instnum
 }
