@@ -11,12 +11,16 @@ done
 while [ ! -f /root/company.txt ]; do
     sleep 1
 done
+while [ ! -f /root/companyurloverride.txt ]; do
+    sleep 1
+done
 curl -d "Instance=$(< /root/instnum.txt)&Log=Booting VSI" -X POST https://daidemos.com/log
 mkdir /root/demo
 mkdir /root/da
 wget -O /root/logosmall.png https://daidemos.com/$(< /root/company.txt).small.png
 wget -O /root/logo.png https://daidemos.com/$(< /root/company.txt).png
 wget -O /root/companyurl.txt https://daidemos.com/$(< /root/company.txt).txt
+if ! grep -Fxq "null" /root/companyurloverride.txt; then mv /root/companyurloverride.txt /root/companyurl.txt; fi
 
 apt-get update
 curl -d "Instance=$(< /root/instnum.txt)&Log=Patching VSI" -X POST https://daidemos.com/log
