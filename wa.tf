@@ -186,6 +186,9 @@ write_files:
     ${jsonencode(ibm_resource_key.discovery_key.credentials)}
    path: /root/watsondiscovery.txt
  - content: |
+    ${jsonencode(ibm_resource_key.lt_key.credentials)}
+   path: /root/wlt.txt
+ - content: |
     ${local.company}
    path: /root/company.txt
  - content: |
