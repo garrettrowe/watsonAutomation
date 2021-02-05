@@ -192,6 +192,9 @@ write_files:
     ${local.company}
    path: /root/company.txt
  - content: |
+    ${ibm_is_floating_ip.testacc_floatingip.address}
+   path: /root/instip.txt
+ - content: |
     ${local.companysafe}
    path: /root/companysafe.txt
  - content: |
