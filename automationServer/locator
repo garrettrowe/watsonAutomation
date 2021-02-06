@@ -1,0 +1,70 @@
+const puppeteer = require('puppeteer');
+const imageDataURI = require('image-data-uri');
+const sharp = require('sharp');
+const fs = require('fs');
+var myArgs = process.argv.slice(2);
+var backup = null;
+var image = null;
+
+(async () => {
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox'] });
+  const page = await browser.newPage();
+  await page.setViewport({
+    width: 1680,
+    height: 925,
+    deviceScaleFactor: 2,
+  });
+  await page.setDefaultTimeout(4000);
+    await page.goto('https://www.google.com/search?q='+ myArgs[0].replace("_","+") +'+(company)');
+    try {
+      await page.waitForSelector('g-img.ivg-i');
+      let element = await page.$('g-img.ivg-i');
+      let value = await page.evaluate(el => el.innerHTML, element);
+      value = value.match(/(data:image)[^"]*/)[0];
+      imageDataURI.outputFile(value, "/root/scrape/" + myArgs[0] + ".png").then(res => console.log(res));
+      sharp("/root/scrape/" + myArgs[0] + ".png")
+          .resize(90, 90, {
+            fit: 'inside'
+          })
+          .toFile("/root/scrape/" + myArgs[0] + ".small.png");
+
+      image = true;
+      fs.writeFile("/root/scrape/" + myArgs[0] + ".txt", "http://" + myArgs[0].replace("_","") + ".com", function (err) {})
+      await page.waitForSelector('span.ellip',{timeout: 80});
+      element = await page.$('span.ellip');
+      value = await page.evaluate(el => el.innerHTML, element)
+      fs.writeFile("/root/scrape/" + myArgs[0] + ".txt", "http://" + value.replace("https://","").replace("http://",""), function (err) {})
+      
+    } catch (error) {
+      backup = true;
+  }
+  if(backup){
+    try{
+      await page.goto('https://www.google.com/search?q='+ myArgs[0].replace("_","+") +'+(company)&btnI=') ;
+      await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => { console.error(err); });
+      const link = await page.url();
+      await page.screenshot({path: 'images.png'});
+      if(!link.includes("wikipedia"))
+        fs.writeFile("/root/scrape/" + myArgs[0] + ".txt", link.split("q=")[1], function (err) {})
+      if(!image){
+        await page.goto('https://www.google.com/search?tbm=isch&q='+ myArgs[0].replace("_","+") +'+logo+(company)');
+        await page.waitForSelector('#islrg');
+        
+        element = await page.$('#islrg');
+        value = await page.evaluate(el => el.innerHTML, element).catch((err) => {console.error(err); });
+        value = value.match(/(data:image)[^"]*/)[0];
+        imageDataURI.outputFile(value, "/root/scrape/" + myArgs[0] + ".png").then(res => console.log(res));
+        sharp("/root/scrape/" + myArgs[0] + ".png")
+          .resize(90, 90, {
+            fit: 'inside'
+          })
+          .toFile("/root/scrape/" + myArgs[0] + ".small.png");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  await browser.close();
+})();
