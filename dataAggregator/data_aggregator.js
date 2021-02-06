@@ -4,6 +4,7 @@ const fse = require('fs-extra');
 var myArgs = process.argv.slice(2);
 var iterate = 0;
 var uitems = [];
+var outitems = [];
 
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 	
@@ -24,6 +25,15 @@ crawler.on("complete", function(queueItem){
 });
 crawler.start();
 
+function hashCode(str) {
+  var hash = 0, i, chr;
+  for (i = 0; i < str.length; i++) {
+    chr   = str.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+}
 
 async function evaluatel(murl){
 	var browser =  await puppeteer.launch({
@@ -88,8 +98,15 @@ async function evaluatel(murl){
 					    text: out, 
 					    source_link: lurl
 					};
-					if (out.length > 150)
-						fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".json", JSON.stringify(outJSON));
+					if (out.length > 150){
+						let ojs = JSON.stringify(outJSON);
+						let ojsH = hashCode(ojs);
+						if (!outitems.includes(ojsH)){
+							outitems.push(ojsH)
+							fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".json", ojs);
+						}
+					}
+					
 				}
 				next = 1;
 			}catch (err) {
