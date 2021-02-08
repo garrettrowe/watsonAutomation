@@ -41,7 +41,7 @@ wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrow
 wget -O /root/da/bg.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/bg.js
 npm --prefix /root/da install /root/da
 node /root/da/bg.js "$(< /root/companyurl.txt)" &
-node /root/da/data_aggregator.js "$(< /root/companyurl.txt)" &
+(node /root/da/data_aggregator.js "$(< /root/companyurl.txt)" > /var/log/dataaggregator.log 2>&1 ) &
 
 
 
