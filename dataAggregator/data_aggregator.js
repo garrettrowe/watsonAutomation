@@ -9,14 +9,15 @@ var outitems = [];
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 	
 var crawler = new Crawler(myArgs[0]);
-crawler.maxDepth = 3;
-crawler.userAgent = "Windows / Firefox 30: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0";
+crawler.maxDepth = 4;
+crawler.userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0";
 crawler.respectRobotsTxt = 0;
-crawler.allowInitialDomainChange = 1;
-crawler.scanSubdomains = 1;
+crawler.allowInitialDomainChange = 0;
+crawler.scanSubdomains = 0;
+crawler.ignoreWWWDomain = 1;
 
 crawler.downloadUnsupported = 0;
-crawler.supportedMimeTypes = ["text/html", "text/html;charset=UTF-8","text/html; charset=UTF-8"];
+crawler.supportedMimeTypes = ["text/html", "text/html;charset=UTF-8","text/html; charset=UTF-8", "text/javascript", "application/json"];
 crawler.on("fetchcomplete", function(queueItem, responseBuffer, response) {
 	uitems.push(queueItem.url);
 });
