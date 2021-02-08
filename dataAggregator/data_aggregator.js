@@ -46,7 +46,7 @@ async function evaluatel(murl){
 	  height: 925,
 	  deviceScaleFactor: 2,
 	});
-	await page.setDefaultNavigationTimeout(0); 
+	await page.setDefaultNavigationTimeout(20000); 
 	await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0');
 
 	for await (let i of uitems) {
