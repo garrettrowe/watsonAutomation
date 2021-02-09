@@ -48,10 +48,14 @@ function getOTP() {
     });
 }
 
+async function setGettingPage(gp) {
+    gettingPage = gp;
+}
+
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 	
 var crawler = new Crawler(myArgs[0]);
-crawler.maxDepth = 3;
+crawler.maxDepth = 1;
 crawler.userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0";
 crawler.respectRobotsTxt = 0;
 crawler.allowInitialDomainChange = 1;
@@ -61,32 +65,60 @@ crawler.downloadUnsupported = 0;
 crawler.supportedMimeTypes = [];
 crawler.interval = 1000; 
 crawler.maxConcurrency = 1;
+crawler.listenerTTL = 120000;
+var gettingPage = false
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 crawler.on("fetchstart", function(queueItem, responseBuffer, response) {
-        cont = this.wait();
-        console.log("doing fetch: " + queueItem.url);
-        getPandL(queueItem.url).then(outp => {
-                outp.forEach(function (item, index) {
-                  crawler.queueURL(crawler.processURL(item));
-                });
-		cont();
-        }).catch((err) => {console.error(err); });
+	cont = this.wait();
+	if(gettingPage){
+		queueItem.status = "queued";
+		return;
+	}
+    console.log("doing fetch: " + queueItem.url);
+	 getPandL(queueItem.url, cont).then(outp => {
+	 		if(outp){
+	            outp.forEach(function (item, index) {
+	              crawler.queueURL(crawler.processURL(item));
+	            });
+	            console.log("added: " + outp.length + ", queue length: "+ crawler.queue.length);
+	           }
+	    }).catch((err) => {console.error(err); });   
 });
 
 crawler.on("complete", function () {
-        console.log("Complete!");
-        otp = true;
+	setInterval(function(){ 
+		crawler.queue.countItems({
+		    status: "queued"
+		}, function(error, items) {
+		    if(items && !crawler.running)
+		    	crawler.start();
+		});
+	}, 5000);
+    setTimeout(function(){ 
+    	crawler.queue.countItems({
+		    status: "queued"
+		}, function(error, items) {
+			console.log("Final Check: " + items);
+		    if(items && !crawler.running)
+		    	crawler.start();
+		    else
+		    	otp = true;
+		});
+    }, 240000);   
 });
 
 
-async function getPandL(url){
+async function getPandL(url, cont, gettingPage){
 	try {
+			await setGettingPage(true).catch((err) => {});
 			console.log("processing: " + url);
-    		let page = await getPage(browser).catch((err) => {console.error(err); });
+    		let page = await getPage(browser).catch((err) => {console.log(err); });
 			await page.goto(url, {waitUntil: 'networkidle0'}).catch((err) => {});
-			var t = await page.evaluate(() => {
-				return;
-			}).catch((err) => {});
+	//	await page.screenshot({path: 'purl.png'});
+			
 			let pageTitle = await page.title().catch((err) => {});
 			pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
 			let pname = url.split("/");
@@ -102,7 +134,7 @@ async function getPandL(url){
 				    return element.parentElement.innerHTML;
 				})
 				return links;
-			    }, sel);
+			    }, sel).catch((err) => {});
 			for (let j of links) {
 				iterate +=1;
 				var out = j.replace(/<html([\S\s]*?)>([\S\s]*?)<\/html>/gi, "");
@@ -137,20 +169,24 @@ async function getPandL(url){
 				}
 			}
 
-			var sel = "a[href]";
-			var links = await page.evaluate((sel) => {
+			 sel = "a[href]";
+			 links = await page.evaluate((sel) => {
 				let elements = Array.from(document.querySelectorAll(sel));
 				let links = elements.map(element => {
 				    return element.getAttribute('href');
 				})
 				return links;
-			    }, sel);
-			if(page)
-				await page.close().catch((err) => {console.error(err); });
+			    }, sel).catch((err) => {});
 			console.log("got: " + links.length + " at " + url);
+
+			if(page)
+				await page.close().catch((err) => {console.log(err); });
 			return links;
 		}catch (err) {
 		    console.log("error:" +err);
+		}finally{
+			await setGettingPage(false).catch((err) => {});
+			cont();
 		}
 
 }
