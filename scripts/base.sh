@@ -34,6 +34,8 @@ wget https://raw.githubusercontent.com/node-red/linux-installers/master/deb/upda
 bash update-nodejs-and-nodered --confirm-root --confirm-install --skip-pi
 npm install --prefix /root/.node-red node-red-node-watson
 npm install --prefix /root/.node-red node-red-contrib-startup-trigger
+openssl req -nodes -newkey rsa:2048 -keyout /root/.node-red/node-key.pem -out /root/.node-red/node-csr.pem -subj "/C=US/ST=Dallas/L=Dallas/O=Global Security/OU=IT Department/CN=$(curl -s ipinfo.io/ip)"
+openssl x509 -req -in /root/.node-red/node-csr.pem -signkey /root/.node-red/node-key.pem -out /root/.node-red/node-cert.pem
 
 curl -d "Instance=$(< /root/instnum.txt)&Log=Starting Data Aggregator" -X POST https://daidemos.com/log
 wget -O /root/da/package.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/package.json
