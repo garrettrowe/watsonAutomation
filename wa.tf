@@ -123,7 +123,7 @@ data "logship" "sttlog" {
 resource "ibm_resource_instance" "tts_instance" {
   name              = "${local.companysafe}-text-to-speech"
   service           = "text-to-speech"
-  plan              = "plus"
+  plan              = "premium"
   location          = "us-south"
   resource_group_id = ibm_resource_group.group.id
 
