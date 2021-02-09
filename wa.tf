@@ -144,7 +144,7 @@ resource "ibm_resource_key" "tts_key" {
   }
 }
 data "logship" "ttslog" {
-  log = "Created Speech-to-text: ${ibm_resource_instance.tts_instance.name}"
+  log = "Created Text-to-speech: ${ibm_resource_instance.tts_instance.name}"
   instance = local.instnum
 }
 
