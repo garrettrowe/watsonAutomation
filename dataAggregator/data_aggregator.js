@@ -55,21 +55,22 @@ crawler.maxDepth = 3;
 crawler.userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0";
 crawler.respectRobotsTxt = 0;
 crawler.allowInitialDomainChange = 1;
-crawler.scanSubdomains = 0;
+crawler.scanSubdomains = 1;
 crawler.ignoreWWWDomain = 0;
 crawler.downloadUnsupported = 0;
 crawler.supportedMimeTypes = [];
 crawler.interval = 1000; 
 crawler.maxConcurrency = 1;
 
-crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
-	cont = this.wait();
-	console.log("doing fetch: " + queueItem.url);
-	const outp = await getPandL(queueItem.url).catch((err) => {});
-	outp.forEach(function (item, index) {
-	  crawler.queueURL(crawler.processURL(item));
-	});
-	cont();
+crawler.on("fetchstart", function(queueItem, responseBuffer, response) {
+        cont = this.wait();
+        console.log("doing fetch: " + queueItem.url);
+        getPandL(queueItem.url).then(outp => {
+                outp.forEach(function (item, index) {
+                  crawler.queueURL(crawler.processURL(item));
+                });
+		cont();
+        }).catch((err) => {console.error(err); });
 });
 
 crawler.on("complete", function () {
