@@ -6043,7 +6043,7 @@
   },
   "webhooks": [
     {
-      "url": "http://948376593648263452/translate",
+      "url": "https://948376593648263452/translate",
       "name": "main_webhook",
       "headers": []
     }
