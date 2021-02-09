@@ -92,6 +92,63 @@ data "logship" "discoverylog" {
   instance = local.instnum
 }
 
+resource "ibm_resource_instance" "stt_instance" {
+  name              = "${local.companysafe}-speech-to-text"
+  service           = "speech-to-text"
+  plan              = "plus"
+  location          = "us-south"
+  resource_group_id = ibm_resource_group.group.id
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
+}
+resource "ibm_resource_key" "stt_key" {
+  name                 = "${ibm_resource_instance.stt_instance.name}-key"
+  role                 = "Manager"
+  resource_instance_id = ibm_resource_instance.stt_instance.id
+  
+  timeouts {
+    create = "15m"
+    delete = "15m"
+  }
+}
+data "logship" "sttlog" {
+  log = "Created Speech-to-text: ${ibm_resource_instance.stt_instance.name}"
+  instance = local.instnum
+}
+
+resource "ibm_resource_instance" "tts_instance" {
+  name              = "${local.companysafe}-text-to-speech"
+  service           = "text-to-speech"
+  plan              = "plus"
+  location          = "us-south"
+  resource_group_id = ibm_resource_group.group.id
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
+}
+resource "ibm_resource_key" "tts_key" {
+  name                 = "${ibm_resource_instance.tts_instance.name}-key"
+  role                 = "Manager"
+  resource_instance_id = ibm_resource_instance.tts_instance.id
+  
+  timeouts {
+    create = "15m"
+    delete = "15m"
+  }
+}
+data "logship" "ttslog" {
+  log = "Created Speech-to-text: ${ibm_resource_instance.tts_instance.name}"
+  instance = local.instnum
+}
+
+
 resource "ibm_resource_instance" "wa_instance" {
   name              = "${local.companysafe}-assistant"
   service           = "conversation"
@@ -188,6 +245,12 @@ write_files:
  - content: |
     ${jsonencode(ibm_resource_key.lt_key.credentials)}
    path: /root/wlt.txt
+ - content: |
+    ${jsonencode(ibm_resource_key.stt_key.credentials)}
+   path: /root/wstt.txt
+ - content: |
+    ${jsonencode(ibm_resource_key.tts_key.credentials)}
+   path: /root/wtts.txt
  - content: |
     ${local.company}
    path: /root/company.txt
