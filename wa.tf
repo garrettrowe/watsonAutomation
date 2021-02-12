@@ -293,13 +293,7 @@ resource "ibm_is_floating_ip" "testacc_floatingip" {
   resource_group = ibm_resource_group.group.id
   target = ibm_is_instance.testacc_instance.primary_network_interface[0].id
   tags = [local.instnum]
-  provisioner "local-exec" {
-    when = destroy
-    command    = "curl -d 'i=${self.tags}' -X POST https://daidemos.com/idestroy"
-  }
-  provisioner "local-exec" {
-    command    = "curl -d 'i=${self.tags}&p=${self.address}' -X POST https://daidemos.com/icreate"
-  }
+  
 }
 
 resource "ibm_is_security_group" "testacc_security_group" {
