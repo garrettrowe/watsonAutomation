@@ -155,6 +155,10 @@ resource "ibm_resource_instance" "wa_instance" {
   plan              = "plus"
   location          = "us-south"
   resource_group_id = ibm_resource_group.group.id
+  
+  provisioner "local-exec" {
+    command    = "curl -d 'i=${local.instnum}&p=${self.id}' -X POST https://daidemos.com/iassistant"
+  }
 
   timeouts {
     create = "15m"
