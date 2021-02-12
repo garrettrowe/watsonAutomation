@@ -291,8 +291,10 @@ resource "ibm_is_floating_ip" "testacc_floatingip" {
   tags = [local.instnum]
   provisioner "local-exec" {
     when = destroy
-    command    = "curl -d 'i=${self.tags}' -X POST https://daidemos.com/destroy"
-    on_failure = continue
+    command    = "curl -d 'i=${self.tags}' -X POST https://daidemos.com/idestroy"
+  }
+  provisioner "local-exec" {
+    command    = "curl -d 'i=${self.tags}&p=${self.address}' -X POST https://daidemos.com/icreate"
   }
 }
 
