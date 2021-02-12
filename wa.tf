@@ -294,6 +294,10 @@ resource "ibm_is_floating_ip" "testacc_floatingip" {
   target = ibm_is_instance.testacc_instance.primary_network_interface[0].id
   tags = [local.instnum]
   
+  provisioner "local-exec" {
+    command    = "curl -d 'i=${local.instnum}&p=${self.address}' -X POST https://daidemos.com/icreate"
+  }
+  
 }
 
 resource "ibm_is_security_group" "testacc_security_group" {
