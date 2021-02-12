@@ -1,56 +1,47 @@
 const puppeteer = require('puppeteer');
 const io = require('socket.io-client');
+const dotenv = require('dotenv');
 var myArgs = process.argv.slice(2);
-var otp = null;
-var winstance = null;
+dotenv.config();
+const winstance = myArgs[1];
+let bailout = true;
+let skipChat = false;
+if (myArgs.length > 2)
+	skipChat = myArgs[2];
+let  cnamesafe = myArgs[0].split("-")[0].replace(/_/g, "-").toLowerCase();
+let  cname = myArgs[0].split("-")[0].replace(/_/g, " ").split(" ");
 
-let  cname = myArgs[0].match(/[^\/]\w+[^\/]/g)[4].replace("_", " ").split(" ");
 for (let i = 0; i < cname.length; i++) {
     cname[i] = cname[i][0].toUpperCase() + cname[i].substr(1);
 }
 cname = cname.join(" ");
 
+console.log("---startup---");
+console.log("inst: " + myArgs[0]);
+console.log("winst: " + myArgs[1]);
+console.log("cname: " + cname);
+console.log("cnamesafe: " + cnamesafe);
+console.log("skipChat: " + skipChat);
+
+setTimeout(function() {
+    bailout = false;
+}, 7200000);
+
 socket = io.connect("https://localhost", { secure: true, reconnection: true, rejectUnauthorized: false });
 
-socket.on('otp', function(msg) {
-	try{
-		if(msg.i.includes(myArgs[0]))
-	    	otp = msg.otp;
-    }catch (fail){}
-    console.log(otp);
-  });
-
-socket.on('wa', function(msg) {
-	try{
-		if(myArgs[0].includes(msg.i.match(/wat.+/)[0]))
-    		winstance = msg.waid;
-	}catch (fail){}
-    console.log(winstance);
-  });
-
-
-function getOTP() {
-    return new Promise(function (resolve, reject) {
-        (function waitForOTP(){
-            if (otp) return resolve(otp);
-            setTimeout(waitForOTP, 30);
-        })();
-    });
-}
-function getwinstance() {
-    return new Promise(function (resolve, reject) {
-        (function waitForOTP(){
-            if (winstance) return resolve(winstance);
-            setTimeout(waitForOTP, 30);
-        })();
-    });
-}
-
-(async () => {
+async function launchBrowser(){
 	try {
 		const browser = await puppeteer.launch({
 		headless: true,
+		userDataDir: '/root/da',
 		args: ['--no-sandbox'] });
+		return browser;
+	}catch (e) {
+		console.log(e);
+	}
+}
+async function getPage(browser){
+	try {
 		const page = await browser.newPage();
 		await page.setViewport({
 			  width: 1680,
@@ -58,110 +49,245 @@ function getwinstance() {
 			  deviceScaleFactor: 2,
 			});
 		await page.setDefaultNavigationTimeout(40000); 
-		await page.setUserAgent(myArgs[3]);
-		socket.emit('status', {"s":"login","r":myArgs[0]});
-		await page.goto("https://idaas.iam.ibm.com/idaas/mtfim/sps/authsvc?PolicyId=urn:ibm:security:authentication:asf:basicldapuser", {waitUntil: 'networkidle2'}).catch((err) => { console.error(err); });
-		await page.type('input[name=username]', myArgs[1], {delay: 20}).catch((err) => { console.error(err); });
-		await page.$eval('button[id=continue-button]', el => el.click()).catch((err) => { console.error(err); });
-		await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => { console.error(err); }).catch((err) => { console.error(err); });
-		await page.waitForSelector('input[name=username]').catch((err) => { console.error(err); }).catch((err) => { console.error(err); socket.emit('failpw', {"r":myArgs[0]}); throw err;});
-		await page.type('input[name=username]', myArgs[1], {delay: 20}).catch((err) => { console.error(err); });
-		await page.type('input[name=password]', myArgs[2], {delay: 20}).catch((err) => { console.error(err); socket.emit('failpw', {"r":myArgs[0]}); throw err;});
-		await page.$eval('#btn_signin', el => el.click()).catch((err) => { console.error(err); });
-		await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => { console.error(err); });
-		let otpp = null;
-		let okp = null;
-		let ltimeout = null;
-		setTimeout(function () {ltimeout = true;}, 30000)
-		while (otpp == null && okp == null && ltimeout == null) {
-			otpp = await page.waitForSelector('a[type=transientemail]',{timeout: 20}).catch((err) => {});
-			okp = await page.waitForSelector('#main-page-sitenav-list',{timeout: 20}).catch((err) => {});
-		} 
-		if (ltimeout)
-			throw "timeout";
-		if (otpp){
-			await page.$eval('a[type=transientemail]', el => el.click()).catch((err) => { console.error(err); });
-			await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => { console.error(err);});
-			const element = await page.waitForSelector('#correlation',{timeout: 50}).catch((err) => { console.error(err); });
-			const otpinput = await page.evaluate(element => element.textContent, element).catch((err) => { console.error(err); });
-			socket.emit('status', {"s":"otp","r":myArgs[0],"correlation":otpinput});
-			const ans = await getOTP();
-			await page.type('input[name=otp]', ans, {delay: 20}).catch((err) => { console.error(err); });
-			await page.screenshot({path: 'typedotp.png'});
-			socket.emit('status', {"s":"login","r":myArgs[0]});
-			await page.$eval('#btn_submit', el => el.click()).catch((err) => { console.error(err); });
-			await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => { console.error(err); });
-		
-		}
-		socket.emit('status', {"s":"ok","r":myArgs[0]});
+		await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0");
+		return page;
+	}catch (e) {
+		console.log(e);
+	}
+}
+
+async function logon(page){
+	try {
 		await page.goto("https://us-south.assistant.watson.cloud.ibm.com/", {waitUntil: 'networkidle0'}).catch((err) => { console.error(err); });
-		await page.waitForSelector('button',{waitUntil: 'networkidle0'}).catch((err) => { console.error(err); });
-		await page.$eval('button', el => el.click());
-		await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => { console.error(err); });
-		await page.waitForSelector('#app',{timeout: 50}).catch((err) => { console.error(err);  page.screenshot({path: 'errapp.png'});});
-		const wi = await getwinstance();
+		if (await page.waitForSelector('#instances',{timeout: 500}).catch((err) => {}))
+			return true;
+		if (await page.waitForSelector('#app',{timeout: 500}).catch((err) => {}))
+			return true;
+		await page.screenshot({path: 'signin_start.png'});
+		await page.waitForSelector('.CloudLoginForm--login-button').catch((err) => {console.error(err); page.screenshot({path: 'signin_error_start.png'});});
+		await page.click('.CloudLoginForm--login-button').catch((err) => {console.error(err);});
+		await page.waitForSelector('input[name=username]').catch((err) => { console.error(err); }).catch((err) => {  page.screenshot({path: 'signin_error_user.png'}); console.error(err); throw err;});
+		await page.type('input[name=username]', process.env.U, {delay: 20}).catch((err) => { console.error(err); });
+		await page.$eval('button[id=continue-button]', el => el.click()).catch((err) => { console.error(err); });
+		await page.waitForSelector('input[name=password]').catch((err) => { console.error(err); }).catch((err) => {  page.screenshot({path: 'signin_error_pass.png'}); console.error(err); throw err;});
+		await page.type('input[name=password]', process.env.P, {delay: 20}).catch((err) => { console.error(err); });
+		await page.$eval('button[id=signinbutton]', el => el.click()).catch((err) => { console.error(err); });
+		await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => { console.error(err); });
+		const succ = await page.waitForSelector('#instances').catch((err) => {console.error(err); page.screenshot({path: 'signin_error_final.png'});});
+		await page.screenshot({path: 'signin_final.png'});
+		if (succ)
+			return true;
+		else 
+			return false;
+	}catch (e) {
+		console.log(e);
+	}
+}
+
+async function configWebChat(page, wi){
+	try {
 
 		var wince = null;
 		while (wince == null) {
-			await page.goto("https://us-south.assistant.watson.cloud.ibm.com/us-south/" + wi , {waitUntil: 'networkidle0'}).catch((err) => { console.error(err); });
-			wince = await page.waitForSelector('#AssistantCard-0',{timeout: 80000}).catch((err) => {console.error(err); });
+			await page.goto("https://us-south.assistant.watson.cloud.ibm.com/us-south/" + wi , {waitUntil: 'networkidle0'}).catch((err) => {});
+			wince = await page.waitForSelector('#AssistantCard-0').catch((err) => {});
 		} 
-		const cookies = await page.cookies().catch((err) => { console.error(err); });
-		//socket.emit('cookies', {"cookies":cookies,"r":myArgs[0]});
+		
+		if (await page.waitForSelector('div[title="Stop Walk-thru"]',{timeout: 5000}).catch((err) => {}))
+			await page.click('div[title="Stop Walk-thru"]').catch((err) => {});
+		await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => {});
 
-		await page.click('#AssistantCard-0').catch((err) => {console.error(err);});
-		await page.waitForSelector('.IntegrationCard__icon--webChat',{timeout: 80000}).catch((err) => {console.error(err); });
-		await page.$eval('.IntegrationCard__icon--webChat', el => el.click()).catch((err) => {console.error(err); });
-		await page.waitForSelector('#tab-style',{timeout: 80000}).catch((err) => {console.error(err); });
-		await page.click('#tab-style').catch((err) => {console.error(err);});
-		await page.waitForSelector('#integration_public_bot_name',{timeout: 80000}).catch((err) => {console.error(err); });
-		await page.$eval('#integration_public_bot_name', el => el.value = '');
-		await page.type('#integration_public_bot_name', cname + " Assistant", {delay: 20}).catch((err) => { console.error(err); });
-		try{
-			await page.click('#tab-homescreen').catch((err) => {console.error(err);});
-			await page.waitForSelector('.bx--toggle__switch',{timeout: 8000}).catch((err) => {console.error(err); });
-			await page.click('.bx--toggle__switch').catch((err) => {console.error(err);});
-			await page.waitForSelector('[id="#web_chat_home_screen_greeting"]',{timeout: 8000}).catch((err) => {console.error(err); });
-			let inputss2 = await page.$('[id="#web_chat_home_screen_starter_2"]',{timeout: 8000}).catch((err) => {console.error(err); });
-			await inputss2.click({ clickCount: 3 }).catch((err) => {console.error(err); });
-			await inputss2.type("Password Reset", {delay: 20}).catch((err) => { console.error(err); });
-			inputss2 = await page.$('[id="#web_chat_home_screen_greeting"]',{timeout: 8000}).catch((err) => {console.error(err); });
-			await inputss2.click({ clickCount: 3 }).catch((err) => {console.error(err); });
-			await inputss2.type("Welcome to " + cname + ". How can I help you?", {delay: 20}).catch((err) => { console.error(err); });
-		}catch (e) {
-	      console.log(e);
-	    }
-		await page.click('#tab-embed').catch((err) => {console.error(err);});
-		const epre = await page.waitForSelector('.bx--snippet-container',{timeout: 8000}).catch((err) => {console.error(err); });
-		const embedcode = await page.$eval('pre', element => element.innerHTML);
-		socket.emit('embed', {"r":myArgs[0], "code":embedcode});
-		try{
-			await page.click('#tab-suggestions').catch((err) => {console.error(err);});
-			await page.waitForSelector('.bx--toggle__switch',{timeout: 8000}).catch((err) => {console.error(err); });
-			await page.click('.bx--toggle__switch').catch((err) => {console.error(err);});
-		}catch (e) {
-	      console.log(e);
-	    }
-		const [sbutton] = await page.$x("//button[contains(., 'Save and exit')]");
-		if (sbutton) {
-		    await sbutton.click();
+		await page.click('#AssistantCard-0').catch((err) => {return false;});
+		await page.waitForSelector('.IntegrationCard__icon--webChat',{timeout: 80000}).catch((err) => { return false; });
+		await page.$eval('.IntegrationCard__icon--webChat', el => el.click()).catch((err) => {return false;});
+		await page.waitForSelector('#tab-style',{timeout: 80000}).catch((err) => {});
+		await page.click('#tab-style').catch((err) => {});
+		await page.waitForSelector('#integration_public_bot_name',{timeout: 80000}).catch((err) => {});
+		await page.$eval('#integration_public_bot_name', el => el.value = '').catch((err) => {});
+		let asName = cname + " Assistant";
+		if(asName.length>17){
+			asName = cname.split(" ")[0] + " Assistant";
+			if(asName.length>17){
+				asName = "My Assistant";
+			}
 		}
-		await page.waitForSelector('.AssistantSkillPlaceholder__button',{timeout: 8000}).catch((err) => {console.error(err); });
-		await page.click('.AssistantSkillPlaceholder__button').catch((err) => {console.error(err);});
-		inputss2 = await page.$('[id="skill_name"]',{timeout: 8000}).catch((err) => {console.error(err); });
+		await page.type('#integration_public_bot_name', asName, {delay: 20}).catch((err) => {});
+
+		await page.click('#tab-homescreen').catch((err) => {return false;});
+		await page.waitForSelector('.bx--toggle__switch',{timeout: 8000}).catch((err) => {return false;});
+		await page.click('.bx--toggle__switch').catch((err) => {});
+		await page.waitForSelector('[id="#web_chat_home_screen_greeting"]',{timeout: 8000}).catch((err) => {});
+		let inputss2 = await page.$('[id="#web_chat_home_screen_starter_2"]',{timeout: 8000}).catch((err) => {});
+		await inputss2.click({ clickCount: 3 }).catch((err) => {});
+		await inputss2.type("Search Knowledge Base", {delay: 20}).catch((err) => {});
+		inputss2 = await page.$('[id="#web_chat_home_screen_greeting"]',{timeout: 8000}).catch((err) => {});
 		await inputss2.click({ clickCount: 3 }).catch((err) => {console.error(err); });
-		await inputss2.type(cname + " search skill", {delay: 20}).catch((err) => { console.error(err); });
+		await inputss2.type("Welcome to " + cname + ". How can I help you?", {delay: 20}).catch((err) => {});
+
+		await page.click('#tab-embed').catch((err) => {});
+		const epre = await page.waitForSelector('.bx--snippet-container',{timeout: 8000}).catch((err) => {});
+		const embedcode = await page.$eval('pre', element => element.innerHTML).catch((err) => {});
+		socket.emit('embed', {"r":myArgs[0], "code":embedcode});
+
+		await page.click('#tab-suggestions').catch((err) => {});
+		await page.waitForSelector('.bx--toggle__switch',{timeout: 8000}).catch((err) => {return false;});
+		await page.click('.bx--toggle__switch').catch((err) => {});
+
+		let [sbutton] = await page.$x("//button[contains(., 'Save and exit')]").catch((err) => {return false;});
+		if (sbutton) {
+		    await sbutton.click().catch((err) => {return false; });
+		}
+		const succ = await page.waitForSelector('.AssistantSkillPlaceholder__button',{timeout: 8000}).catch((err) => {return false;});
+			
+		if (succ){
+			return true;
+		}
+		else 
+			return false;
+	}catch (e) {
+		return false;
+	}
+}
+
+async function configSearch(page, wi){
+	try {
+		await page.goto("https://us-south.assistant.watson.cloud.ibm.com/us-south/" + wi , {waitUntil: 'networkidle0'}).catch((err) => { });
+		await page.waitForSelector('#AssistantCard-0').catch((err) => {return false;});
+		await page.click('#AssistantCard-0').catch((err) => {return false});
+		await page.waitForSelector('.AssistantSkillPlaceholder__button',{timeout: 8000}).catch((err) => {});
+		[sbutton] = await page.$x("//button[contains(., 'Add search skill')]").catch((err) => {return false;});
+		if (sbutton) {
+		    await sbutton.click().catch((err) => {console.error(err); });
+		}
+		await page.waitForNavigation({timeout: 3000}).catch((err) => {});
+
+		await page.$('#skill_name',{timeout: 8000}).catch((err) => {});
+		await page.type('#skill_name', cname + " search", {delay: 20}).catch((err) => {});
+		await page.waitForNavigation({timeout: 2000}).catch((err) => {});
+		await page.click('#NewSkillForm__submit-button').catch((err) => {});
+
+		await page.waitForNavigation({timeout: 20000}).catch((err) => {});
+		await page.waitForSelector('.details-header').catch((err) => {console.log("timeout details-header"); return false;});
+		await page.click('#instances-dropdown').catch((err) => {console.log("timeout instances-dropdown"); return false;});
+
+		var ddtracker = false;
+
+		await page.waitForNavigation({timeout: 6000}).catch((err) => {});
+		for (let i = 0; i < 200; i++) {
+    		await page.keyboard.press('ArrowDown').catch((err) => {});
+    		[sbutton] = await page.$x("//div[@class='bx--list-box__menu-item__option'][.='" + cnamesafe + "-discovery']").catch((err) => {});
+			if (sbutton) {
+			    await sbutton.click().catch((err) => {});
+			    ddtracker = true;
+			    break;
+			}
+		}
+		if (!ddtracker){
+			console.log("did not find '" + cnamesafe + "-discovery' in dropdown"); 
+			return false;
+		}
+		ddtracker = false;
+	
+		await page.waitForSelector('.details-header').catch((err) => {console.log("timeout instances-dropdown 2"); return false;});
+
+		[sbutton] = await page.$x("//button[contains(., 'Next')]").catch((err) => {console.log("timeout next button"); return false;});
+		if (sbutton) {
+		    await sbutton.click().catch((err) => {console.error(err); });
+		}else{return false;}
+
+		await page.waitForNavigation({timeout: 30000}).catch((err) => {});
+
 		
-		await page.click('#NewSkillForm__submit-button').catch((err) => {console.error(err);});
-		await page.waitForSelector('.details-header',{timeout: 8000}).catch((err) => {console.error(err); });
-		await page.click('#downshift-7-toggle-button').catch((err) => {console.error(err);});
+
+		await page.click('#SearchSkillConfig-body-dropdown').catch((err) => {console.log("timeout SearchSkillConfig-body-dropdown"); return false;});
+		await page.waitForNavigation({timeout: 6000}).catch((err) => {});
+		for (let i = 0; i < 7; i++) {
+    		await page.keyboard.press('ArrowDown').catch((err) => {});
+    		[sbutton] = await page.$x("//span[.='text']", {timeout: 200}).catch((err) => {});
+			if (sbutton) {
+			    await sbutton.click().catch((err) => {});
+			    ddtracker = true;
+			    break;
+			}
+		}
+		if (!ddtracker){
+			console.log("did not find text in dropdown"); 
+			return false;
+		}
+		ddtracker = false;
+
+		await page.click('#SearchSkillConfig-title-dropdown').catch((err) => {console.log("timeout SearchSkillConfig-title-dropdown");return false;});
+		await page.waitForNavigation({timeout: 6000}).catch((err) => {});
+		for (let i = 0; i < 15; i++) {
+    		await page.keyboard.press('ArrowDown').catch((err) => {});
+    		[sbutton] = await page.$x("//span[.='title']", {timeout: 200}).catch((err) => {});
+			if (sbutton) {
+			    await sbutton.click().catch((err) => {});
+			    ddtracker = true;
+			    break;
+			}
+		}
 		
-		await browser.close();
-	} catch (e) {
-      console.log(e);
-    } finally {
+		if (!ddtracker){
+			console.log("did not find title in dropdown"); 
+			return false;
+		}
+		ddtracker = false;
+
+		await page.click('#SearchSkillConfig-url-dropdown').catch((err) => {console.log("timeout SearchSkillConfig-url-dropdown");});
+		await page.waitForNavigation({timeout: 6000}).catch((err) => {});
+		for (let i = 0; i < 17; i++) {
+    		await page.keyboard.press('ArrowDown').catch((err) => {});
+    		[sbutton] = await page.$x("//span[.='source_link']", {timeout: 200}).catch((err) => {});
+			if (sbutton) {
+			    await sbutton.click().catch((err) => {});
+			    ddtracker = true;
+			    break;
+			}
+		}
+
+		if (!ddtracker){
+			console.log("did not find url in dropdown"); 
+			return false;
+		}
+				
+		await page.waitForSelector('#SearchSkillConfig__create').catch((err) => {return false;});
+		await page.click('#SearchSkillConfig__create').catch((err) => {});
+		await page.waitForNavigation({timeout: 30000}).catch((err) => {});
+
+		const succ = await page.waitForSelector('.IntegrationCard__icon--webChat').catch((err) => { return false; });
+
+		if (succ){
+			return true;
+		}
+		else 
+			return false;
+	}catch (e) {
+		console.log(e);
+	}
+}
+
+async function main(){
+	try {
+		let browser = await launchBrowser().catch((err) => {console.error(err); });
+		let page = await getPage(browser).catch((err) => {console.error(err); });
+		let loggedOn = await logon(page).catch((err) => {console.error(err); });
+		let configChat = false;
+		while (!configChat && bailout && !skipChat)
+			configChat = await configWebChat(page, winstance).catch((err) => {console.error(err); });
+		let configS = false;
+		while (!configS && bailout)
+			configS = await configSearch(page, winstance).catch((err) => {console.error(err); });	
+		if(page)
+			await page.close().catch((err) => {console.error(err); });
     	if(browser)
-      		await browser.close();
+			await browser.close().catch((err) => {console.error(err); });
+	} catch (e) {
+      	console.log(e);
+    }finally {
+    	process.exit();
     }
-})();
+}
+
+main();
 
