@@ -55,7 +55,7 @@ async function setGettingPage(gp) {
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 	
 var crawler = new Crawler(myArgs[0]);
-crawler.maxDepth = 1;
+crawler.maxDepth = 4;
 crawler.userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0";
 crawler.respectRobotsTxt = 0;
 crawler.allowInitialDomainChange = 1;
