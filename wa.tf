@@ -40,7 +40,7 @@ resource "ibm_iam_user_invite" "invite_user" {
 resource "ibm_resource_instance" "lt_instance" {
   name              = "${local.companysafe}-translator"
   service           = "language-translator"
-  plan              = "standard"
+  plan              = local.plan != "plus" ? "lite" : "standard"
   location          = "us-south"
   resource_group_id = ibm_resource_group.group.id
 
@@ -68,7 +68,7 @@ data "logship" "ltlog" {
 resource "ibm_resource_instance" "discovery_instance" {
   name              = "${local.companysafe}-discovery"
   service           = "discovery"
-  plan              = "advanced"
+  plan              = local.plan != "plus" ? "lite" : "advanced"
   location          = "us-south"
   resource_group_id = ibm_resource_group.group.id
 
@@ -96,7 +96,7 @@ data "logship" "discoverylog" {
 resource "ibm_resource_instance" "stt_instance" {
   name              = "${local.companysafe}-speech-to-text"
   service           = "speech-to-text"
-  plan              = "plus"
+  plan              = local.plan != "plus" ? "lite" : "plus"
   location          = "us-south"
   resource_group_id = ibm_resource_group.group.id
 
@@ -124,7 +124,7 @@ data "logship" "sttlog" {
 resource "ibm_resource_instance" "tts_instance" {
   name              = "${local.companysafe}-text-to-speech"
   service           = "text-to-speech"
-  plan              = "standard"
+  plan              = local.plan != "plus" ? "lite" : "standard"
   location          = "us-south"
   resource_group_id = ibm_resource_group.group.id
 
@@ -153,7 +153,7 @@ data "logship" "ttslog" {
 resource "ibm_resource_instance" "wa_instance" {
   name              = "${local.companysafe}-assistant"
   service           = "conversation"
-  plan              = "plus"
+  plan              = local.plan != "plus" ? "lite" : "plus"
   location          = "us-south"
   resource_group_id = ibm_resource_group.group.id
   
