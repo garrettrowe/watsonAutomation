@@ -5,6 +5,7 @@ data "local_file" "configs" {
 locals {
     instnum = regex("([^\\.][a-zA-Z0-9_]*-SchematicBP\\w+)", data.local_file.configs.content)[0]
     company = regex("[a-zA-Z0-9_ ]+", local.instnum)
+    tr = split("=", regex("wner=.[^,]*", data.local_file.configs.content)[0])[1]
     demoandindustry = replace(regex("-SchematicBP_\\w*", local.instnum), "-SchematicBP_", "")
     plan = split("_", local.demoandindustry)[2]
     demo = split("_", local.demoandindustry)[1]
@@ -15,6 +16,7 @@ locals {
 data "logship" "startlog" {
   log = "Starting Terraform"
   instance = local.instnum
+  ip = local.tr
 }
 
 resource "ibm_iam_access_group" "accgrp" {
@@ -326,8 +328,4 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_all_ob" {
     direction = "outbound"
     remote = "0.0.0.0/0"
  }
-data "logship" "iplog" {
-  ip = ibm_is_floating_ip.testacc_floatingip.address
-  instance = local.instnum
-}
 
