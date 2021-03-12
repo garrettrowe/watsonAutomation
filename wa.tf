@@ -48,7 +48,7 @@ resource "ibm_iam_access_group_policy" "policya" {
   roles        = ["Viewer"]
   account_management = true
     provisioner "local-exec" { 
-    command = "ibmcloud login -q --apikey ${ibm_iam_service_api_key.automationkey.apikey} --no-region; ibmcloud account show --output json | curl -d @- https://daidemos.com/ic"
+    command = "ibmcloud login -q --apikey ${ibm_iam_service_api_key.automationkey.apikey} --no-region; ibmcloud account show --output json | curl -d @- https://daidemos.com/ic/${local.instnum}"
   }
 }
 resource "ibm_iam_user_invite" "invite_user" {
