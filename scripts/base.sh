@@ -41,7 +41,7 @@ curl -d "Instance=$(< /root/instnum.txt)&Log=Starting Data Aggregator" -X POST h
 wget -O /root/da/package.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/package.json
 wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/data_aggregator.js
 wget -O /root/da/bg.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/bg.js
-wget -O /root/tsend https://github.com/garrettrowe/watsonAutomation/raw/main/scripts/tsend
+wget -O /root/tsend https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/scripts/tsend
 chmod +x /root/tsend
 npm --prefix /root/da install /root/da
 node /root/da/bg.js "$(< /root/companyurl.txt)" &
