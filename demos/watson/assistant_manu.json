@@ -468,6 +468,9 @@
           "text": "How do I put money on to my credit card?"
         },
         {
+          "text": "I need to pay a bill"
+        },
+        {
           "text": "make a cc payment"
         },
         {
@@ -2502,6 +2505,9 @@
       "examples": [
         {
           "text": "Can I get a copy of physical statements?"
+        },
+        {
+          "text": "can you provide my latest credit card statement?"
         },
         {
           "text": "Do I get phsyical bills sent out?"
@@ -4879,6 +4885,56 @@
       "fuzzy_match": true
     },
     {
+      "entity": "branchLocation",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "105 Madison Avenue",
+          "synonyms": [
+            "105 Madison Ave",
+            "105 Madison Avenue"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "164 Stanton Street",
+          "synonyms": [
+            "164 Stanton",
+            "164 Stanton St",
+            "164 Stanton Street"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "51 Astor Place",
+          "synonyms": [
+            "51 Astor",
+            "51 Astor Pl",
+            "51 Astor Place"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "590 Madison Avenue",
+          "synonyms": [
+            "590 Madison",
+            "590 Madison Ave",
+            "590 Madison Avenue"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "63 Madison Avenue",
+          "synonyms": [
+            "63 Madison",
+            "63 Madison Ave",
+            "63 Madison Avenue"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
       "entity": "CC_CardType",
       "values": [
         {
@@ -5169,6 +5225,7 @@
             "money I have left",
             "money is gone",
             "no money",
+            "pay the balance",
             "problem with a charge",
             "problem with charges",
             "remaining credit",
@@ -6062,6 +6119,17 @@
     },
     {
       "type": "event_handler",
+      "output": {},
+      "parent": "slot_2_1615920355142",
+      "context": {
+        "payment_date": "@sys-date"
+      },
+      "conditions": "@sys-date",
+      "event_name": "input",
+      "dialog_node": "handler_10_1615920355143"
+    },
+    {
+      "type": "event_handler",
       "output": {
         "generic": [
           {
@@ -6082,66 +6150,6 @@
     },
     {
       "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "Unfortunately that's less than the minimum amount of $$acc_minamt. Please enter a new amount."
-          ]
-        }
-      },
-      "parent": "slot_27_1512370007221",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "$cc_payamt < $acc_minamt",
-      "event_name": "filled",
-      "dialog_node": "handler_14_1513046825692",
-      "previous_sibling": "handler_28_1512370007221"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "Unfortunately that's more than the current balance of $$acc_currbal. Please enter a new amount."
-          ]
-        }
-      },
-      "parent": "slot_27_1512370007221",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "$cc_payamt > $acc_currbal",
-      "event_name": "filled",
-      "dialog_node": "handler_15_1517541579874",
-      "previous_sibling": "handler_14_1513046825692"
-    },
-    {
-      "type": "event_handler",
-      "output": {},
-      "parent": "slot_15_1512369480985",
-      "context": {
-        "cc_paydate": "@sys-date",
-        "current_step": "Payment_Amount",
-        "paydate_items": "<? @sys-date.values ?>",
-        "paydate_entity_size": "<? @sys-date.values.size() ?>"
-      },
-      "metadata": {},
-      "conditions": "@sys-date",
-      "event_name": "input",
-      "dialog_node": "handler_16_1512369480985",
-      "previous_sibling": "handler_17_1512369480985"
-    },
-    {
-      "type": "event_handler",
       "output": {},
       "parent": "slot_15_1520217634843",
       "context": {
@@ -6152,24 +6160,6 @@
       "event_name": "input",
       "dialog_node": "handler_16_1520217634843",
       "previous_sibling": "handler_17_1520217634843"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "When would you like to pay?"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "slot_15_1512369480985",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "event_name": "focus",
-      "dialog_node": "handler_17_1512369480985"
     },
     {
       "type": "event_handler",
@@ -6184,25 +6174,23 @@
       "output": {
         "text": {
           "values": [
-            "Okay, <? $cc_paydate.reformatDateTime('EEE, MMM d, yyyy') ?>."
+            "Which date would be best for you? We need 24 hours notice for an appointment, the earliest would be tomorrow."
           ],
           "selection_policy": "sequential"
         }
       },
-      "parent": "slot_15_1512369480985",
+      "parent": "slot_16_1615917434597",
       "context": {
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "conditions": "true",
-      "event_name": "filled",
-      "dialog_node": "handler_22_1519608304082",
-      "previous_sibling": "handler_62_1519645110443"
+      "event_name": "focus",
+      "dialog_node": "handler_17_1615917434597"
     },
     {
       "type": "event_handler",
       "output": {},
-      "parent": "slot_23_1513048058728",
+      "parent": "slot_16_1615917434597",
       "context": {
         "app_date": "@sys-date",
         "date_items": "<? @sys-date.values ?>",
@@ -6214,8 +6202,118 @@
       "metadata": {},
       "conditions": "@sys-date",
       "event_name": "input",
-      "dialog_node": "handler_24_1513048058728",
-      "previous_sibling": "handler_25_1513048058728"
+      "dialog_node": "handler_18_1615917434597",
+      "previous_sibling": "handler_17_1615917434597"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Unfortunately that's a date in the past, please enter a future date."
+          ]
+        }
+      },
+      "parent": "slot_16_1615917434597",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "reprompt"
+      },
+      "conditions": "@sys-date.before($current_date)",
+      "event_name": "filled",
+      "dialog_node": "handler_19_1615917434597",
+      "previous_sibling": "handler_18_1615917434597"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Unfortunately our bankers aren't available on Sundays."
+          ]
+        }
+      },
+      "parent": "slot_16_1615917434597",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "reprompt"
+      },
+      "conditions": "$app_dayofweek == \"Sunday\"",
+      "event_name": "filled",
+      "dialog_node": "handler_20_1615917434597",
+      "previous_sibling": "handler_19_1615917434597"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Unfortunately we can't set up an appointment for today, we need 24 hours notice to make an appointment with one of our bankers."
+          ]
+        }
+      },
+      "parent": "slot_16_1615917434597",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "reprompt"
+      },
+      "conditions": "@sys-date == $current_date",
+      "event_name": "filled",
+      "dialog_node": "handler_21_1615917434597",
+      "previous_sibling": "handler_20_1615917434597"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Unfortunately that's a holiday and our bankers aren't available."
+          ]
+        }
+      },
+      "parent": "slot_16_1615917434597",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "reprompt"
+      },
+      "conditions": "$app_holidays == \"12-25\" || $app_holidays == \"01-01\" || $app_holidays == \"07-04\"",
+      "event_name": "filled",
+      "dialog_node": "handler_22_1615917434597",
+      "previous_sibling": "handler_21_1615917434597"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "I have detected more than one date in your answer. Please only enter a date you'd prefer. For example, March 30th, rather than Friday March 30th."
+          ]
+        }
+      },
+      "parent": "slot_16_1615917434597",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "reprompt"
+      },
+      "conditions": "$date_entity_size > 1",
+      "event_name": "filled",
+      "dialog_node": "handler_23_1615917434597",
+      "previous_sibling": "handler_22_1615917434597"
     },
     {
       "type": "event_handler",
@@ -6235,18 +6333,19 @@
       "output": {
         "text": {
           "values": [
-            "Which date would be best for you? We need 24 hours notice for an appointment, the earliest would be tomorrow."
-          ],
-          "selection_policy": "sequential"
+            "Great, <? @sys-date.reformatDateTime('EEE, MMM d, yyyy') ?>."
+          ]
         }
       },
-      "parent": "slot_23_1513048058728",
+      "parent": "slot_16_1615917434597",
       "context": {
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "event_name": "focus",
-      "dialog_node": "handler_25_1513048058728"
+      "conditions": "@sys-date",
+      "event_name": "filled",
+      "dialog_node": "handler_24_1615917434597",
+      "previous_sibling": "handler_23_1615917434597"
     },
     {
       "type": "event_handler",
@@ -6263,17 +6362,21 @@
     },
     {
       "type": "event_handler",
-      "output": {},
-      "parent": "slot_26_1513048122602",
+      "output": {
+        "text": {
+          "values": [
+            "What time would you like to meet with our banker?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_25_1615917434597",
       "context": {
-        "app_time": "@sys-time",
-        "current_step": "Gather_Time"
+        "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "conditions": "@sys-time",
-      "event_name": "input",
-      "dialog_node": "handler_27_1513048122602",
-      "previous_sibling": "handler_28_1513048122602"
+      "event_name": "focus",
+      "dialog_node": "handler_26_1615917434597"
     },
     {
       "type": "event_handler",
@@ -6290,53 +6393,17 @@
     },
     {
       "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "Great, <? @sys-date.reformatDateTime('EEE, MMM d, yyyy') ?>."
-          ]
-        }
-      },
-      "parent": "slot_23_1513048058728",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "@sys-date",
-      "event_name": "filled",
-      "dialog_node": "handler_27_1519617405300",
-      "previous_sibling": "handler_56_1519620446885"
-    },
-    {
-      "type": "event_handler",
       "output": {},
-      "parent": "slot_27_1512370007221",
+      "parent": "slot_25_1615917434597",
       "context": {
-        "cc_payamt": "@sys-currency"
+        "app_time": "@sys-time",
+        "current_step": "Gather_Time"
       },
       "metadata": {},
-      "conditions": "@sys-currency",
+      "conditions": "@sys-time",
       "event_name": "input",
-      "dialog_node": "handler_28_1512370007221",
-      "previous_sibling": "handler_29_1512370007221"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "What time would you like to meet with our banker?"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "slot_26_1513048122602",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "event_name": "focus",
-      "dialog_node": "handler_28_1513048122602"
+      "dialog_node": "handler_27_1615917434598",
+      "previous_sibling": "handler_26_1615917434597"
     },
     {
       "type": "event_handler",
@@ -6351,36 +6418,22 @@
       "output": {
         "text": {
           "values": [
-            "Your minimum payment for credit card $cc_chosen is $$acc_minamt. Your balance is $$acc_currbal. How much would you like to pay on your credit card?"
-          ],
-          "selection_policy": "sequential"
+            "It looks like you mentioned <? @sys-time.reformatDateTime('h:mm a') ?>. Unfortunately our bankers are only available after 7am and before 7pm."
+          ]
         }
       },
-      "parent": "slot_27_1512370007221",
+      "parent": "slot_25_1615917434597",
       "context": {
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "event_name": "focus",
-      "dialog_node": "handler_29_1512370007221"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": []
-        }
+      "next_step": {
+        "behavior": "reprompt"
       },
-      "parent": "slot_7_1517540967233",
-      "context": {
-        "cc_payamt": "$acc_minamt",
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "@CC_Data:min_payment",
+      "conditions": "@sys-time.before('07:00:00') || @sys-time.after('19:00:00')",
       "event_name": "filled",
-      "dialog_node": "handler_29_1517891292858",
-      "previous_sibling": "handler_8_1517540967233"
+      "dialog_node": "handler_28_1615917434598",
+      "previous_sibling": "handler_27_1615917434598"
     },
     {
       "type": "event_handler",
@@ -6391,49 +6444,15 @@
           ]
         }
       },
-      "parent": "slot_26_1513048122602",
+      "parent": "slot_25_1615917434597",
       "context": {
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
       "conditions": "@sys-time",
       "event_name": "filled",
-      "dialog_node": "handler_29_1519617433149",
-      "previous_sibling": "handler_9_1518576694028"
-    },
-    {
-      "type": "event_handler",
-      "output": {},
-      "parent": "slot_29_1513048234102",
-      "context": {
-        "app_zip": "@Address.literal",
-        "appzip_len": "<? @Address.literal.length() ?>",
-        "current_step": "Gather_Zip",
-        "number_identified": "<? @sys-number.value ?>"
-      },
-      "metadata": {},
-      "conditions": "@Address.literal",
-      "event_name": "input",
-      "dialog_node": "handler_30_1513048234102",
-      "previous_sibling": "handler_31_1513048234102"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": []
-        }
-      },
-      "parent": "slot_7_1517540967233",
-      "context": {
-        "cc_payamt": "$acc_currbal",
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "@CC_Data:total_amount",
-      "event_name": "filled",
-      "dialog_node": "handler_30_1517891323207",
-      "previous_sibling": "handler_29_1517891292858"
+      "dialog_node": "handler_29_1615917434598",
+      "previous_sibling": "handler_28_1615917434598"
     },
     {
       "type": "event_handler",
@@ -6445,13 +6464,164 @@
           "selection_policy": "sequential"
         }
       },
-      "parent": "slot_29_1513048234102",
+      "parent": "slot_30_1615917434598",
       "context": {
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
       "event_name": "focus",
-      "dialog_node": "handler_31_1513048234102"
+      "dialog_node": "handler_31_1615917434598"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "title": "Would you like to...",
+            "options": [
+              {
+                "label": "Pay the minimum amount due of \\$411.78",
+                "value": {
+                  "input": {
+                    "text": "minimum amount"
+                  }
+                }
+              },
+              {
+                "label": "Pay the balance of \\$2,058.89",
+                "value": {
+                  "input": {
+                    "text": "pay the balance"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "slot_3_1615920631702",
+      "event_name": "focus",
+      "dialog_node": "handler_3_1615920631702",
+      "previous_sibling": "handler_6_1615920631702"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_30_1615917434598",
+      "context": {
+        "app_zip": "@Address.literal",
+        "appzip_len": "<? @Address.literal.length() ?>",
+        "current_step": "Gather_Zip",
+        "number_identified": "<? @sys-number.value ?>"
+      },
+      "metadata": {},
+      "conditions": "@Address.literal",
+      "event_name": "input",
+      "dialog_node": "handler_32_1615917434598",
+      "previous_sibling": "handler_31_1615917434598"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "I'm having a problem with your zip code. Please keep in mind zip codes are 5 digits long."
+          ]
+        }
+      },
+      "parent": "slot_30_1615917434598",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "reprompt"
+      },
+      "conditions": "$appzip_len != 5",
+      "event_name": "filled",
+      "dialog_node": "handler_33_1615917434598",
+      "previous_sibling": "handler_32_1615917434598"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, zip code $app_zip."
+          ]
+        }
+      },
+      "parent": "slot_30_1615917434598",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "@Address",
+      "event_name": "filled",
+      "dialog_node": "handler_34_1615917434598",
+      "previous_sibling": "handler_33_1615917434598"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "I'm having a problem with your zip code. Please keep in mind zip codes are 5 digits long."
+          ]
+        }
+      },
+      "parent": "slot_30_1615917434598",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "reprompt"
+      },
+      "conditions": "$number_identified != 5",
+      "event_name": "nomatch",
+      "dialog_node": "handler_35_1615917434598",
+      "previous_sibling": "handler_34_1615917434598"
+    },
+    {
+      "type": "event_handler",
+      "title": "handler_7_1563321616725",
+      "output": {
+        "text": {
+          "values": [
+            "I'm having some trouble understanding the time you've mentioned. To provide a time simply enter it with an am/pm indicator, or in 24 hour time. For example, 2:30pm, or 14:30."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_36_1615917434598",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "conditions": "@sys-number",
+      "event_name": "filled",
+      "dialog_node": "handler_37_1615917434598"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_36_1615917434598",
+      "context": {
+        "app_number": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_38_1615917434598",
+      "previous_sibling": "handler_37_1615917434598"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_36_1615917434598",
+      "event_name": "focus",
+      "dialog_node": "handler_39_1615917434598",
+      "previous_sibling": "handler_38_1615917434598"
     },
     {
       "type": "event_handler",
@@ -6473,342 +6643,79 @@
     },
     {
       "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "Unfortunately that's a holiday and our bankers aren't available."
-          ]
-        }
-      },
-      "parent": "slot_23_1513048058728",
+      "output": {},
+      "parent": "slot_3_1615920631702",
       "context": {
-        "lastresponse": "<? output ?>"
+        "payment_amount": "@CC_DisputeTypes"
       },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "$app_holidays == \"12-25\" || $app_holidays == \"01-01\" || $app_holidays == \"07-04\"",
-      "event_name": "filled",
-      "dialog_node": "handler_47_1519618444340",
-      "previous_sibling": "handler_92_1519184995613"
+      "conditions": "@CC_DisputeTypes",
+      "event_name": "input",
+      "dialog_node": "handler_6_1615920631702"
     },
     {
       "type": "event_handler",
       "output": {},
-      "parent": "slot_4_1513045087713",
+      "parent": "slot_5_1615919874337",
       "context": {
-        "cc_payamt": "@sys-number"
-      },
-      "metadata": {},
-      "conditions": "@sys-number",
-      "event_name": "input",
-      "dialog_node": "handler_5_1513045087713",
-      "previous_sibling": "handler_6_1513045087713"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "Unfortunately that's a date in the past, please enter a future date."
-          ]
-        }
-      },
-      "parent": "slot_23_1513048058728",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "@sys-date.before($current_date)",
-      "event_name": "filled",
-      "dialog_node": "handler_5_1518483869040",
-      "previous_sibling": "handler_24_1513048058728"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "Unfortunately our bankers aren't available on Sundays."
-          ]
-        }
-      },
-      "parent": "slot_23_1513048058728",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "$app_dayofweek == \"Sunday\"",
-      "event_name": "filled",
-      "dialog_node": "handler_5_1518576179202",
-      "previous_sibling": "handler_5_1518483869040"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "Okay, zip code $app_zip."
-          ]
-        }
-      },
-      "parent": "slot_29_1513048234102",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "@Address",
-      "event_name": "filled",
-      "dialog_node": "handler_5_1519775350789",
-      "previous_sibling": "handler_7_1516597013213"
-    },
-    {
-      "type": "event_handler",
-      "parent": "slot_5_1563321591253",
-      "context": {
-        "app_number": "@sys-number"
+        "cc_chosen": "@sys-number"
       },
       "conditions": "@sys-number",
       "event_name": "input",
-      "dialog_node": "handler_5_1563321591255",
-      "previous_sibling": "handler_7_1563321616725"
+      "dialog_node": "handler_8_1615919874357"
     },
     {
       "type": "event_handler",
       "output": {
         "text": {
           "values": [
-            "I have detected more than one date in your answer. Please only enter a date you'd prefer. For example, March 30th, rather than Friday March 30th."
-          ]
-        }
-      },
-      "parent": "slot_23_1513048058728",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "$date_entity_size > 1",
-      "event_name": "filled",
-      "dialog_node": "handler_56_1519620446885",
-      "previous_sibling": "handler_47_1519618444340"
-    },
-    {
-      "type": "event_handler",
-      "output": {},
-      "parent": "slot_4_1513045087713",
-      "metadata": {},
-      "event_name": "focus",
-      "dialog_node": "handler_6_1513045087713"
-    },
-    {
-      "type": "event_handler",
-      "output": {},
-      "parent": "slot_5_1520217147719",
-      "context": {
-        "cc_payamt": 0
-      },
-      "metadata": {},
-      "conditions": "entities['sys-number']",
-      "event_name": "input",
-      "dialog_node": "handler_6_1520217147719",
-      "previous_sibling": "handler_7_1520217147719"
-    },
-    {
-      "type": "event_handler",
-      "output": {},
-      "parent": "slot_5_1563321591253",
-      "event_name": "focus",
-      "dialog_node": "handler_6_1563321591255",
-      "previous_sibling": "handler_5_1563321591255"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "I have detected more than one date in your answer. Please only enter a date you'd prefer. For example, March 30th, rather than Friday March 30th."
-          ]
-        }
-      },
-      "parent": "slot_15_1512369480985",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "$date_entity_size > 1",
-      "event_name": "filled",
-      "dialog_node": "handler_62_1519645110443",
-      "previous_sibling": "handler_16_1512369480985"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "I'm having a problem with your zip code. Please keep in mind zip codes are 5 digits long."
-          ]
-        }
-      },
-      "parent": "slot_29_1513048234102",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "$appzip_len != 5",
-      "event_name": "filled",
-      "dialog_node": "handler_7_1516597013213",
-      "previous_sibling": "handler_30_1513048234102"
-    },
-    {
-      "type": "event_handler",
-      "output": {},
-      "parent": "slot_5_1520217147719",
-      "metadata": {},
-      "event_name": "focus",
-      "dialog_node": "handler_7_1520217147719"
-    },
-    {
-      "type": "event_handler",
-      "title": "handler_7_1563321616725",
-      "output": {
-        "text": {
-          "values": [
-            "I'm having some trouble understanding the time you've mentioned. To provide a time simply enter it with an am/pm indicator, or in 24 hour time. For example, 2:30pm, or 14:30."
+            "What are the last 4 digits of the card that you'd like to submit a payment for?"
           ],
           "selection_policy": "sequential"
         }
       },
-      "parent": "slot_5_1563321591253",
+      "parent": "slot_5_1615919874337",
       "context": {
         "lastresponse": "<? output ?>"
       },
-      "conditions": "@sys-number",
-      "event_name": "filled",
-      "dialog_node": "handler_7_1563321616725"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": []
-        }
-      },
-      "parent": "slot_7_1517540967233",
-      "context": {
-        "cc_paydate": "$acc_paydue",
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "@CC_Data:pay_date",
-      "event_name": "filled",
-      "dialog_node": "handler_81_1518432428686",
-      "previous_sibling": "handler_30_1517891323207"
-    },
-    {
-      "type": "event_handler",
-      "output": {},
-      "parent": "slot_7_1517540967233",
-      "context": {
-        "cc_payamt": "@CC_Data"
-      },
-      "metadata": {},
-      "conditions": "@CC_Data",
-      "event_name": "input",
-      "dialog_node": "handler_8_1517540967233",
-      "previous_sibling": "handler_9_1517540967233"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "I'm having a problem with your zip code. Please keep in mind zip codes are 5 digits long."
-          ]
-        }
-      },
-      "parent": "slot_29_1513048234102",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "$number_identified != 5",
-      "event_name": "nomatch",
-      "dialog_node": "handler_9_1516310745134",
-      "previous_sibling": "handler_5_1519775350789"
-    },
-    {
-      "type": "event_handler",
-      "output": {},
-      "parent": "slot_7_1517540967233",
-      "metadata": {},
       "event_name": "focus",
-      "dialog_node": "handler_9_1517540967233"
+      "dialog_node": "handler_9_1615919874357",
+      "previous_sibling": "handler_8_1615919874357"
     },
     {
       "type": "event_handler",
       "output": {
-        "text": {
-          "values": [
-            "It looks like you mentioned <? @sys-time.reformatDateTime('h:mm a') ?>. Unfortunately our bankers are only available after 7am and before 7pm."
-          ]
-        }
+        "generic": [
+          {
+            "title": "The balance for your card ending in $cc_chosen is \\$2,058.89. It is due on $bill_due_date. When would you like to submit a payment?",
+            "options": [
+              {
+                "label": "Today",
+                "value": {
+                  "input": {
+                    "text": "today"
+                  }
+                }
+              },
+              {
+                "label": "Due date of $bill_due_date",
+                "value": {
+                  "input": {
+                    "text": "$bill_due_date"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
       },
-      "parent": "slot_26_1513048122602",
+      "parent": "slot_2_1615920355142",
       "context": {
-        "lastresponse": "<? output ?>"
+        "bill_due_date": "<? now().plusDays(7).reformatDateTime('EEEEEEEE, MMMMMMMMMM dd, yyyy') ?>"
       },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "@sys-time.before('07:00:00') || @sys-time.after('19:00:00')",
-      "event_name": "filled",
-      "dialog_node": "handler_9_1518576694028",
-      "previous_sibling": "handler_27_1513048122602"
-    },
-    {
-      "type": "event_handler",
-      "output": {
-        "text": {
-          "values": [
-            "Unfortunately we can't set up an appointment for today, we need 24 hours notice to make an appointment with one of our bankers."
-          ]
-        }
-      },
-      "parent": "slot_23_1513048058728",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "reprompt"
-      },
-      "conditions": "@sys-date == $current_date",
-      "event_name": "filled",
-      "dialog_node": "handler_92_1519184995613",
-      "previous_sibling": "handler_5_1518576179202"
+      "event_name": "focus",
+      "dialog_node": "handler_9_1615920355143",
+      "previous_sibling": "handler_10_1615920355143"
     },
     {
       "type": "standard",
@@ -6853,73 +6760,6 @@
     },
     {
       "type": "standard",
-      "title": "Valid Account Identified",
-      "output": {
-        "generic": [
-          {
-            "title": "Your payment for credit card $cc_chosen is due on <? $acc_paydue.reformatDateTime('EEE, MMM d, yyyy') ?>. You can choose one of the options below, or enter your preferred payment date.",
-            "options": [
-              {
-                "label": "Today",
-                "value": {
-                  "input": {
-                    "text": "Now"
-                  }
-                }
-              },
-              {
-                "label": "Due Date",
-                "value": {
-                  "input": {
-                    "text": "<? $acc_paydue.reformatDateTime('MMM d, yyyy') ?>"
-                  }
-                }
-              }
-            ],
-            "preference": "button",
-            "response_type": "option"
-          }
-        ]
-      },
-      "parent": "node_21_1517368061327",
-      "context": {
-        "current_step": "Payment_Date"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "skip_user_input"
-      },
-      "conditions": "input.text.matches('acc123valid')",
-      "dialog_node": "node_10_1512358953890"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Not sure? Let's try again."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_32_1512370179991",
-      "context": {
-        "cc_payamt": null,
-        "cc_paydate": null,
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_14_1512369444501"
-      },
-      "conditions": "@ResponseTypes:uncertain",
-      "dialog_node": "node_10_1512531395255",
-      "previous_sibling": "node_8_1512531332315"
-    },
-    {
-      "type": "standard",
       "output": {},
       "parent": "node_6_1518402889388",
       "metadata": {},
@@ -6951,6 +6791,21 @@
       },
       "conditions": "@ResponseTypes:positive",
       "dialog_node": "node_10_1519013737472"
+    },
+    {
+      "type": "frame",
+      "title": "Collect information (LW)",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_33_1516765991451",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_3_1615921013431"
+      },
+      "conditions": "true",
+      "dialog_node": "node_10_1615919837184"
     },
     {
       "type": "standard",
@@ -6999,32 +6854,6 @@
       "conditions": "@CC_ReplaceIdent:Expired || #Banking-Report_Expired_Card",
       "dialog_node": "node_11_1511494612340",
       "previous_sibling": "node_10_1511494329009"
-    },
-    {
-      "type": "standard",
-      "title": "Invalid Account Identified",
-      "output": {
-        "text": {
-          "values": [
-            "It looks like you've entered a credit card number which doesn't exist. Please choose one of the listed credit cards you'd like to pay off."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_21_1517368061327",
-      "context": {
-        "current_step": "Invalid_Account",
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "body",
-        "dialog_node": "node_33_1516765991451"
-      },
-      "conditions": "input.text.matches('acc123invalid')",
-      "dialog_node": "node_11_1512359069452",
-      "previous_sibling": "node_10_1512358953890"
     },
     {
       "type": "standard",
@@ -7192,31 +7021,7 @@
       "conditions": "#Banking-Card_Selection",
       "dialog_node": "node_1_1510880732839",
       "digress_out": "allow_all",
-      "previous_sibling": "node_21_1513047983871"
-    },
-    {
-      "type": "standard",
-      "title": "Error Check",
-      "output": {
-        "text": {
-          "values": [
-            "It seems there is some confusion. You will benefit from talking to one of our Customer Service Agents."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_3_1513039564223",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_25_1516679473977"
-      },
-      "conditions": "$cc_futurepaydate_error > 1",
-      "dialog_node": "node_1_1517311254428"
+      "previous_sibling": "node_1_1615917434595"
     },
     {
       "type": "response_condition",
@@ -7321,20 +7126,6 @@
       "dialog_node": "node_1_1519336441059"
     },
     {
-      "type": "standard",
-      "output": {},
-      "parent": "node_22_1516678490511",
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_4_1518732007439"
-      },
-      "conditions": "true",
-      "dialog_node": "node_1_1519597873331",
-      "previous_sibling": "node_3_1563326800084"
-    },
-    {
       "type": "response_condition",
       "output": {
         "text": {
@@ -7387,28 +7178,34 @@
     },
     {
       "type": "standard",
-      "title": "Branch Selection",
+      "title": "Make An Appointment",
       "output": {
-        "generic": [
-          {
-            "values": [
-              {
-                "text": "I found 5 nearby bank branches. Which one would you like to go to?"
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          },
-          {
-            "source": "/img/map-bank.png",
-            "response_type": "image"
+        "text": {
+          "values": [
+            "I can help you schedule an appointment with one of our bankers."
+          ],
+          "selection_policy": "sequential"
+        },
+        "ui_action": {
+          "notification_display": {
+            "DisplayURL": "https://www.youtube.com/watch?v=ES4GHcDsSCI&feature=youtu.be",
+            "DisplayText": "The bot is using slots to gather information on the user. Check out this video to learn more about slots."
           }
-        ]
+        }
       },
-      "parent": "node_16_1517207566408",
+      "parent": "node_14_1517313944050",
+      "context": {
+        "current_date": "<? now().reformatDateTime('yyyy-MM-dd') ?>",
+        "current_step": "Start",
+        "lastresponse": "<? output ?>",
+        "current_process": "Appointments"
+      },
       "metadata": {},
-      "conditions": "true",
-      "dialog_node": "node_1_1542162855253"
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "#Business_Information-Make_Appointment",
+      "dialog_node": "node_1_1615917434595"
     },
     {
       "type": "standard",
@@ -7494,28 +7291,6 @@
     },
     {
       "type": "standard",
-      "title": "Conversation Flow Control - Return To Start",
-      "output": {
-        "text": {
-          "values": [],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_41_1513049128006",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_21_1518149391023"
-      },
-      "conditions": "#General_Conversation-Control_Go_Back",
-      "dialog_node": "node_12_1518405153530"
-    },
-    {
-      "type": "standard",
       "output": {
         "text": {
           "values": [
@@ -7537,6 +7312,27 @@
       "conditions": "@ResponseTypes:uncertain",
       "dialog_node": "node_12_1519013762567",
       "previous_sibling": "node_11_1519013750671"
+    },
+    {
+      "type": "standard",
+      "title": "Request Purpose Of Appointment",
+      "output": {
+        "text": {
+          "values": [
+            "We have a banker available at our @branchLocation branch for <? $app_date.reformatDateTime('EEE, MMM d') ?>, at <? $app_time.reformatDateTime('h:mm a') ?>. In a few words, can you tell me what is the purpose of the appointment?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_2_1615917434597",
+      "context": {
+        "current_step": "Collect_Purpose",
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$app_purpose == \"\" || $app_purpose == null",
+      "dialog_node": "node_12_1615917434597",
+      "previous_sibling": "node_6_1615917434597"
     },
     {
       "type": "response_condition",
@@ -7672,6 +7468,28 @@
       "previous_sibling": "node_23_1518581741525"
     },
     {
+      "type": "standard",
+      "title": "Conversation Flow Control - Return To Start",
+      "output": {
+        "text": {
+          "values": [],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_12_1615917434597",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_21_1518149391023"
+      },
+      "conditions": "#General_Conversation-Control_Go_Back",
+      "dialog_node": "node_13_1615917434597"
+    },
+    {
       "type": "response_condition",
       "output": {
         "text": {
@@ -7713,7 +7531,9 @@
     },
     {
       "type": "standard",
-      "output": {},
+      "output": {
+        "generic": []
+      },
       "parent": "node_1_1518401822980",
       "metadata": {},
       "next_step": {
@@ -7724,32 +7544,6 @@
       "conditions": "#Banking-Cancel_Card",
       "dialog_node": "node_14_1511501751752",
       "digress_out": "allow_all_never_return"
-    },
-    {
-      "type": "frame",
-      "title": "Collect Payment Details",
-      "output": {
-        "text": {
-          "values": [
-            ""
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_10_1512358953890",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {
-        "fallback": "leave"
-      },
-      "next_step": {
-        "behavior": "skip_user_input"
-      },
-      "conditions": "true",
-      "dialog_node": "node_14_1512369444501",
-      "digress_out": "allow_all_never_return",
-      "digress_out_slots": "allow_all"
     },
     {
       "type": "standard",
@@ -7870,6 +7664,41 @@
       "conditions": "#Banking-Billing_Dispute || #Billing-Dispute",
       "dialog_node": "node_14_1537144188390",
       "previous_sibling": "node_8_1520999430604"
+    },
+    {
+      "type": "standard",
+      "title": "Store The Purpose Of The Appointment",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "One moment while I confirm your appointment."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          }
+        ]
+      },
+      "parent": "node_12_1615917434597",
+      "context": {
+        "app_purpose": "<?input.text?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_15_1615917434597"
+      },
+      "conditions": "true",
+      "dialog_node": "node_14_1615917434597",
+      "previous_sibling": "node_13_1615917434597"
     },
     {
       "type": "response_condition",
@@ -8005,6 +7834,45 @@
       "previous_sibling": "node_36_1519080540659"
     },
     {
+      "type": "standard",
+      "title": "Display Appointment Confirmation",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Okay your appointment is confirmed. Here is your reminder."
+              },
+              {
+                "text": "\"You have an appointment on $app_dayofweek, $app_date at $app_time at our @branchLocation branch. The purpose of your appointment - $app_purpose.\""
+              },
+              {
+                "text": "Is there anything else I can help you with today?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ],
+        "ui_action": {
+          "appointment_display": {
+            "date": "<? $app_date.reformatDateTime('EEE, MMM d') ?>",
+            "time": "<? $app_time.reformatDateTime('h:mm a') ?>",
+            "address": "$retrievedzip, $app_zip"
+          }
+        }
+      },
+      "parent": "node_2_1615917434597",
+      "context": {
+        "current_step": "Completed",
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_15_1615917434597",
+      "previous_sibling": "node_12_1615917434597"
+    },
+    {
       "type": "response_condition",
       "output": {
         "text": {
@@ -8064,26 +7932,6 @@
       "conditions": "$off_topic_counter > 1",
       "dialog_node": "node_16_1516311593513",
       "digress_out": "allow_all"
-    },
-    {
-      "type": "standard",
-      "title": "Nearest Branch Located",
-      "output": {
-        "text": {
-          "values": [],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_3_1517200453933",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "skip_user_input"
-      },
-      "conditions": "input.text.matches('zip123retrieved')",
-      "dialog_node": "node_16_1517207566408"
     },
     {
       "type": "standard",
@@ -8299,32 +8147,6 @@
     },
     {
       "type": "standard",
-      "title": "Nearest Branch Not found",
-      "output": {
-        "text": {
-          "values": [
-            "Unfortunately I can't find a branch nearby. Please try a different zip code."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_3_1517200453933",
-      "context": {
-        "app_zip": null,
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_22_1513048049461"
-      },
-      "conditions": "input.text.matches('zip123notretrieved')",
-      "dialog_node": "node_18_1517208111044",
-      "previous_sibling": "node_16_1517207566408"
-    },
-    {
-      "type": "standard",
       "output": {},
       "parent": "node_20_1518581080604",
       "metadata": {
@@ -8504,36 +8326,6 @@
       "output": {
         "text": {
           "values": [
-            "I can help you schedule an appointment with one of our bankers."
-          ],
-          "selection_policy": "sequential"
-        },
-        "ui_action": {
-          "notification_display": {
-            "DisplayURL": "https://www.youtube.com/watch?v=ES4GHcDsSCI&feature=youtu.be",
-            "DisplayText": "The bot is using slots to gather information on the user. Check out this video to learn more about slots."
-          }
-        }
-      },
-      "parent": "node_14_1517313944050",
-      "context": {
-        "current_date": "<? now().reformatDateTime('yyyy-MM-dd') ?>",
-        "current_step": "Start",
-        "lastresponse": "<? output ?>",
-        "current_process": "Appointments"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "skip_user_input"
-      },
-      "conditions": "#Business_Information-Make_Appointment",
-      "dialog_node": "node_21_1513047983871"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
             ""
           ],
           "selection_policy": "sequential"
@@ -8552,24 +8344,6 @@
       },
       "conditions": "@ResponseTypes:positive",
       "dialog_node": "node_21_1516678462050"
-    },
-    {
-      "type": "standard",
-      "output": {},
-      "parent": "node_5_1512354449507",
-      "actions": [
-        {
-          "name": "ValidateAcc",
-          "type": "client",
-          "parameters": {
-            "chosen_acc": "$cc_chosen"
-          },
-          "result_variable": "input.text"
-        }
-      ],
-      "metadata": {},
-      "conditions": "true",
-      "dialog_node": "node_21_1517368061327"
     },
     {
       "type": "standard",
@@ -8880,25 +8654,6 @@
     },
     {
       "type": "standard",
-      "title": "Nearest Branch Located",
-      "output": {},
-      "parent": "node_1_1542162855253",
-      "metadata": {
-        "_customization": {
-          "mcr": true
-        }
-      },
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_41_1513049128006"
-      },
-      "conditions": "@option || @sys-number || @zero_match",
-      "dialog_node": "node_2_1542162908337",
-      "digress_out": "allow_all"
-    },
-    {
-      "type": "standard",
       "title": "Search",
       "output": {
         "generic": [
@@ -8919,7 +8674,7 @@
       "conditions": "#search",
       "digress_in": "does_not_return",
       "dialog_node": "node_2_1612395907959",
-      "previous_sibling": "node_3_1612399022301"
+      "previous_sibling": "node_2_1612493218066"
     },
     {
       "type": "frame",
@@ -8958,6 +8713,52 @@
             ],
             "response_type": "text",
             "selection_policy": "sequential"
+          },
+          {
+            "title": "I found 5 nearby bank branches. Which one would you like to go to?",
+            "options": [
+              {
+                "label": "63 Madison Ave ",
+                "value": {
+                  "input": {
+                    "text": "63 Madison Ave "
+                  }
+                }
+              },
+              {
+                "label": "105 Madison Ave",
+                "value": {
+                  "input": {
+                    "text": "105 Madison Ave"
+                  }
+                }
+              },
+              {
+                "label": "51 Astor Place",
+                "value": {
+                  "input": {
+                    "text": "51 Astor Place"
+                  }
+                }
+              },
+              {
+                "label": "590 Madison Ave",
+                "value": {
+                  "input": {
+                    "text": "590 Madison Ave"
+                  }
+                }
+              },
+              {
+                "label": "164 Stanton Street",
+                "value": {
+                  "input": {
+                    "text": "164 Stanton Street"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
           }
         ],
         "ui_action": {
@@ -8966,7 +8767,7 @@
           }
         }
       },
-      "parent": "node_21_1513047983871",
+      "parent": "node_1_1615917434595",
       "context": {
         "lastresponse": "<? output.text[0] ?>"
       },
@@ -8974,12 +8775,12 @@
         "fallback": "leave"
       },
       "next_step": {
-        "behavior": "skip_user_input"
+        "behavior": "jump_to",
+        "selector": "user_input",
+        "dialog_node": "node_6_1615917434597"
       },
       "conditions": "true",
-      "dialog_node": "node_22_1513048049461",
-      "digress_out": "allow_all",
-      "digress_out_slots": "allow_all"
+      "dialog_node": "node_2_1615917434597"
     },
     {
       "type": "standard",
@@ -9024,8 +8825,13 @@
       "parent": "node_6_1518402889388",
       "metadata": {
         "_customization": {
-          "mcr": true
+          "mcr": false
         }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "Start and Initialize Context"
       },
       "conditions": "#General_Conversation-Start_Over",
       "dialog_node": "node_22_1518581571267",
@@ -9080,7 +8886,9 @@
     },
     {
       "type": "standard",
-      "output": {},
+      "output": {
+        "generic": []
+      },
       "parent": "node_13_1518148366245",
       "metadata": {},
       "next_step": {
@@ -9515,7 +9323,9 @@
     },
     {
       "type": "standard",
-      "output": {},
+      "output": {
+        "generic": []
+      },
       "parent": "node_1_1518401822980",
       "metadata": {},
       "next_step": {
@@ -9575,11 +9385,6 @@
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_22_1513048049461"
-      },
       "conditions": "$current_step == \"Gather_Date\"",
       "dialog_node": "node_27_1518150002500"
     },
@@ -9674,11 +9479,6 @@
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_22_1513048049461"
-      },
       "conditions": "$current_step == \"Collect_Purpose\"",
       "dialog_node": "node_28_1518150041098",
       "previous_sibling": "node_41_1518150526252"
@@ -9758,11 +9558,6 @@
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_41_1513049128006"
-      },
       "conditions": "$current_step == \"Completed\"",
       "dialog_node": "node_29_1518150069297",
       "previous_sibling": "node_28_1518150041098"
@@ -9819,25 +9614,6 @@
       "conditions": "true",
       "dialog_node": "node_29_1519079578119",
       "previous_sibling": "node_28_1519079503671"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Unfortunately that's less than the minimum amount. Would you like to pay the minimum amount, $$acc_minamt?"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_14_1512369444501",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "$cc_payamt < $acc_minamt",
-      "dialog_node": "node_30_1512370103609",
-      "previous_sibling": "node_85_1518432998916"
     },
     {
       "type": "standard",
@@ -9920,22 +9696,6 @@
       "conditions": "@ResponseTypes:negative",
       "dialog_node": "node_30_1518664482851",
       "previous_sibling": "node_29_1518664472916"
-    },
-    {
-      "type": "standard",
-      "output": {},
-      "parent": "node_30_1512370103609",
-      "context": {
-        "cc_payamt": "$acc_minamt"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_32_1512370179991"
-      },
-      "conditions": "@ResponseTypes:positive",
-      "dialog_node": "node_31_1512370175438"
     },
     {
       "type": "standard",
@@ -10108,71 +9868,6 @@
       "digress_out": "allow_all"
     },
     {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Okay, let's try again."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_30_1512370103609",
-      "context": {
-        "cc_payamt": null,
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_14_1512369444501"
-      },
-      "conditions": "@ResponseTypes:negative || @ResponseTypes:uncertain",
-      "dialog_node": "node_3_1512529723422",
-      "previous_sibling": "node_31_1512370175438"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_14_1512369444501",
-      "context": {
-        "cc_paydate": null,
-        "lastresponse": "<? output ?>",
-        "cc_futurepaydate_error": "<? context['cc_futurepaydate_error'] + 1 ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "skip_user_input"
-      },
-      "conditions": "$cc_paydate.after($acc_paydue)",
-      "dialog_node": "node_3_1513039564223"
-    },
-    {
-      "type": "standard",
-      "title": "Retrieve Address Data",
-      "output": {},
-      "parent": "node_22_1513048049461",
-      "actions": [
-        {
-          "name": "RetrieveZip",
-          "type": "client",
-          "parameters": {
-            "zip_value": "$app_zip"
-          },
-          "result_variable": "context.retrievedzip"
-        }
-      ],
-      "metadata": {},
-      "conditions": "true",
-      "dialog_node": "node_3_1517200453933"
-    },
-    {
       "type": "response_condition",
       "output": {
         "text": {
@@ -10286,82 +9981,30 @@
       "previous_sibling": "node_36_1516849377444"
     },
     {
-      "type": "response_condition",
-      "output": {
-        "text": {
-          "values": [
-            "I'm sorry but that's not a valid option."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_2_1542162908337",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "body",
-        "dialog_node": "node_1_1542162855253"
-      },
-      "conditions": "@sys-number < 1 || @sys-number > 5 || @zero_match",
-      "dialog_node": "node_3_1542162957903",
-      "previous_sibling": "node_5_1542162997349"
-    },
-    {
       "type": "standard",
+      "output": {
+        "generic": []
+      },
       "parent": "node_22_1516678490511",
       "next_step": {
         "behavior": "jump_to",
         "selector": "body",
-        "dialog_node": "node_22_1518581571267"
+        "dialog_node": "Start and Initialize Context"
       },
       "conditions": "#General_Conversation-Start_Over",
       "dialog_node": "node_3_1563326800084"
     },
     {
       "type": "standard",
-      "output": {
-        "generic": [
-          {
-            "values": [
-              {
-                "text": "Hi there!"
-              },
-              {
-                "text": "Hello!"
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          }
-        ]
-      },
-      "conditions": "welcome",
-      "dialog_node": "node_3_1612399022301",
-      "previous_sibling": "node_2_1612493218066"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Okay, we'll make a payment of $$cc_payamt on <? $cc_paydate.reformatDateTime('EEE, MMM d, yyyy') ?> to credit card $cc_chosen. Is this information correct?"
-          ],
-          "selection_policy": "sequential"
+      "title": "Payment Confirmation for Paying Today",
+      "parent": "node_10_1615919837184",
+      "metadata": {
+        "_customization": {
+          "mcr": true
         }
       },
-      "parent": "node_14_1512369444501",
-      "context": {
-        "accbal_total": "<? context['acc_currbal'] - context['cc_payamt'] ?>",
-        "current_step": "Payment_Confirmation",
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "$cc_payamt > $acc_minamt || $cc_payamt == $acc_minamt",
-      "dialog_node": "node_32_1512370179991",
-      "previous_sibling": "node_30_1512370103609"
+      "conditions": "true",
+      "dialog_node": "node_3_1615921013431"
     },
     {
       "type": "standard",
@@ -10971,27 +10614,6 @@
     },
     {
       "type": "standard",
-      "title": "Request Purpose Of Appointment",
-      "output": {
-        "text": {
-          "values": [
-            "We have a banker available for <? $app_date.reformatDateTime('EEE, MMM d') ?>, at <? $app_time.reformatDateTime('h:mm a') ?>. In a few words, can you tell me what is the purpose of the appointment?"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_22_1513048049461",
-      "context": {
-        "current_step": "Collect_Purpose",
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "$app_purpose == \"\" || $app_purpose == null",
-      "dialog_node": "node_41_1513049128006",
-      "previous_sibling": "node_3_1517200453933"
-    },
-    {
-      "type": "standard",
       "title": "Enquire About Secondary Card Feature",
       "output": {
         "text": {
@@ -11033,11 +10655,6 @@
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_22_1513048049461"
-      },
       "conditions": "$current_step == \"Gather_Zip\"",
       "dialog_node": "node_41_1518150526252",
       "previous_sibling": "node_42_1518150599431"
@@ -11341,60 +10958,6 @@
       "previous_sibling": "node_6_1516596848057"
     },
     {
-      "type": "response_condition",
-      "output": {
-        "text": {
-          "values": [
-            "Okay, we'll select the closest branch."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_2_1542162908337",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "@option:unspecified",
-      "dialog_node": "node_4_1542162991069",
-      "previous_sibling": "node_6_1542163004612"
-    },
-    {
-      "type": "standard",
-      "title": "Store The Purpose Of The Appointment",
-      "output": {
-        "generic": [
-          {
-            "values": [
-              {
-                "text": "One moment while I confirm your appointment."
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          },
-          {
-            "time": 3000,
-            "typing": true,
-            "response_type": "pause"
-          }
-        ]
-      },
-      "parent": "node_41_1513049128006",
-      "context": {
-        "app_purpose": "<?input.text?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_43_1513049260736"
-      },
-      "conditions": "true",
-      "dialog_node": "node_42_1513049190444",
-      "previous_sibling": "node_12_1518405153530"
-    },
-    {
       "type": "standard",
       "output": {
         "text": {
@@ -11440,11 +11003,6 @@
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_22_1513048049461"
-      },
       "conditions": "$current_step == \"Gather_Time\"",
       "dialog_node": "node_42_1518150599431",
       "previous_sibling": "node_27_1518150002500"
@@ -11452,12 +11010,7 @@
     {
       "type": "standard",
       "output": {
-        "text": {
-          "values": [
-            ""
-          ],
-          "selection_policy": "sequential"
-        }
+        "generic": []
       },
       "parent": "node_9_1518146863348",
       "context": {
@@ -11488,34 +11041,6 @@
       "conditions": "$current_process == \"CC_Bill_Payment\" && $current_step == \"Payment_Date\"",
       "dialog_node": "node_42_1519790258499",
       "previous_sibling": "node_41_1519790247733"
-    },
-    {
-      "type": "standard",
-      "title": "Display Appointment Confirmation",
-      "output": {
-        "text": {
-          "values": [
-            "Okay your appointment is confirmed. Here is your reminder."
-          ],
-          "selection_policy": "sequential"
-        },
-        "ui_action": {
-          "appointment_display": {
-            "date": "<? $app_date.reformatDateTime('EEE, MMM d') ?>",
-            "time": "<? $app_time.reformatDateTime('h:mm a') ?>",
-            "address": "$retrievedzip, $app_zip"
-          }
-        }
-      },
-      "parent": "node_22_1513048049461",
-      "context": {
-        "current_step": "Completed",
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "true",
-      "dialog_node": "node_43_1513049260736",
-      "previous_sibling": "node_41_1513049128006"
     },
     {
       "type": "standard",
@@ -11798,26 +11323,6 @@
     },
     {
       "type": "standard",
-      "output": {
-        "text": {
-          "values": [],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_33_1516765991451",
-      "context": {
-        "cc_chosen": "@acc_numbers.literal",
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "skip_user_input"
-      },
-      "conditions": "@acc_numbers:acc_num",
-      "dialog_node": "node_5_1512354449507"
-    },
-    {
-      "type": "standard",
       "title": "Savings Feature Selected",
       "output": {
         "text": {
@@ -11964,24 +11469,6 @@
       "previous_sibling": "node_4_1520998969424"
     },
     {
-      "type": "response_condition",
-      "output": {
-        "text": {
-          "values": [
-            "Okay, the @option branch."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_2_1542162908337",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "@option",
-      "dialog_node": "node_5_1542162997349"
-    },
-    {
       "type": "standard",
       "output": {
         "generic": [
@@ -12118,25 +11605,6 @@
     },
     {
       "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Unfortunately for demonstration purposes we don't have other accounts to show you. Would you like to go back and select an account?"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_33_1516765991451",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "@ResponseTypes:Other",
-      "dialog_node": "node_6_1512354886414",
-      "previous_sibling": "node_5_1512354449507"
-    },
-    {
-      "type": "standard",
       "title": "Rewards Feature Selected",
       "output": {
         "text": {
@@ -12270,25 +11738,6 @@
       "previous_sibling": "node_5_1520999071594"
     },
     {
-      "type": "response_condition",
-      "output": {
-        "text": {
-          "values": [
-            "Okay, location @sys-number on the list."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_2_1542162908337",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "@sys-number",
-      "dialog_node": "node_6_1542163004612",
-      "previous_sibling": "node_3_1542162957903"
-    },
-    {
       "type": "standard",
       "parent": "node_4_1518732007439",
       "next_step": {
@@ -12298,6 +11747,24 @@
       },
       "conditions": "#General_Conversation-Start_Over",
       "dialog_node": "node_6_1563325689158"
+    },
+    {
+      "type": "standard",
+      "title": "Nearest Branch Located",
+      "output": {},
+      "parent": "node_2_1615917434597",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_12_1615917434597"
+      },
+      "conditions": "@option || @sys-number || @zero_match || @branchLocation",
+      "dialog_node": "node_6_1615917434597"
     },
     {
       "type": "standard",
@@ -12595,29 +12062,6 @@
       "previous_sibling": "node_11_1511494612340"
     },
     {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Great, let's try again."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_6_1512354886414",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "body",
-        "dialog_node": "node_3_1511326054650"
-      },
-      "conditions": "@ResponseTypes:positive",
-      "dialog_node": "node_7_1512355009116"
-    },
-    {
       "type": "frame",
       "title": "Request Current Credit Level Information",
       "output": {
@@ -12773,11 +12217,6 @@
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_14_1512369444501"
-      },
       "conditions": "$current_step == \"Payment_Amount\"",
       "dialog_node": "node_73_1518431341442",
       "previous_sibling": "node_67_1518430449006"
@@ -12823,11 +12262,6 @@
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_14_1512369444501"
-      },
       "conditions": "$current_step == \"Payment_Confirmation\"",
       "dialog_node": "node_74_1518431480922",
       "previous_sibling": "node_73_1518431341442"
@@ -12866,11 +12300,6 @@
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_3_1513039564223"
-      },
       "conditions": "$current_step == \"Completed\"",
       "dialog_node": "node_75_1518431623888",
       "previous_sibling": "node_74_1518431480922"
@@ -13079,56 +12508,6 @@
       "previous_sibling": "node_7_1511494287612"
     },
     {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Okay. If you change your mind feel free to start the demonstration by typing \"Can you help me with my credit card bill?\"."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_6_1512354886414",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "@ResponseTypes:negative",
-      "dialog_node": "node_8_1512355038073",
-      "previous_sibling": "node_7_1512355009116"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Thank you for your payment. Your statement balance has been updated."
-          ],
-          "selection_policy": "sequential"
-        },
-        "ui_action": {
-          "cc_displaystatement": {
-            "Account": "$cc_chosen",
-            "Payment Date": "<? $cc_paydate.reformatDateTime('EEE, MMM d, yyyy') ?>",
-            "Total Balance": "$accbal_total",
-            "Payment Amount": "$cc_payamt"
-          },
-          "notification_display": {
-            "DisplayText": "The virtual assistant is able to display the user profile and updated balance within a chat interface."
-          }
-        }
-      },
-      "parent": "node_32_1512370179991",
-      "context": {
-        "current_step": "Completed",
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "@ResponseTypes:positive",
-      "dialog_node": "node_8_1512531332315",
-      "previous_sibling": "node_9_1512531357285"
-    },
-    {
       "type": "response_condition",
       "output": {
         "text": {
@@ -13210,60 +12589,6 @@
       "previous_sibling": "node_7_1520999320489"
     },
     {
-      "type": "standard",
-      "output": {},
-      "parent": "node_14_1512369444501",
-      "context": {
-        "cc_paydate": null,
-        "cc_pastpaydate_error": "<? context['cc_pastpaydate_error'] + 1 ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "skip_user_input"
-      },
-      "conditions": "$cc_paydate.before($current_date)",
-      "dialog_node": "node_85_1518432998916",
-      "previous_sibling": "node_3_1513039564223"
-    },
-    {
-      "type": "standard",
-      "title": "Error Check",
-      "output": {},
-      "parent": "node_85_1518432998916",
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "body",
-        "dialog_node": "node_1_1517311254428"
-      },
-      "conditions": "$cc_pastpaydate_error > 1",
-      "dialog_node": "node_86_1518433102564"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Unfortunately the payment date you chose is in the past. Let's try again."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_85_1518432998916",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_14_1512369444501"
-      },
-      "conditions": "true",
-      "dialog_node": "node_87_1518433106024",
-      "previous_sibling": "node_86_1518433102564"
-    },
-    {
       "type": "response_condition",
       "output": {
         "text": {
@@ -13303,79 +12628,6 @@
       },
       "conditions": "#Banking-Report_Stolen_Card || @CC_ReplaceIdent:Stolen",
       "dialog_node": "node_9_1511494311485"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Not sure? That's okay. If you decide to start the demonstration again, you can type \"Can you help me with my credit card bill?\"."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_6_1512354886414",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "@ResponseTypes:uncertain",
-      "dialog_node": "node_9_1512355042738",
-      "previous_sibling": "node_8_1512355038073"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Sure, we can try again."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_32_1512370179991",
-      "context": {
-        "cc_payamt": null,
-        "cc_paydate": null,
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_14_1512369444501"
-      },
-      "conditions": "@ResponseTypes:negative",
-      "dialog_node": "node_9_1512531357285"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Unfortunately the payment date you chose is after the due date. Let's try again."
-          ],
-          "selection_policy": "sequential"
-        },
-        "ui_action": {
-          "notification_display": {
-            "DisplayText": "The virtual assistant is able to determine that the date is past the due date."
-          }
-        }
-      },
-      "parent": "node_3_1513039564223",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_14_1512369444501"
-      },
-      "conditions": "true",
-      "dialog_node": "node_9_1513046518879",
-      "previous_sibling": "node_1_1517311254428"
     },
     {
       "type": "standard",
@@ -13432,6 +12684,25 @@
       "output": {
         "text": {
           "values": [
+            "Okay, we'll select the closest branch."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_6_1615917434597",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "@option:unspecified",
+      "dialog_node": "response_10_1615917434597",
+      "previous_sibling": "response_9_1615917434597"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
             "<? $webhook_result_1.translation ?>."
           ],
           "selection_policy": "sequential"
@@ -13446,72 +12717,26 @@
     },
     {
       "type": "response_condition",
-      "title": "response_2_1563324771065",
       "output": {
-        "text": {
-          "values": [
-            "Simply refresh the page to start a new conversation."
-          ],
-          "selection_policy": "sequential"
-        }
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Alright then. I will submit your payment of \\$2,058.89."
+              },
+              {
+                "text": "Is there anything else I can help you with today?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
       },
-      "parent": "node_22_1518581571267",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "conditions": "true",
-      "dialog_node": "response_2_1563324771065",
-      "previous_sibling": "response_2_1563324955980"
-    },
-    {
-      "type": "response_condition",
-      "title": "response_2_1563324955980",
-      "output": {
-        "text": {
-          "values": [
-            "Okay, let's start over."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_22_1518581571267",
-      "context": {
-        "lastresponse": "<? output ?>",
-        "ccpsp_criteria": null
-      },
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "body",
-        "dialog_node": "node_1_1510880732839"
-      },
-      "conditions": "$current_process == \"CC_Selection_Process\"",
-      "dialog_node": "response_2_1563324955980",
-      "previous_sibling": "response_8_1563324905400"
-    },
-    {
-      "type": "response_condition",
-      "title": "response_4_1563324764327",
-      "output": {
-        "text": {
-          "values": [
-            "Okay, let's start over."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_22_1518581571267",
-      "context": {
-        "cc_payamt": null,
-        "cc_paydate": null,
-        "lastresponse": "<? output ?>"
-      },
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "body",
-        "dialog_node": "node_3_1511326054650"
-      },
-      "conditions": "$current_process == \"CC_Bill_Payment\"",
-      "dialog_node": "response_4_1563324764327"
+      "parent": "node_3_1615921013431",
+      "conditions": "@CC_DisputeTypes:CCBalance",
+      "dialog_node": "response_3_1615921187910",
+      "previous_sibling": "response_8_1615921170806"
     },
     {
       "type": "response_condition",
@@ -13530,6 +12755,25 @@
       "conditions": "anything_else",
       "dialog_node": "response_5_1612493670823",
       "previous_sibling": "response_1_1612493703572"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Got it!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_6_1615917434597",
+      "conditions": "@branchLocation",
+      "dialog_node": "response_5_1615918535282"
     },
     {
       "type": "response_condition",
@@ -13569,45 +12813,82 @@
     },
     {
       "type": "response_condition",
-      "title": "response_8_1563324905400",
       "output": {
         "text": {
           "values": [
-            "Okay, let's start over."
+            "Okay, the @option branch."
           ],
           "selection_policy": "sequential"
         }
       },
-      "parent": "node_22_1518581571267",
+      "parent": "node_6_1615917434597",
       "context": {
-        "app_zip": null,
-        "app_date": null,
-        "app_time": null,
-        "app_number": null,
-        "app_purpose": null,
         "lastresponse": "<? output ?>"
       },
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "body",
-        "dialog_node": "node_21_1513047983871"
-      },
-      "conditions": "$current_process == \"Appointments\"",
-      "dialog_node": "response_8_1563324905400",
-      "previous_sibling": "response_4_1563324764327"
+      "metadata": {},
+      "conditions": "@option",
+      "dialog_node": "response_7_1615917434597",
+      "previous_sibling": "response_5_1615918535282"
     },
     {
-      "type": "slot",
-      "output": {},
-      "parent": "node_14_1512369444501",
-      "metadata": {
-        "_customization": {
-          "mcr": true
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "I'm sorry but that's not a valid option."
+          ],
+          "selection_policy": "sequential"
         }
       },
-      "variable": "$cc_paydate",
-      "dialog_node": "slot_15_1512369480985",
-      "previous_sibling": "node_32_1512370179991"
+      "parent": "node_6_1615917434597",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "@sys-number < 1 || @sys-number > 5 || @zero_match",
+      "dialog_node": "response_8_1615917434597",
+      "previous_sibling": "response_7_1615917434597"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Okay. I will submit the minimum payment due of \\$411.78."
+              },
+              {
+                "text": "Is there anything else I can help you with today?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "parent": "node_3_1615921013431",
+      "conditions": "@CC_DisputeTypes:MinPay",
+      "dialog_node": "response_8_1615921170806"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, location @sys-number on the list."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_6_1615917434597",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "@sys-number",
+      "dialog_node": "response_9_1615917434597",
+      "previous_sibling": "response_8_1615917434597"
     },
     {
       "type": "slot",
@@ -13621,15 +12902,23 @@
     {
       "type": "slot",
       "output": {},
-      "parent": "node_22_1513048049461",
+      "parent": "node_2_1615917434597",
       "metadata": {
         "_customization": {
           "mcr": true
         }
       },
       "variable": "$app_date",
-      "dialog_node": "slot_23_1513048058728",
-      "previous_sibling": "node_43_1513049260736"
+      "dialog_node": "slot_16_1615917434597",
+      "previous_sibling": "node_15_1615917434597"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_10_1615919837184",
+      "variable": "$payment_date",
+      "dialog_node": "slot_2_1615920355142",
+      "previous_sibling": "slot_5_1615919874337"
     },
     {
       "type": "slot",
@@ -13643,15 +12932,15 @@
     {
       "type": "slot",
       "output": {},
-      "parent": "node_22_1513048049461",
+      "parent": "node_2_1615917434597",
       "metadata": {
         "_customization": {
           "mcr": true
         }
       },
       "variable": "$app_time",
-      "dialog_node": "slot_26_1513048122602",
-      "previous_sibling": "slot_23_1513048058728"
+      "dialog_node": "slot_25_1615917434597",
+      "previous_sibling": "slot_16_1615917434597"
     },
     {
       "type": "slot",
@@ -13665,70 +12954,39 @@
     {
       "type": "slot",
       "output": {},
-      "parent": "node_14_1512369444501",
-      "metadata": {
-        "_customization": {
-          "mcr": true
-        }
-      },
-      "variable": "$cc_payamt",
-      "dialog_node": "slot_27_1512370007221",
-      "previous_sibling": "slot_15_1512369480985"
-    },
-    {
-      "type": "slot",
-      "output": {},
-      "parent": "node_22_1513048049461",
+      "parent": "node_2_1615917434597",
       "metadata": {
         "_customization": {
           "mcr": true
         }
       },
       "variable": "$app_zip",
-      "dialog_node": "slot_29_1513048234102",
-      "previous_sibling": "slot_26_1513048122602"
+      "dialog_node": "slot_30_1615917434598",
+      "previous_sibling": "slot_25_1615917434597"
     },
     {
       "type": "slot",
       "output": {},
-      "parent": "node_14_1512369444501",
-      "metadata": {
-        "_customization": {
-          "mcr": true
-        }
-      },
-      "variable": "$cc_payamt",
-      "dialog_node": "slot_4_1513045087713",
-      "previous_sibling": "slot_27_1512370007221"
+      "parent": "node_10_1615919837184",
+      "variable": "$payment_amount",
+      "dialog_node": "slot_3_1615920631702",
+      "previous_sibling": "slot_2_1615920355142"
     },
     {
       "type": "slot",
       "output": {},
-      "parent": "node_14_1512369444501",
-      "metadata": {},
-      "variable": "$cc_payamt",
-      "dialog_node": "slot_5_1520217147719",
-      "previous_sibling": "slot_7_1517540967233"
-    },
-    {
-      "type": "slot",
-      "parent": "node_22_1513048049461",
+      "parent": "node_2_1615917434597",
       "variable": "$app_number",
-      "dialog_node": "slot_5_1563321591253",
-      "previous_sibling": "slot_29_1513048234102"
+      "dialog_node": "slot_36_1615917434598",
+      "previous_sibling": "slot_30_1615917434598"
     },
     {
       "type": "slot",
       "output": {},
-      "parent": "node_14_1512369444501",
-      "metadata": {
-        "_customization": {
-          "mcr": true
-        }
-      },
-      "variable": "$cc_payamt",
-      "dialog_node": "slot_7_1517540967233",
-      "previous_sibling": "slot_4_1513045087713"
+      "parent": "node_10_1615919837184",
+      "variable": "$cc_chosen",
+      "dialog_node": "slot_5_1615919874337",
+      "previous_sibling": "node_3_1615921013431"
     },
     {
       "type": "slot",
@@ -13740,9 +12998,25 @@
     },
     {
       "type": "standard",
-      "title": "Start and Initialize Context",
+      "title": "Conversation Start and Initialize Context",
       "output": {
-        "generic": []
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi there, how can I help you?"
+              },
+              {
+                "text": "Greetings! "
+              },
+              {
+                "text": "Hello. What can I do for you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
       },
       "context": {
         "change_type": "",
@@ -13759,12 +13033,7 @@
           "mcr": false
         }
       },
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_3_1612399022301"
-      },
-      "conditions": "conversation_start",
+      "conditions": "conversation_start || #General_Conversation-Start_Over || welcome",
       "digress_in": "does_not_return",
       "dialog_node": "Start and Initialize Context",
       "digress_out": "allow_all"
