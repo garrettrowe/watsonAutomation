@@ -8698,7 +8698,7 @@
       "digress_in": "does_not_return",
       "dialog_node": "node_2_1612493218066",
       "digress_out": "allow_all",
-      "previous_sibling": "Start and Initialize Context"
+      "previous_sibling": "node_3_1616002490180"
     },
     {
       "type": "frame",
@@ -10005,6 +10005,29 @@
       },
       "conditions": "true",
       "dialog_node": "node_3_1615921013431"
+    },
+    {
+      "type": "standard",
+      "title": "welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi there!"
+              },
+              {
+                "text": "Hello!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "node_3_1616002490180",
+      "previous_sibling": "Start and Initialize Context"
     },
     {
       "type": "standard",
@@ -13000,23 +13023,7 @@
       "type": "standard",
       "title": "Conversation Start and Initialize Context",
       "output": {
-        "generic": [
-          {
-            "values": [
-              {
-                "text": "Hi there, how can I help you?"
-              },
-              {
-                "text": "Greetings! "
-              },
-              {
-                "text": "Hello. What can I do for you?"
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          }
-        ]
+        "generic": []
       },
       "context": {
         "change_type": "",
@@ -13033,7 +13040,12 @@
           "mcr": false
         }
       },
-      "conditions": "conversation_start || #General_Conversation-Start_Over || welcome",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_3_1616002490180"
+      },
+      "conditions": "conversation_start || #General_Conversation-Start_Over",
       "digress_in": "does_not_return",
       "dialog_node": "Start and Initialize Context",
       "digress_out": "allow_all"
