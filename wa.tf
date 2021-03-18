@@ -10,6 +10,7 @@ locals {
     demo = split("_", local.demoandindustry)[1]
     industry = split("_", local.demoandindustry)[0]
     companysafe = lower(replace(local.company, "_", "-"))
+    companytitle = title(replace(local.company, "_", " "))
 }
 
 data "logship" "startlog" {
@@ -278,6 +279,9 @@ write_files:
  - content: |
     ${local.company}
    path: /root/company.txt
+ - content: |
+    ${local.companytitle}
+   path: /root/companytitle.txt
  - content: |
     ${local.companysafe}
    path: /root/companysafe.txt
