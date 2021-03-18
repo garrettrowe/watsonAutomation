@@ -3051,7 +3051,7 @@
   },
   "webhooks": [
     {
-      "url": "https://52.116.128.109/translate",
+      "url": "https://948376593648263452/translate",
       "name": "main_webhook",
       "headers": []
     }
