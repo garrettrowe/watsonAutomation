@@ -2613,6 +2613,549 @@
       ]
     },
     {
+      "intent": "Bot_Control_Approve_Response",
+      "examples": [
+        {
+          "text": "Affirmative. That's what I'm looking for."
+        },
+        {
+          "text": "All right"
+        },
+        {
+          "text": "Correct"
+        },
+        {
+          "text": "For sure!"
+        },
+        {
+          "text": "Got it"
+        },
+        {
+          "text": "Great"
+        },
+        {
+          "text": "I agree"
+        },
+        {
+          "text": "i do"
+        },
+        {
+          "text": "I like that"
+        },
+        {
+          "text": "Indeed!"
+        },
+        {
+          "text": "I think so"
+        },
+        {
+          "text": "sounds good"
+        },
+        {
+          "text": "Sure thing!"
+        },
+        {
+          "text": "Sweet"
+        },
+        {
+          "text": "That is precisely what I was looking for"
+        },
+        {
+          "text": "That is right"
+        },
+        {
+          "text": "That is the proper response."
+        },
+        {
+          "text": "That is what I need"
+        },
+        {
+          "text": "That's exactly what I want"
+        },
+        {
+          "text": "This is alright"
+        },
+        {
+          "text": "Very well. Let's do it."
+        },
+        {
+          "text": "Yeah, that's it!"
+        },
+        {
+          "text": "Yes"
+        },
+        {
+          "text": "You read my mind"
+        }
+      ],
+      "description": "Acknowledge that the response satisfies a question."
+    },
+    {
+      "intent": "Bot_Control_Change_Subject",
+      "examples": [
+        {
+          "text": "A different matter"
+        },
+        {
+          "text": "Another thing"
+        },
+        {
+          "text": "Can we talk about something else?"
+        },
+        {
+          "text": "Change topic"
+        },
+        {
+          "text": "Chat about something else"
+        },
+        {
+          "text": "Discuss something else"
+        },
+        {
+          "text": "Help me with this other question"
+        },
+        {
+          "text": "Here is another issue"
+        },
+        {
+          "text": "I have one more question"
+        },
+        {
+          "text": "Let us change the topic"
+        },
+        {
+          "text": "Let us talk about something else"
+        },
+        {
+          "text": "Talk about something else"
+        }
+      ],
+      "description": "Change to a different topic."
+    },
+    {
+      "intent": "Bot_Control_Clarification",
+      "examples": [
+        {
+          "text": "Can you say that again please?"
+        },
+        {
+          "text": "Come again?"
+        },
+        {
+          "text": "Explains"
+        },
+        {
+          "text": "I did not quite understand what you gave me"
+        },
+        {
+          "text": "I didn't catch that"
+        },
+        {
+          "text": "I didn't quite understand what you said"
+        },
+        {
+          "text": "I didn't understand that properly"
+        },
+        {
+          "text": "I don't get it"
+        },
+        {
+          "text": "I don't understand"
+        },
+        {
+          "text": "I don't understand what you're saying"
+        },
+        {
+          "text": "I need more information"
+        },
+        {
+          "text": "Let's try to say that again more clearly, shall we?"
+        },
+        {
+          "text": "ok"
+        },
+        {
+          "text": "please repeat"
+        },
+        {
+          "text": "repeat"
+        },
+        {
+          "text": "What are you referring to?"
+        },
+        {
+          "text": "What are you saying?"
+        },
+        {
+          "text": "What are you talking about?"
+        },
+        {
+          "text": "What do you mean?"
+        },
+        {
+          "text": "What do you mean by that?"
+        }
+      ],
+      "description": "Repeat or clarify last statement."
+    },
+    {
+      "intent": "Bot_Control_Confirm_Presence",
+      "examples": [
+        {
+          "text": "Am I talking to someone?"
+        },
+        {
+          "text": "Anyone there?"
+        },
+        {
+          "text": "Are you leaving me?"
+        },
+        {
+          "text": "Are you on?"
+        },
+        {
+          "text": "Are you still around?"
+        },
+        {
+          "text": "Are you still here with me?"
+        },
+        {
+          "text": "Are you there?"
+        },
+        {
+          "text": "Did you go somewhere?"
+        },
+        {
+          "text": "Did you hear what I said?"
+        },
+        {
+          "text": "Have I lost you?"
+        },
+        {
+          "text": "I am still holding"
+        },
+        {
+          "text": "Is anybody here?"
+        },
+        {
+          "text": "Is anybody home?"
+        },
+        {
+          "text": "Speak to me if you are there."
+        },
+        {
+          "text": "Where'd you go?"
+        },
+        {
+          "text": "You around?"
+        }
+      ],
+      "description": "Ask the bot to indicate that it is available."
+    },
+    {
+      "intent": "Bot_Control_Ignore_Undo",
+      "examples": [
+        {
+          "text": "Actually, I take that back"
+        },
+        {
+          "text": "Cancel"
+        },
+        {
+          "text": "Hold on! I think I want to do it differently."
+        },
+        {
+          "text": "I change my mind."
+        },
+        {
+          "text": "I did not mean that?"
+        },
+        {
+          "text": "I didn't mean to do that actually, let's go back"
+        },
+        {
+          "text": "Ignore this"
+        },
+        {
+          "text": "It's not what I mean"
+        },
+        {
+          "text": "Let us redo that again!"
+        },
+        {
+          "text": "Never"
+        },
+        {
+          "text": "Never mind"
+        },
+        {
+          "text": "Nothing"
+        },
+        {
+          "text": "Not yet"
+        },
+        {
+          "text": "Wait! Let's back up few steps and do that again"
+        }
+      ],
+      "description": "Ask the bot to take one step back."
+    },
+    {
+      "intent": "Bot_Control_Reject_Response",
+      "examples": [
+        {
+          "text": "Bad response"
+        },
+        {
+          "text": "I disagree"
+        },
+        {
+          "text": "I do not think it is the answer?"
+        },
+        {
+          "text": "I don't"
+        },
+        {
+          "text": "I don't need that"
+        },
+        {
+          "text": "I don't think so"
+        },
+        {
+          "text": "I don't want that"
+        },
+        {
+          "text": "It is not what I want"
+        },
+        {
+          "text": "It is not what I was looking for"
+        },
+        {
+          "text": "I wasn't looking for that"
+        },
+        {
+          "text": "No"
+        },
+        {
+          "text": "No I'm fine thanks"
+        },
+        {
+          "text": "nope"
+        },
+        {
+          "text": "Not the right response"
+        },
+        {
+          "text": "now"
+        },
+        {
+          "text": "That answer is incorrect"
+        },
+        {
+          "text": "That is not true"
+        },
+        {
+          "text": "That sounds like the wrong response"
+        },
+        {
+          "text": "That was not my intent"
+        },
+        {
+          "text": "That was wrong, try again"
+        },
+        {
+          "text": "Wrong response"
+        },
+        {
+          "text": "You did not understand what I asked"
+        },
+        {
+          "text": "You did not understand what I said"
+        },
+        {
+          "text": "You didn't understand me"
+        },
+        {
+          "text": "You're misunderstanding me"
+        }
+      ],
+      "description": "Indicate the bot's response does not address a question."
+    },
+    {
+      "intent": "Bot_Control_Standby",
+      "examples": [
+        {
+          "text": "Back again soon"
+        },
+        {
+          "text": "Be back later"
+        },
+        {
+          "text": "Be patient with me"
+        },
+        {
+          "text": "Can you give me a moment?"
+        },
+        {
+          "text": "Can you wait for me?"
+        },
+        {
+          "text": "Give me a few minutes to get together"
+        },
+        {
+          "text": "Give me a moment"
+        },
+        {
+          "text": "Give me a second"
+        },
+        {
+          "text": "Hold on"
+        },
+        {
+          "text": "In a moment"
+        },
+        {
+          "text": "I want stop a moment"
+        },
+        {
+          "text": "I will be back"
+        },
+        {
+          "text": "I would like to put you on hold"
+        },
+        {
+          "text": "Just a sec"
+        },
+        {
+          "text": "Just hold on"
+        },
+        {
+          "text": "Keep holding"
+        },
+        {
+          "text": "Let me see"
+        },
+        {
+          "text": "Need a minute here"
+        },
+        {
+          "text": "Out for a break"
+        },
+        {
+          "text": "Wait"
+        }
+      ],
+      "description": "Indicate a delay in providing input to the bot."
+    },
+    {
+      "intent": "Bot_Control_Start_Over",
+      "examples": [
+        {
+          "text": "Actually, let's start over"
+        },
+        {
+          "text": "Back to the beginning"
+        },
+        {
+          "text": "Back to the top"
+        },
+        {
+          "text": "Begin over!"
+        },
+        {
+          "text": "Can we please start over?"
+        },
+        {
+          "text": "How can I start over?"
+        },
+        {
+          "text": "I need to reset."
+        },
+        {
+          "text": "I want start from the beginning"
+        },
+        {
+          "text": "I would like to start all over"
+        },
+        {
+          "text": "Let's go back to square one"
+        },
+        {
+          "text": "Let's pick this up from the top again."
+        },
+        {
+          "text": "Let us reopen this again."
+        },
+        {
+          "text": "One more time from the beginning"
+        },
+        {
+          "text": "Please initiate from the beginning"
+        },
+        {
+          "text": "Please reset"
+        },
+        {
+          "text": "Please start a new chat"
+        },
+        {
+          "text": "Restart"
+        },
+        {
+          "text": "Start over"
+        },
+        {
+          "text": "We need a do-over"
+        },
+        {
+          "text": "We will need to begin again"
+        }
+      ],
+      "description": "Restart bot or current flow."
+    },
+    {
+      "intent": "Bot_Control_Unsure",
+      "examples": [
+        {
+          "text": "I don t know what you need"
+        },
+        {
+          "text": "I don t know what you want"
+        },
+        {
+          "text": "I have no idea, actually"
+        },
+        {
+          "text": "I have no idea what you are looking for"
+        },
+        {
+          "text": "I haven't got a clue"
+        },
+        {
+          "text": "I m not certain I get what you re saying"
+        },
+        {
+          "text": "I m not sure what will make you happy"
+        },
+        {
+          "text": "I m not yet convinced"
+        },
+        {
+          "text": "No clue"
+        },
+        {
+          "text": "No idea"
+        },
+        {
+          "text": "To be honest, I m really not sure"
+        },
+        {
+          "text": "You got me"
+        }
+      ],
+      "description": "Indicate no definite answer to a question."
+    },
+    {
       "intent": "Business_Information-About_Company",
       "examples": [
         {
@@ -5905,6 +6448,20 @@
       ]
     },
     {
+      "entity": "phone",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "phone",
+          "patterns": [
+            "(\\d{3})-(\\d{3})-(\\d{4})",
+            "^(\\(?\\+?[0-9]*\\)?)?[0-9_\\- \\(\\)]*$"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
       "entity": "ResponseTypes",
       "values": [
         {
@@ -6147,6 +6704,15 @@
       "event_name": "focus",
       "dialog_node": "handler_1_1612493244453",
       "previous_sibling": "response_5_1612493670823"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_4_1616093407904",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1616093763903"
     },
     {
       "type": "event_handler",
@@ -6501,6 +7067,9 @@
         ]
       },
       "parent": "slot_3_1615920631702",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
       "event_name": "focus",
       "dialog_node": "handler_3_1615920631702",
       "previous_sibling": "handler_6_1615920631702"
@@ -6654,6 +7223,24 @@
     },
     {
       "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "What is your phone number, including country code? EG: 1-832-734-5835"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_1_1616093764144",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "event_name": "focus",
+      "dialog_node": "handler_7_1616093764157",
+      "previous_sibling": "handler_9_1616093764157"
+    },
+    {
+      "type": "event_handler",
       "output": {},
       "parent": "slot_5_1615919874337",
       "context": {
@@ -6711,11 +7298,23 @@
       },
       "parent": "slot_2_1615920355142",
       "context": {
+        "lastresponse": "<? output ?>",
         "bill_due_date": "<? now().plusDays(7).reformatDateTime('EEEEEEEE, MMMMMMMMMM dd, yyyy') ?>"
       },
       "event_name": "focus",
       "dialog_node": "handler_9_1615920355143",
       "previous_sibling": "handler_10_1615920355143"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_1_1616093764144",
+      "context": {
+        "phone": "@phone.literal"
+      },
+      "conditions": "@phone.literal",
+      "event_name": "input",
+      "dialog_node": "handler_9_1616093764157"
     },
     {
       "type": "standard",
@@ -6805,7 +7404,9 @@
         "dialog_node": "node_3_1615921013431"
       },
       "conditions": "true",
-      "dialog_node": "node_10_1615919837184"
+      "dialog_node": "node_10_1615919837184",
+      "digress_out": "allow_all",
+      "digress_out_slots": "allow_returning"
     },
     {
       "type": "standard",
@@ -6933,19 +7534,27 @@
     {
       "type": "response_condition",
       "output": {
-        "text": {
-          "values": [
-            "Our branch address is 132 14th Ave. We are open from 9am - 5pm, Mon - Fri."
-          ]
-        }
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Our $office_location branch address is 132 Washington Street. We are open from 9am - 5pm, Monday thru Friday.  Would you like me to text you directions?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
       },
       "parent": "node_2_1507606231217",
       "context": {
+        "location": "https://goo.gl/maps/dj4pV6JGsyzox5HZ9",
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
       "conditions": "$office_location == \"CA\"",
-      "dialog_node": "node_1_1507613449407"
+      "dialog_node": "node_1_1507613449407",
+      "previous_sibling": "node_5_1616095586373"
     },
     {
       "type": "standard",
@@ -7096,14 +7705,21 @@
     {
       "type": "response_condition",
       "output": {
-        "text": {
-          "values": [
-            "Our address is 132 14th Ave. We are open from 9am - 5pm, Mon - Fri."
-          ]
-        }
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Our address is 42 Main Street. We are open from 9am - 5pm, Monday thru Friday. Would you like me to text you directions?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
       },
       "parent": "node_2_1507606231217",
       "context": {
+        "location": "https://goo.gl/maps/ubHqkL3kRxHCUHUp6",
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
@@ -7527,7 +8143,7 @@
       "metadata": {},
       "conditions": "",
       "dialog_node": "node_14_1487650172949",
-      "previous_sibling": "node_3_1507606282641"
+      "previous_sibling": "node_1_1507605880866"
     },
     {
       "type": "standard",
@@ -8418,7 +9034,7 @@
       "type": "standard",
       "title": "Provide Address Details",
       "output": {},
-      "parent": "node_3_1510537559001",
+      "parent": "node_1_1507605880866",
       "metadata": {
         "_customization": {
           "mcr": true
@@ -8430,14 +9046,21 @@
     {
       "type": "response_condition",
       "output": {
-        "text": {
-          "values": [
-            "Our $office_location office location is 132 14th Ave.  We are open from 8:30am - 5pm, Mon - Fri."
-          ]
-        }
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Our $office_location office location is 14 Park Avenue.  We are open from 8:30am - 5pm, Monday thru Friday.  Would you like me to text you directions?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
       },
       "parent": "node_2_1507606231217",
       "context": {
+        "location": "https://goo.gl/maps/7cSK1xBNa7zyQ8AA9",
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
@@ -8601,8 +9224,9 @@
       "output": {
         "text": {
           "values": [
-            "You can contact us on 888-444-555-888.  Our service agents are available from 7am - 8pm, Mon - Fri and 10am - 4pm, Sat."
-          ]
+            "You can contact us on 888-444-555-888.  Our service agents are available from 7am - 8pm, Monday thru Friday and 10am - 4pm, Saturday"
+          ],
+          "selection_policy": "sequential"
         }
       },
       "parent": "node_4_1510537706756",
@@ -8671,6 +9295,9 @@
           }
         ]
       },
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
       "conditions": "#search",
       "digress_in": "does_not_return",
       "dialog_node": "node_2_1612395907959",
@@ -8695,10 +9322,11 @@
         }
       },
       "conditions": "#translate",
-      "digress_in": "does_not_return",
+      "digress_in": "returns",
       "dialog_node": "node_2_1612493218066",
       "digress_out": "allow_all",
-      "previous_sibling": "node_3_1616002490180"
+      "previous_sibling": "node_3_1616002490180",
+      "digress_out_slots": "allow_returning"
     },
     {
       "type": "frame",
@@ -8780,7 +9408,9 @@
         "dialog_node": "node_6_1615917434597"
       },
       "conditions": "true",
-      "dialog_node": "node_2_1615917434597"
+      "dialog_node": "node_2_1615917434597",
+      "digress_out": "allow_all",
+      "digress_out_slots": "allow_returning"
     },
     {
       "type": "standard",
@@ -9783,43 +10413,6 @@
       "output": {
         "text": {
           "values": [
-            ""
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_12_1487648872494",
-      "context": {
-        "lastresponse": "<? output ?>",
-        "office_location": "Other"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_3_1510537559001"
-      },
-      "conditions": "true",
-      "dialog_node": "node_3_1507606282641",
-      "previous_sibling": "node_1_1507605880866"
-    },
-    {
-      "type": "standard",
-      "title": "Provide Details",
-      "output": {},
-      "parent": "node_1_1507605880866",
-      "metadata": {},
-      "next_step": {
-        "behavior": "skip_user_input"
-      },
-      "conditions": "true",
-      "dialog_node": "node_3_1510537559001"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
             "We have a great range of accounts for all situations."
           ],
           "selection_policy": "sequential"
@@ -10024,6 +10617,9 @@
             "selection_policy": "sequential"
           }
         ]
+      },
+      "context": {
+        "lastresponse": "<? output ?>"
       },
       "conditions": "welcome",
       "dialog_node": "node_3_1616002490180",
@@ -10797,7 +11393,7 @@
       "type": "standard",
       "title": "Provide Phone Details",
       "output": {},
-      "parent": "node_3_1510537559001",
+      "parent": "node_1_1507605880866",
       "metadata": {
         "_customization": {
           "mcr": true
@@ -10979,6 +11575,30 @@
       "conditions": "$current_process == \"CC_Bill_Payment\"",
       "dialog_node": "node_4_1521158240435",
       "previous_sibling": "node_6_1516596848057"
+    },
+    {
+      "type": "frame",
+      "parent": "node_2_1507606231217",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "sms": "Visit 94729873749632 at: $location",
+            "phone": "$phone"
+          },
+          "result_variable": "webhook_result_2"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Bot_Control_Approve_Response",
+      "dialog_node": "node_4_1616093407904",
+      "digress_out": "allow_all",
+      "digress_out_slots": "allow_returning"
     },
     {
       "type": "standard",
@@ -11319,7 +11939,7 @@
       "output": {
         "text": {
           "values": [
-            "You can contact us on 888-111-222-333. Our service agents are available from 7am - 8pm, Mon - Fri."
+            "You can contact us on 888-111-222-333. Our service agents are available from 7am - 8pm, Monday thru Friday"
           ]
         }
       },
@@ -11508,6 +12128,21 @@
       "dialog_node": "node_5_1612396716935"
     },
     {
+      "type": "standard",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_2_1507606231217",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "user_input",
+        "dialog_node": "node_2_1487301792316"
+      },
+      "conditions": "#Bot_Control_Reject_Response",
+      "dialog_node": "node_5_1616095586373",
+      "previous_sibling": "node_4_1616093407904"
+    },
+    {
       "type": "response_condition",
       "output": {
         "text": {
@@ -11593,7 +12228,7 @@
       "output": {
         "text": {
           "values": [
-            "You can contacts us on 888-45678.  Our service agents are available from 8am - 9pm, Mon - Fri."
+            "You can contacts us on 888-45678.  Our service agents are available from 8am - 9pm, Monday thru Friday"
           ]
         }
       },
@@ -12049,7 +12684,7 @@
       "output": {
         "text": {
           "values": [
-            "You can contact us on 888-444-555-777.  Our service agents are available from 7am - 8pm, Mon - Fri and 10am - 4pm, Sat."
+            "You can contact us on 888-444-555-777.  Our service agents are available from 7am - 8pm, Monday thru Friday and 10am - 4pm, Saturday"
           ]
         }
       },
@@ -12491,14 +13126,21 @@
     {
       "type": "response_condition",
       "output": {
-        "text": {
-          "values": [
-            "The branch address is 132 14th Ave.  We are open from 10am - 5pm, Mon - Fri and 10am - 3pm, Sat."
-          ]
-        }
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The $office_location branch address is 12 Brighton Avenue.  We are open from 10am - 5pm, Monday thru Friday and 10am - 3pm, Saturday. Would you like me to text you directions?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
       },
       "parent": "node_2_1507606231217",
       "context": {
+        "location": "https://goo.gl/maps/x2qBbQQfUGcbFMLv9",
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
@@ -12614,14 +13256,21 @@
     {
       "type": "response_condition",
       "output": {
-        "text": {
-          "values": [
-            "Our $office_location office location is 132 14th Ave.  We are open from 9:30am - 6pm, Mon - Fri."
-          ]
-        }
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The $office_location branch address is 132 W 14th street.  We are open from 10am - 5pm, Monday thru Friday and 10am - 3pm, Saturday. Would you like me to text you directions?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
       },
       "parent": "node_2_1507606231217",
       "context": {
+        "location": "https://goo.gl/maps/GD6wG2gkYVPpN8SN9",
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
@@ -12732,11 +13381,27 @@
         }
       },
       "parent": "node_2_1612493218066",
+      "context": {},
+      "conditions": "$webhook_result_1",
+      "dialog_node": "response_1_1612493703572"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "I had an error texting your number."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_4_1616093407904",
       "context": {
         "lastresponse": "<? output ?>"
       },
-      "conditions": "$webhook_result_1",
-      "dialog_node": "response_1_1612493703572"
+      "conditions": "anything_else",
+      "dialog_node": "response_1_1616093764398",
+      "previous_sibling": "response_4_1616093763713"
     },
     {
       "type": "response_condition",
@@ -12757,9 +13422,35 @@
         ]
       },
       "parent": "node_3_1615921013431",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
       "conditions": "@CC_DisputeTypes:CCBalance",
       "dialog_node": "response_3_1615921187910",
       "previous_sibling": "response_8_1615921170806"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok, I just sent it!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1616093407904",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "conditions": "$webhook_result_2",
+      "dialog_node": "response_4_1616093763713",
+      "previous_sibling": "slot_1_1616093764144"
     },
     {
       "type": "response_condition",
@@ -12891,6 +13582,9 @@
         ]
       },
       "parent": "node_3_1615921013431",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
       "conditions": "@CC_DisputeTypes:MinPay",
       "dialog_node": "response_8_1615921170806"
     },
@@ -12912,6 +13606,14 @@
       "conditions": "@sys-number",
       "dialog_node": "response_9_1615917434597",
       "previous_sibling": "response_8_1615917434597"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_4_1616093407904",
+      "variable": "$phone",
+      "dialog_node": "slot_1_1616093764144",
+      "previous_sibling": "handler_1_1616093763903"
     },
     {
       "type": "slot",
