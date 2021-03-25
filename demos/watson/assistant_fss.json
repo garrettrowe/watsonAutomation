@@ -7512,12 +7512,7 @@
       "type": "standard",
       "title": "Determine If Valid State Entered",
       "output": {
-        "text": {
-          "values": [
-            ""
-          ],
-          "selection_policy": "sequential"
-        }
+        "generic": []
       },
       "parent": "node_12_1487648872494",
       "context": {
@@ -7538,7 +7533,7 @@
           {
             "values": [
               {
-                "text": "Our $office_location branch address is 132 Washington Street. We are open from 9am - 5pm, Monday thru Friday.  Would you like me to text you directions?"
+                "text": "Our California branch address is 132 Washington Street. We are open from 9am - 5pm, Monday thru Friday.  Would you like me to text you directions?"
               }
             ],
             "response_type": "text",
@@ -7766,25 +7761,6 @@
       "previous_sibling": "node_7_1519703536330"
     },
     {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "I am the bank's Virtual Agent. I can help you with banking questions. Please keep in mind this is a demonstration, you will be able to start, restart or move to another scenario by clicking the navigation buttons on the bottom-right hand of this window, or clicking on \"See all features\" in the top-left corner of this window."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_34_1517953592593",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "#General_Conversation-About_The_VA",
-      "dialog_node": "node_1_1519888551970",
-      "previous_sibling": "node_4_1519356290479"
-    },
-    {
       "type": "folder",
       "title": "Advanced Pathways",
       "metadata": {},
@@ -7828,7 +7804,7 @@
       "output": {
         "text": {
           "values": [
-            "We have branches across the country, but our primary offices are in California, Texas, New York and Florida. In which state would you like our location details?"
+            "94729873749632 has locations across the country, but our primary offices are in California, Texas, New York and Florida. In which state would you like our location details?"
           ],
           "selection_policy": "sequential"
         }
@@ -7935,7 +7911,7 @@
       "output": {
         "text": {
           "values": [
-            "We have a banker available at our @branchLocation branch for <? $app_date.reformatDateTime('EEE, MMM d') ?>, at <? $app_time.reformatDateTime('h:mm a') ?>. In a few words, can you tell me what is the purpose of the appointment?"
+            "We have an appointment available at our @branchLocation location for <? $app_date.reformatDateTime('EEE, MMM d') ?>, at <? $app_time.reformatDateTime('h:mm a') ?>. In a few words, can you tell me what is the purpose of the appointment?"
           ],
           "selection_policy": "sequential"
         }
@@ -7972,7 +7948,7 @@
       "output": {
         "text": {
           "values": [
-            "Unfortunately I can't help you close an account. You will need to speak to one of our helpful Customer Service Agents."
+            "Unfortunately I can't help you close an account. You will need to speak to a 94729873749632 Customer Service Agent."
           ],
           "selection_policy": "sequential"
         }
@@ -8130,7 +8106,7 @@
       "output": {
         "text": {
           "values": [
-            "We have branches across the country, but our primary offices are in California, Texas, New York and Florida. In which state would you like our location details?"
+            "94729873749632 has offices across the country, but our primary offices are in California, Texas, New York and Florida. In which state would you like our location details?"
           ],
           "selection_policy": "sequential"
         }
@@ -8262,7 +8238,7 @@
       "output": {
         "text": {
           "values": [
-            "Unfortunately I can't help you with  credit card billing disputes. You will need to talk to one of our Customer Service Agents to assist you."
+            "Unfortunately I can't help you with  credit card billing disputes. You will need to talk to a 94729873749632 Customer Service Agent to assist you."
           ],
           "selection_policy": "sequential"
         }
@@ -8321,7 +8297,7 @@
       "output": {
         "text": {
           "values": [
-            "You can message our service department on 1800-123-456-7890."
+            "You can message the 94729873749632 service department on 1800-123-456-7890."
           ],
           "selection_policy": "sequential"
         }
@@ -8354,7 +8330,7 @@
       "output": {
         "text": {
           "values": [
-            "You can easily set up payment reminders from your Account Settings.  Simply log in to your on-line banking account, then go to your Settings section and select the notification suited to your needs."
+            "You can easily set up payment reminders from your Account Settings.  Simply log in to your 94729873749632 account, then go to your Settings section and select the notification suited to your needs."
           ],
           "selection_policy": "sequential"
         }
@@ -8392,7 +8368,7 @@
       "output": {
         "text": {
           "values": [
-            "Our Bankers are available for appointments Monday - Saturday, 7am - 7pm."
+            "94729873749632 personnel are available for appointments Monday - Saturday, 7am - 7pm."
           ],
           "selection_policy": "sequential"
         }
@@ -8460,7 +8436,7 @@
                 "text": "Okay your appointment is confirmed. Here is your reminder."
               },
               {
-                "text": "\"You have an appointment on $app_dayofweek, $app_date at $app_time at our @branchLocation branch. The purpose of your appointment - $app_purpose.\""
+                "text": "\"You have an appointment on $app_dayofweek, $app_date at $app_time at our @branchLocation location. The purpose of your appointment - $app_purpose.\""
               },
               {
                 "text": "Is there anything else I can help you with today?"
@@ -8513,7 +8489,7 @@
       "output": {
         "text": {
           "values": [
-            "We have branches across the country, but our primary offices are in California, Texas, New York and Florida. In which state would you like to call us?"
+            "94729873749632 has branches across the country, but our primary offices are in California, Texas, New York and Florida. In which state would you like to call us?"
           ],
           "selection_policy": "sequential"
         }
@@ -8532,7 +8508,7 @@
       "output": {
         "text": {
           "values": [
-            "I'm not sure what you mean. You may benefit from talking to our Customer Service agents."
+            "I'm not sure what you mean. You may benefit from talking to a 94729873749632 Customer Service agent."
           ],
           "selection_policy": "sequential"
         }
@@ -8610,7 +8586,7 @@
       "output": {
         "text": {
           "values": [
-            "Our business hours differ for our offices and our Service Center. How would you like to contact us, via a phone call, or visit our office?"
+            "94729873749632 business hours differ for our offices and our Service Center. How would you like to contact us, via a phone call, or visit our office?"
           ],
           "selection_policy": "sequential"
         }
@@ -8686,7 +8662,7 @@
       "output": {
         "text": {
           "values": [
-            "You can contact us a number of ways. You can call us, send an email or visit us on our social media page.  How would you like to reach us?"
+            "You can contact 94729873749632 a number of ways. You can call us, send an email or visit us on our social media page.  How would you like to reach us?"
           ],
           "selection_policy": "sequential"
         }
@@ -8748,7 +8724,7 @@
         },
         "ui_action": {
           "notification_display": {
-            "DisplayText": "This virtual assistant is only trained on specific information regarding selecting a credit card, so it may not understand questions out of scope."
+            "DisplayText": "This virtual assistant is only trained on specific information, so it may not understand questions out of scope."
           }
         }
       },
@@ -8826,30 +8802,6 @@
       "dialog_node": "node_20_1516312171869",
       "digress_out": "allow_all",
       "previous_sibling": "node_16_1516311593513"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "Our Customer Service agents would be happy to help you."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_1_1518401822980",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_25_1516679473977"
-      },
-      "conditions": "#Help-Connect_to_Agent",
-      "dialog_node": "node_20_1517212977657",
-      "previous_sibling": "node_13_1511501739683"
     },
     {
       "type": "standard",
@@ -9025,10 +8977,10 @@
         "behavior": "skip_user_input"
       },
       "conditions": "anything_else",
-      "digress_in": "returns",
+      "digress_in": "does_not_return",
       "dialog_node": "node_2_1487301792316",
       "digress_out": "allow_all",
-      "previous_sibling": "node_1_1518401822980"
+      "previous_sibling": "node_2_1518731420715"
     },
     {
       "type": "standard",
@@ -9050,7 +9002,7 @@
           {
             "values": [
               {
-                "text": "Our $office_location office location is 14 Park Avenue.  We are open from 8:30am - 5pm, Monday thru Friday.  Would you like me to text you directions?"
+                "text": "Our New York office location is 14 Park Avenue.  We are open from 8:30am - 5pm, Monday thru Friday.  Would you like me to text you directions?"
               }
             ],
             "response_type": "text",
@@ -9196,12 +9148,20 @@
       "type": "standard",
       "title": "Live Agent Transfer - No Digressions Return",
       "output": {
-        "text": {
-          "values": [
-            "Okay, I'll transfer you now."
-          ],
-          "selection_policy": "sequential"
-        },
+        "generic": [
+          {
+            "response_type": "connect_to_agent",
+            "transfer_info": {
+              "target": {}
+            },
+            "agent_available": {
+              "message": "An agent will join you shortly."
+            },
+            "agent_unavailable": {
+              "message": "Looks like no agents are available at this moment."
+            }
+          }
+        ],
         "ui_action": {
           "connect_agent": {}
         }
@@ -9210,21 +9170,18 @@
         "lastresponse": "<? output ?>"
       },
       "metadata": {},
-      "next_step": {
-        "behavior": "skip_user_input"
-      },
-      "conditions": "$liveagent_transfer == \"yes\"",
-      "digress_in": "not_available",
+      "conditions": "$liveagent_transfer == \"yes\" || #Help-Connect_to_Agent",
+      "digress_in": "does_not_return",
       "dialog_node": "node_2_1518731420715",
       "digress_out": "allow_all",
-      "previous_sibling": "node_2_1487301792316"
+      "previous_sibling": "node_1_1518401822980"
     },
     {
       "type": "response_condition",
       "output": {
         "text": {
           "values": [
-            "You can contact us on 888-444-555-888.  Our service agents are available from 7am - 8pm, Monday thru Friday and 10am - 4pm, Saturday"
+            "You can contact us on 888-444-555-888.  94729873749632 service agents are available from 7am - 8pm, Monday thru Friday and 10am - 4pm, Saturday"
           ],
           "selection_policy": "sequential"
         }
@@ -9343,7 +9300,7 @@
             "selection_policy": "sequential"
           },
           {
-            "title": "I found 5 nearby bank branches. Which one would you like to go to?",
+            "title": "I found 5 nearby 94729873749632 locations. Which one would you like to go to?",
             "options": [
               {
                 "label": "63 Madison Ave ",
@@ -9417,7 +9374,7 @@
       "output": {
         "text": {
           "values": [
-            "For demonstration purposes I'm only trained to pass the conversation off to a live agent at this point. Simply refresh the page to start a new conversation, or to re-start the scenario tell me to \"Start over\"."
+            "For demonstration purposes I'm only trained to pass the conversation off to a 94729873749632 live agent at this point. Simply refresh the page to start a new conversation, or to re-start the scenario tell me to \"Start over\"."
           ],
           "selection_policy": "sequential"
         }
@@ -9472,7 +9429,7 @@
       "output": {
         "text": {
           "values": [
-            "Unfortunately I can't help you change your security questions. You will need to talk to one of our Customer Service Agents to assist you."
+            "Unfortunately I can't help you change your security questions. You will need to talk to a 94729873749632 Customer Service Agent to assist you."
           ],
           "selection_policy": "sequential"
         }
@@ -9580,7 +9537,7 @@
       "output": {
         "text": {
           "values": [
-            "Unfortunately some details on your account can't be changed. You should talk to one of our Customer Service Agents."
+            "Unfortunately some details on your account can't be changed. You should talk to a 94729873749632 Customer Service Agent."
           ],
           "selection_policy": "sequential"
         }
@@ -9695,7 +9652,7 @@
       "output": {
         "text": {
           "values": [
-            "Unfortunately I cant help you with modifying your login details. You will need to speak to one of our Customer Service agents."
+            "Unfortunately I cant help you with modifying your login details. You will need to speak to a 94729873749632 Customer Service agent."
           ],
           "selection_policy": "sequential"
         }
@@ -9774,7 +9731,7 @@
         },
         "ui_action": {
           "notification_display": {
-            "DisplayText": "The virtual assistant can hand off seamlessly to a live agent who can then address the user."
+            "DisplayText": "The virtual assistant can hand off seamlessly to a 94729873749632 live agent who can then address the user."
           }
         }
       },
@@ -9826,7 +9783,7 @@
       "output": {
         "text": {
           "values": [
-            "Our Rewards programs differ for each range of products. For more information, go to our product page and select the Rewards option to find out more."
+            "94729873749632 Rewards programs differ for each range of products. For more information, go to our product page and select the Rewards option to find out more."
           ]
         }
       },
@@ -9844,7 +9801,7 @@
       "output": {
         "text": {
           "values": [
-            "Unfortunately for fraudulent charges to an account you will need to speak to one of our Customer Service agents."
+            "Unfortunately for fraudulent charges to an account you will need to speak to a 94729873749632 Customer Service agent."
           ],
           "selection_policy": "sequential"
         }
@@ -9868,7 +9825,7 @@
       "output": {
         "text": {
           "values": [
-            "You can see your address details in your Account Settings section from your online account."
+            "You can see your address details in your Account Settings section from your 94729873749632 online account."
           ],
           "selection_policy": "sequential"
         }
@@ -10231,7 +10188,7 @@
       "output": {
         "text": {
           "values": [
-            "You find the account balance in the Accounts Balance section in your online account."
+            "You find the account balance in the Accounts Balance section in your 94729873749632 online account."
           ],
           "selection_policy": "sequential"
         }
@@ -10389,7 +10346,7 @@
       "output": {
         "text": {
           "values": [
-            "For changes to payment due dates you will need to speak to one of our Customer Service Agents."
+            "For changes to payment due dates you will need to speak to a 94729873749632 Customer Service Agent."
           ],
           "selection_policy": "sequential"
         }
@@ -10554,13 +10511,13 @@
       "output": {
         "text": {
           "values": [
-            "I'm having some trouble understanding what you mean. I'm trained to help you select a credit card to suit your needs."
+            "I'm having some trouble understanding what you mean."
           ],
           "selection_policy": "sequential"
         },
         "ui_action": {
           "notification_display": {
-            "DisplayText": "This virtual assistant is only trained on specific information regarding selecting a credit card, so it may not understand questions out of scope."
+            "DisplayText": "This virtual assistant is only trained on specific information, so it may not understand questions out of scope."
           }
         }
       },
@@ -10671,7 +10628,7 @@
       "output": {
         "text": {
           "values": [
-            "You can log into your account and download previous statements. If you need a physical copy sent out to you, you will need to speak to one of our Customer Service Agents."
+            "You can log into your 94729873749632 account and download previous statements. If you need a physical copy sent out to you, you will need to speak to one of our Customer Service Agents."
           ],
           "selection_policy": "sequential"
         }
@@ -10698,7 +10655,7 @@
           {
             "values": [
               {
-                "text": "One moment while I retrieve a list of accounts."
+                "text": "One moment while I retrieve a list of your 94729873749632 accounts."
               }
             ],
             "response_type": "text",
@@ -10894,7 +10851,7 @@
       "output": {
         "text": {
           "values": [
-            "You can read about our company's history and our commitment to customer service on our About Us page."
+            "You can read about 94729873749632 history and our commitment to customer service on our About Us page."
           ],
           "selection_policy": "sequential"
         }
@@ -10937,7 +10894,7 @@
       "output": {
         "text": {
           "values": [
-            "Goodbye, I look forward to helping you again!"
+            "Goodbye, thank you for choosing 94729873749632!"
           ],
           "selection_policy": "sequential"
         }
@@ -11045,7 +11002,7 @@
       "output": {
         "text": {
           "values": [
-            "For more information about our Products or Services, simply go to our website. We have a great range of accounts and services to suit your needs. You can also speak to one of our Customer Service Agents."
+            "For more information about 94729873749632 Products or Services, simply go to our website. We have a great range of accounts and services to suit your needs. You can also speak to one of our Customer Service Agents."
           ],
           "selection_policy": "sequential"
         }
@@ -11304,7 +11261,7 @@
           {
             "values": [
               {
-                "text": "I can help you with questions about our products, specifically credit cards."
+                "text": "I can help you with questions about our products."
               }
             ],
             "response_type": "text",
@@ -11314,10 +11271,10 @@
             "title": "You can talk to me about:",
             "options": [
               {
-                "label": "Making a credit card payment",
+                "label": "Making a payment",
                 "value": {
                   "input": {
-                    "text": "I want to make a credit card payment"
+                    "text": "I want to make a payment"
                   }
                 }
               },
@@ -11330,10 +11287,10 @@
                 }
               },
               {
-                "label": "Booking an appointment with a banker",
+                "label": "Booking an appointment",
                 "value": {
                   "input": {
-                    "text": "I want to book an appointment with a banker"
+                    "text": "I want to book an appointment"
                   }
                 }
               }
@@ -11495,43 +11452,6 @@
       "conditions": "$current_process == \"CC_Selection_Process\"",
       "dialog_node": "node_4_1518402473659",
       "previous_sibling": "node_3_1518402466014"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "This is a demonstration only and you have reached the end of the Live Agent transfer pathway. Simply refresh the page to start a new conversation, or to re-start the scenario tell me to \"Start over\"."
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_2_1518731420715",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "true",
-      "dialog_node": "node_4_1518732007439"
-    },
-    {
-      "type": "standard",
-      "output": {
-        "text": {
-          "values": [
-            "I love talking about our banking products and services! Let's talk some more and help you with your banking questions!"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "node_34_1517953592593",
-      "context": {
-        "lastresponse": "<? output ?>"
-      },
-      "metadata": {},
-      "conditions": "#General_Conversation-VA_State",
-      "dialog_node": "node_4_1519356290479",
-      "previous_sibling": "node_80_1519099536094"
     },
     {
       "type": "standard",
@@ -12055,20 +11975,6 @@
       "previous_sibling": "node_4_1518402473659"
     },
     {
-      "type": "standard",
-      "output": {},
-      "parent": "node_4_1518732007439",
-      "metadata": {},
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "condition",
-        "dialog_node": "node_4_1518732007439"
-      },
-      "conditions": "true",
-      "dialog_node": "node_5_1518739863965",
-      "previous_sibling": "node_6_1563325689158"
-    },
-    {
       "type": "response_condition",
       "output": {
         "text": {
@@ -12259,7 +12165,7 @@
       "conditions": "#Banking-Replace_Card",
       "dialog_node": "node_6_1511490600598",
       "digress_out": "allow_all",
-      "previous_sibling": "node_20_1517212977657"
+      "previous_sibling": "node_13_1511501739683"
     },
     {
       "type": "standard",
@@ -12394,17 +12300,6 @@
       "conditions": "#Banking-Request_Checkbook",
       "dialog_node": "node_6_1520999172763",
       "previous_sibling": "node_5_1520999071594"
-    },
-    {
-      "type": "standard",
-      "parent": "node_4_1518732007439",
-      "next_step": {
-        "behavior": "jump_to",
-        "selector": "body",
-        "dialog_node": "node_22_1518581571267"
-      },
-      "conditions": "#General_Conversation-Start_Over",
-      "dialog_node": "node_6_1563325689158"
     },
     {
       "type": "standard",
@@ -12987,7 +12882,7 @@
       "output": {
         "text": {
           "values": [
-            "I don't know the time where you are, my system says the time is <? now().reformatDateTime('h:mm a') ?>. But I'd prefer to talk about our banking products instead."
+            "I don't know the time where you are, my system says the time is <? now().reformatDateTime('h:mm a') ?>. "
           ],
           "selection_policy": "sequential"
         }
@@ -13006,7 +12901,7 @@
       "output": {
         "text": {
           "values": [
-            "Unfortunately I don't have a chance to watch movies as I'm busy answering banking questions."
+            "Unfortunately I don't have a chance to watch movies."
           ],
           "selection_policy": "sequential"
         }
@@ -13025,7 +12920,7 @@
       "output": {
         "text": {
           "values": [
-            "I love answering banking questions and making sure you get the information you need!"
+            "I love answering questions and making sure you get the information you need!"
           ],
           "selection_policy": "sequential"
         }
@@ -13130,7 +13025,7 @@
           {
             "values": [
               {
-                "text": "The $office_location branch address is 12 Brighton Avenue.  We are open from 10am - 5pm, Monday thru Friday and 10am - 3pm, Saturday. Would you like me to text you directions?"
+                "text": "The Texas branch address is 12 Brighton Avenue.  We are open from 10am - 5pm, Monday thru Friday and 10am - 3pm, Saturday. Would you like me to text you directions?"
               }
             ],
             "response_type": "text",
@@ -13260,7 +13155,7 @@
           {
             "values": [
               {
-                "text": "The $office_location branch address is 132 W 14th street.  We are open from 10am - 5pm, Monday thru Friday and 10am - 3pm, Saturday. Would you like me to text you directions?"
+                "text": "The Florida branch address is 132 W 14th street.  We are open from 10am - 5pm, Monday thru Friday and 10am - 3pm, Saturday. Would you like me to text you directions?"
               }
             ],
             "response_type": "text",
@@ -13728,6 +13623,7 @@
         "generic": []
       },
       "context": {
+        "phone": "",
         "change_type": "",
         "current_process": "",
         "office_location": "",
