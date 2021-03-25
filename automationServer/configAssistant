@@ -58,23 +58,27 @@ async function getPage(browser){
 
 async function logon(page){
 	try {
-		await page.goto("https://us-south.assistant.watson.cloud.ibm.com/", {waitUntil: 'networkidle0'}).catch((err) => { console.error(err); });
+		await page.goto("https://us-south.assistant.watson.cloud.ibm.com/", {waitUntil: 'networkidle0'}).catch((err) => { console.log(err); });
+		console.log("Beginning logon"); 
 		if (await page.waitForSelector('#instances',{timeout: 500}).catch((err) => {}))
 			return true;
-		if (await page.waitForSelector('#app',{timeout: 500}).catch((err) => {}))
-			return true;
-		await page.screenshot({path: 'signin_start.png'});
-		await page.waitForSelector('.CloudLoginForm--login-button').catch((err) => {console.error(err); page.screenshot({path: 'signin_error_start.png'});});
-		await page.click('.CloudLoginForm--login-button').catch((err) => {console.error(err);});
-		await page.waitForSelector('input[name=username]').catch((err) => { console.error(err); }).catch((err) => {  page.screenshot({path: 'signin_error_user.png'}); console.error(err); throw err;});
-		await page.type('input[name=username]', process.env.U, {delay: 20}).catch((err) => { console.error(err); });
-		await page.$eval('button[id=continue-button]', el => el.click()).catch((err) => { console.error(err); });
-		await page.waitForSelector('input[name=password]').catch((err) => { console.error(err); }).catch((err) => {  page.screenshot({path: 'signin_error_pass.png'}); console.error(err); throw err;});
-		await page.type('input[name=password]', process.env.P, {delay: 20}).catch((err) => { console.error(err); });
-		await page.$eval('button[id=signinbutton]', el => el.click()).catch((err) => { console.error(err); });
-		await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => { console.error(err); });
-		const succ = await page.waitForSelector('#instances').catch((err) => {console.error(err); page.screenshot({path: 'signin_error_final.png'});});
-		await page.screenshot({path: 'signin_final.png'});
+		await page.waitForSelector('#app',{timeout: 500}).catch((err) => {})
+
+		await page.waitForSelector('.CloudLoginForm--login-button').catch((err) => {console.log(err); page.screenshot({path: 'signin_error_start.png'});});
+		await page.click('.CloudLoginForm--login-button').catch((err) => {console.log(err);});
+		console.log("Entering logon info"); 
+		await page.waitForSelector('input[name=username]').catch((err) => { console.log(err); }).catch((err) => {  page.screenshot({path: 'signin_error_user.png'}); console.log(err); throw err;});
+		await page.type('input[name=username]', process.env.U, {delay: 20}).catch((err) => { console.log(err); });
+		await page.$eval('button[id=continue-button]', el => el.click()).catch((err) => { console.log(err); });
+		await page.waitForSelector('#password').catch((err) => { console.log(err); }).catch((err) => {  page.screenshot({path: 'signin_error_pass.png'}); console.log(err); throw err;});
+		await page.type('#password', process.env.P, {delay: 200}).catch((err) => { console.log(err); });
+		await page.click('.bx--text-input--password__visibility__toggle').catch((err) => {});
+		
+		await page.$eval('button[id=signinbutton]', el => el.click()).catch((err) => { console.log(err); });
+		await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => { console.log(err); });
+
+		const succ = await page.waitForSelector('#instances').catch((err) => {console.log(err); page.screenshot({path: 'signin_error_final.png'});});
+		
 		if (succ)
 			return true;
 		else 
@@ -86,24 +90,28 @@ async function logon(page){
 
 async function configWebChat(page, wi){
 	try {
-
+		console.log("starting webchat configuration");
 		var wince = null;
 		while (wince == null) {
 			await page.goto("https://us-south.assistant.watson.cloud.ibm.com/us-south/" + wi , {waitUntil: 'networkidle0'}).catch((err) => {});
 			wince = await page.waitForSelector('#AssistantCard-0').catch((err) => {});
+			await page.screenshot({path: 'config_start1.png'});
 		} 
+		console.log("navigated to base page");
 		
 		if (await page.waitForSelector('div[title="Stop Walk-thru"]',{timeout: 5000}).catch((err) => {}))
-			await page.click('div[title="Stop Walk-thru"]').catch((err) => {});
+			await page.click('div[title="Stop Walk-thru"]').catch((err) => {console.error(err);});
 		await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => {});
 
 		await page.click('#AssistantCard-0').catch((err) => {return false;});
-		await page.waitForSelector('.IntegrationCard__icon--webChat',{timeout: 80000}).catch((err) => { return false; });
-		await page.$eval('.IntegrationCard__icon--webChat', el => el.click()).catch((err) => {return false;});
+		await page.waitForSelector('.IntegrationCard__icon--webChat',{timeout: 80000}).catch((err) => { console.error(err); return false; });
+		await page.$eval('.IntegrationCard__icon--webChat', el => el.click()).catch((err) => {console.error(err); return false;});
+		console.log("opened webchat");
 		await page.waitForSelector('#tab-style',{timeout: 80000}).catch((err) => {});
-		await page.click('#tab-style').catch((err) => {});
+		await page.click('#tab-style').catch((err) => {console.error(err);});
+		console.log("style tab");
 		await page.waitForSelector('#integration_public_bot_name',{timeout: 80000}).catch((err) => {});
-		await page.$eval('#integration_public_bot_name', el => el.value = '').catch((err) => {});
+		await page.$eval('#integration_public_bot_name', el => el.value = '').catch((err) => {console.error(err);});
 		let asName = cname + " Assistant";
 		if(asName.length>17){
 			asName = cname.split(" ")[0] + " Assistant";
@@ -111,33 +119,37 @@ async function configWebChat(page, wi){
 				asName = "My Assistant";
 			}
 		}
-		await page.type('#integration_public_bot_name', asName, {delay: 20}).catch((err) => {});
+		await page.type('#integration_public_bot_name', asName, {delay: 20}).catch((err) => {console.error(err);});
 
-		await page.click('#tab-homescreen').catch((err) => {return false;});
-		await page.waitForSelector('.bx--toggle__switch',{timeout: 8000}).catch((err) => {return false;});
-		await page.click('.bx--toggle__switch').catch((err) => {});
+		await page.click('#tab-homescreen').catch((err) => {console.error(err);return false;});
+		console.log("homescreen tab");
+		await page.waitForSelector('.bx--toggle__switch',{timeout: 8000}).catch((err) => {console.error(err);return false;});
+		await page.click('.bx--toggle__switch').catch((err) => {console.error(err);});
 		await page.waitForSelector('[id="#web_chat_home_screen_greeting"]',{timeout: 8000}).catch((err) => {});
 		let inputss2 = await page.$('[id="#web_chat_home_screen_starter_2"]',{timeout: 8000}).catch((err) => {});
-		await inputss2.click({ clickCount: 3 }).catch((err) => {});
-		await inputss2.type("Search Knowledge Base", {delay: 20}).catch((err) => {});
-		inputss2 = await page.$('[id="#web_chat_home_screen_greeting"]',{timeout: 8000}).catch((err) => {});
+		await inputss2.click({ clickCount: 3 }).catch((err) => {console.error(err);});
+		await inputss2.type("Search Knowledge Base", {delay: 20}).catch((err) => {console.error(err);});
+		inputss2 = await page.$('[id="#web_chat_home_screen_greeting"]',{timeout: 8000}).catch((err) => {console.error(err);});
 		await inputss2.click({ clickCount: 3 }).catch((err) => {console.error(err); });
-		await inputss2.type("Welcome to " + cname + ". How can I help you?", {delay: 20}).catch((err) => {});
+		await inputss2.type("Welcome to " + cname + ". How can I help you?", {delay: 20}).catch((err) => {console.error(err);});
 
-		await page.click('#tab-embed').catch((err) => {});
+		await page.click('#tab-embed').catch((err) => {console.error(err);});
+		console.log("embed tab");
 		const epre = await page.waitForSelector('.bx--snippet-container',{timeout: 8000}).catch((err) => {});
 		const embedcode = await page.$eval('pre', element => element.innerHTML).catch((err) => {});
 		socket.emit('embed', {"r":myArgs[0], "code":embedcode});
 
-		await page.click('#tab-suggestions').catch((err) => {});
-		await page.waitForSelector('.bx--toggle__switch',{timeout: 8000}).catch((err) => {return false;});
-		await page.click('.bx--toggle__switch').catch((err) => {});
+		await page.click('#tab-suggestions').catch((err) => {console.error(err);});
+		console.log("suggestions tab");
+		await page.waitForSelector('.bx--toggle__switch',{timeout: 8000}).catch((err) => {console.error(err); return false;});
+		await page.click('.bx--toggle__switch').catch((err) => {console.error(err);});
 
-		let [sbutton] = await page.$x("//button[contains(., 'Save and exit')]").catch((err) => {return false;});
+		let [sbutton] = await page.$x("//button[contains(., 'Save and exit')]").catch((err) => {console.error(err); return false;});
 		if (sbutton) {
-		    await sbutton.click().catch((err) => {return false; });
+		    await sbutton.click().catch((err) => {console.error(err); return false; });
+		    console.log("saved");
 		}
-		const succ = await page.waitForSelector('.AssistantSkillPlaceholder__button',{timeout: 8000}).catch((err) => {return false;});
+		const succ = await page.waitForSelector('.AssistantSkillPlaceholder__button',{timeout: 8000}).catch((err) => {console.error(err); return false;});
 			
 		if (succ){
 			return true;
@@ -145,6 +157,7 @@ async function configWebChat(page, wi){
 		else 
 			return false;
 	}catch (e) {
+		console.error(e);
 		return false;
 	}
 }
@@ -270,14 +283,23 @@ async function configSearch(page, wi){
 async function main(){
 	try {
 		let browser = await launchBrowser().catch((err) => {console.error(err); });
+		console.log("---opened browser---");
 		let page = await getPage(browser).catch((err) => {console.error(err); });
+		console.log("---opened page---");
 		let loggedOn = await logon(page).catch((err) => {console.error(err); });
+		console.log("---logon---");
 		let configChat = false;
 		while (!configChat && bailout && !skipChat)
 			configChat = await configWebChat(page, winstance).catch((err) => {console.error(err); });
+		console.log("---chat configured---");
 		let configS = false;
 		while (!configS && bailout)
-			configS = await configSearch(page, winstance).catch((err) => {console.error(err); });	
+			configS = await configSearch(page, winstance).catch((err) => {console.error(err); });
+		console.log("---search configured---");
+
+		if(!bailout)
+			console.log("---exceeded timeout, bailing---");
+				
 		if(page)
 			await page.close().catch((err) => {console.error(err); });
     	if(browser)
@@ -290,4 +312,3 @@ async function main(){
 }
 
 main();
-
