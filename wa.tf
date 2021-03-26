@@ -169,6 +169,34 @@ data "logship" "ttslog" {
   instance = local.instnum
 }
 
+resource "ibm_resource_instance" "cognos_instance" {
+  name              = "${local.companysafe}-cognos"
+  service           = "dynamic-dashboard-embedded"
+  plan              = local.plan != "plus" ? "lite" : "paygo"
+  location          = "us-south"
+  resource_group_id = ibm_resource_group.group.id
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
+}
+resource "ibm_resource_key" "cognos_key" {
+  name                 = "${ibm_resource_instance.cognos_instance.name}-key"
+  role                 = "Manager"
+  resource_instance_id = ibm_resource_instance.cognos_instance.id
+  
+  timeouts {
+    create = "15m"
+    delete = "15m"
+  }
+}
+data "logship" "cognoslog" {
+  log = "Created Cognos Dashboard: ${ibm_resource_instance.cognos_instance.name}"
+  instance = local.instnum
+}
+
 
 resource "ibm_resource_instance" "wa_instance" {
   name              = "${local.companysafe}-assistant"
@@ -277,6 +305,9 @@ write_files:
     ${jsonencode(ibm_resource_key.tts_key.credentials)}
    path: /root/wtts.txt
  - content: |
+    ${jsonencode(ibm_resource_key.cognos_key.credentials)}
+   path: /root/cognos.txt
+ - content: |
     ${local.company}
    path: /root/company.txt
  - content: |
@@ -294,6 +325,9 @@ write_files:
  - content: |
     ${local.demo}
    path: /root/demo.txt
+ - content: |
+    ${ibm_is_floating_ip.testacc_floatingip.address}
+   path: /root/ip.txt
  - content: |
     ${local.industry}
    path: /root/industry.txt
