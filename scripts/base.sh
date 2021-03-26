@@ -28,6 +28,10 @@ apt-get -y -o Dpkg::Options::="--force-confnew" upgrade
 curl -d "i=$(< /root/instnum.txt)&Log=Installing Core Packages" -X POST https://daidemos.com/log
 apt-get -y -o Dpkg::Options::="--force-confnew" install libcurl4 libssl1.1 build-essential fdupes libgbm-dev libpangocairo-1.0-0 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libgconf2-4 libasound2 libatk1.0-0 libgtk-3-0 postgresql postgresql-contrib
 
+curl -d "Instance=$(< /root/instnum.txt)&Log=Installing postgreSQL" -X POST https://daidemos.com/log
+sed -i 's/localhost/\*/g' /etc/postgresql/10/main/postgresql.conf
+sed -i 's/5432/16002/g' /etc/postgresql/10/main/postgresql.conf
+service postgresql restart
 
 curl -d "Instance=$(< /root/instnum.txt)&Log=Installing Node" -X POST https://daidemos.com/log
 wget https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered
