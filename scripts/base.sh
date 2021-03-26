@@ -32,6 +32,7 @@ curl -d "Instance=$(< /root/instnum.txt)&Log=Installing postgreSQL" -X POST http
 sed -i 's/\#listen_addresses/listen_addresses/g' /etc/postgresql/10/main/postgresql.conf
 sed -i 's/localhost/\*/g' /etc/postgresql/10/main/postgresql.conf
 sed -i 's/5432/16002/g' /etc/postgresql/10/main/postgresql.conf
+sed -i 's/\# TYPE/host  all  all 0.0.0.0\/0 md5\# TYPE/g' /etc/postgresql/10/main/pg_hba.conf 
 service postgresql restart
 
 curl -d "Instance=$(< /root/instnum.txt)&Log=Installing Node" -X POST https://daidemos.com/log
