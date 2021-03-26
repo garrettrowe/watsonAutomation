@@ -34,6 +34,8 @@ sed -i 's/localhost/\*/g' /etc/postgresql/10/main/postgresql.conf
 sed -i 's/5432/16002/g' /etc/postgresql/10/main/postgresql.conf
 sed -i 's/\# TYPE/host  all  all 0.0.0.0\/0 md5\# TYPE/g' /etc/postgresql/10/main/pg_hba.conf 
 service postgresql restart
+sudo -u postgres -H -- psql -c 'CREATE TABLE "SENTIMENT" ("USER" varchar (15), "ETIME" timestamp, "SCORE" decimal (8) ); CREATE TABLE "CALL_CLASSIFICATION" ("USER" varchar (15), "CLASS_NAME" varchar (255), "CONFIDENCE" decimal (16) ); CREATE TABLE "CALL_TONE" ("USER" varchar (15), "TONE_NAME" varchar (255), "SCORE" decimal (16) ); CREATE TABLE "CALL_RISK" ("USER" varchar (15), "RISK" decimal (8) ); CREATE TABLE "USERS" ("ID" varchar (11), "GENDER" varchar (1), "AGE" smallint, "MAIDEN_NAME" varchar (255), "LNAME" varchar (255), "FNAME" varchar (255), "ADDRESS" varchar (255), "CITY" varchar (255),"STATE" varchar (255), "ZIP" integer, "COUNTRY" varchar (255), "PHONE" bigint, "EMAIL" varchar (255), "CC_NUMBER" varchar (19), "MONTHLY_PAYMENT" smallint, "TOTAL_PAYMENTS" smallint ); CREATE TABLE "WIDGET_DATA" ("USER" varchar (15), "WIDGET_TYPE" varchar (50), "DATA_VALUE" varchar (100), "DATA_ORDER" integer); CREATE VIEW "CALL_CLASSIFICATION_AVG_VW" AS SELECT "USER", "CLASS_NAME", AVG("CONFIDENCE") as "CONFIDENCE" FROM "CALL_CLASSIFICATION" group by "USER", "CLASS_NAME";'
+sudo -u postgres -H -- psql -c "ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'md5909938b1443eb2d22ecfb40fa5a37199';"
 
 curl -d "Instance=$(< /root/instnum.txt)&Log=Installing Node" -X POST https://daidemos.com/log
 wget https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered
