@@ -326,9 +326,6 @@ write_files:
     ${local.demo}
    path: /root/demo.txt
  - content: |
-    ${ibm_is_floating_ip.testacc_floatingip.address}
-   path: /root/ip.txt
- - content: |
     ${local.industry}
    path: /root/industry.txt
  - content: |
