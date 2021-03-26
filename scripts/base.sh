@@ -20,6 +20,7 @@ mkdir /root/da
 wget -O /root/logosmall.png https://daidemos.com/$(< /root/company.txt).small.png
 wget -O /root/logo.png https://daidemos.com/$(< /root/company.txt).png
 wget -O /root/companyurl.txt https://daidemos.com/$(< /root/company.txt).txt
+wget -O /root/ip.txt icanhazip.com
 if ! grep -Fxq "null" /root/companyurloverride.txt; then mv /root/companyurloverride.txt /root/companyurl.txt; fi
 
 apt-get update
