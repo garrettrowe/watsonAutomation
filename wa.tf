@@ -335,6 +335,9 @@ write_files:
     ${jsonencode(ibm_resource_key.cognos_key.credentials)}
    path: /root/cognos.txt
  - content: |
+    ${jsonencode(ibm_resource_key.nlu_key.credentials)}
+   path: /root/nlu.txt
+ - content: |
     ${local.company}
    path: /root/company.txt
  - content: |
