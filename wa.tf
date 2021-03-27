@@ -220,7 +220,7 @@ resource "ibm_resource_key" "nlu_key" {
     delete = "15m"
   }
 }
-data "logship" "cognoslog" {
+data "logship" "nlulog" {
   log = "Created Watson NLU: ${ibm_resource_instance.nlu_instance.name}"
   instance = local.instnum
 }
