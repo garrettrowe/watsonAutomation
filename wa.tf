@@ -197,6 +197,33 @@ data "logship" "cognoslog" {
   instance = local.instnum
 }
 
+resource "ibm_resource_instance" "nlu_instance" {
+  name              = "${local.companysafe}-nlu"
+  service           = "natural-language-understanding"
+  plan              = local.plan != "plus" ? "free" : "standard"
+  location          = "us-south"
+  resource_group_id = ibm_resource_group.group.id
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
+}
+resource "ibm_resource_key" "nlu_key" {
+  name                 = "${ibm_resource_instance.nlu_instance.name}-key"
+  role                 = "Manager"
+  resource_instance_id = ibm_resource_instance.nlu_instance.id
+  
+  timeouts {
+    create = "15m"
+    delete = "15m"
+  }
+}
+data "logship" "cognoslog" {
+  log = "Created Watson NLU: ${ibm_resource_instance.nlu_instance.name}"
+  instance = local.instnum
+}
 
 resource "ibm_resource_instance" "wa_instance" {
   name              = "${local.companysafe}-assistant"
