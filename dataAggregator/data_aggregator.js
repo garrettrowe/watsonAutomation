@@ -135,8 +135,12 @@ async function getPandL(url, cont, gettingPage){
 
 			const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
 
+			//const phtml = await page.evaluate(() => document.querySelector('body').outerHTML).catch((err) => {});
+
+
+
 			let header = {"Content-type": "application/json", "authorization": "Basic " + Buffer.from("apikey:" + data.apikey).toString("base64") };
-			let bod = {"url": url, "features": {"summarization": {"limit": 6 } } };
+			let bod = {"url": url, "features": {"summarization": {"limit": 8 } } };
 			let wurl = data.url + "/v1/analyze?version=2020-08-01";
 
 			let outJSON = { 
