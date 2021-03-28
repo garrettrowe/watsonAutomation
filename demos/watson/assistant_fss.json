@@ -5260,7 +5260,7 @@
       ]
     },
     {
-      "intent": "search",
+      "intent": "General_Conversation-search",
       "examples": [
         {
           "text": "can you help me search"
@@ -5287,7 +5287,7 @@
       "description": "intent for search skill"
     },
     {
-      "intent": "translate",
+      "intent": "General_Conversation-translate",
       "examples": [
         {
           "text": "can you translate this"
@@ -9255,7 +9255,7 @@
       "context": {
         "lastresponse": "<? output ?>"
       },
-      "conditions": "#search",
+      "conditions": "#General_Conversation-search",
       "digress_in": "does_not_return",
       "dialog_node": "node_2_1612395907959",
       "previous_sibling": "node_2_1612493218066"
@@ -9278,7 +9278,7 @@
           "mcr": true
         }
       },
-      "conditions": "#translate",
+      "conditions": "#General_Conversation-translate",
       "digress_in": "returns",
       "dialog_node": "node_2_1612493218066",
       "digress_out": "allow_all",
