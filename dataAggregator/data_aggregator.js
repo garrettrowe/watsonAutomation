@@ -1,5 +1,7 @@
 var Crawler = require("simplecrawler");
 const puppeteer = require('puppeteer');
+var request = require('request');
+const fs = require('fs');
 const fse = require('fs-extra');
 var myArgs = process.argv.slice(2);
 var iterate = 0;
@@ -130,47 +132,35 @@ async function getPandL(url, cont, gettingPage){
 					pname = "index";
 			}
 			pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_");
-			var sel = "div";
-			var links = await page.evaluate((sel) => {
-				let elements = Array.from(document.querySelectorAll(sel));
-				let links = elements.map(element => {
-				    return element.parentElement.innerHTML;
-				})
-				return links;
-			    }, sel).catch((err) => {});
-			for (let j of links) {
-				iterate +=1;
-				var out = j.replace(/<html([\S\s]*?)>([\S\s]*?)<\/html>/gi, "");
-				var out = out.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
-				var out = out.replace(/<body([\S\s]*?)>([\S\s]*?)<\/body>/gi, "");
-				var out = out.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
-				var out = out.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
-				var out = out.replace(/<!--([\S\s]*?)-->/gi, "");
-				var out = out.replace(/&[a-z]+;/g, "");
-				var out = "." + out.replace(/<.\w*[^>]*>/gi, ".").trim();
-				var out = out.replace(/\.[\w \\/]{0,80}(?=\.)/gi, ".");
-				var out = out.replace(/( )+/gi, " ");
-				var out = out.replace(/([\t\n])+/gi, ".");
-				var out = out.replace(/\..{0,60}\./gi, ".");
-				var out = out.replace(/\. */gi, ".");
-				var out = out.replace(/\.+/gi, ".");
-				var out = out.replace(/\.+/gi, ". ");
-				var out = out.replace(/^\. */, "");
-			
-				let outJSON = { 
+
+			const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
+
+			let header = {"Content-type": "application/json", "authorization": "Basic " + Buffer.from("apikey:" + data.apikey).toString("base64") };
+			let bod = {"url": url, "features": {"summarization": {"limit": 6 } } };
+			let wurl = data.url + "/v1/analyze?version=2020-08-01";
+
+			let outJSON = { 
 				    title: pageTitle,
-				    text: out, 
+				    text: null, 
 				    source_link: url
-				};
-				if (out.length > 150){
-					let ojs = JSON.stringify(outJSON);
-					let ojsH = hashCode(ojs);
-					if (!outitems.includes(ojsH)){
-						outitems.push(ojsH)
-						fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".json", ojs);
-					}
-				}
-			}
+			};
+
+			var options = {
+			  uri: wurl,
+			  headers: header,
+			  method: 'POST',
+			  json: bod
+			};
+
+			(function(outJSON, options){
+				request(options, function (error, response, body) {
+				  if (!error && response.statusCode == 200) {
+				    let out = body
+				    outJSON.text = out.summarization.text;
+					fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".json", JSON.stringify(outJSON));
+				  }
+				});
+			  })(outJSON, options);
 
 			 sel = "a[href]";
 			 links = await page.evaluate((sel) => {
@@ -192,16 +182,6 @@ async function getPandL(url, cont, gettingPage){
 			cont();
 		}
 
-}
-
-function hashCode(str) {
-  var hash = 0, i, chr;
-  for (i = 0; i < str.length; i++) {
-    chr   = str.charCodeAt(i);
-    hash  = ((hash << 5) - hash) + chr;
-    hash |= 0; 
-  }
-  return hash;
 }
 
 async function main(){
