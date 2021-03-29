@@ -2613,7 +2613,7 @@
       ]
     },
     {
-      "intent": "Bot_Control_Approve_Response",
+      "intent": "Bot_Control-Approve_Response",
       "examples": [
         {
           "text": "Affirmative. That's what I'm looking for."
@@ -2691,7 +2691,7 @@
       "description": "Acknowledge that the response satisfies a question."
     },
     {
-      "intent": "Bot_Control_Change_Subject",
+      "intent": "Bot_Control-Change_Subject",
       "examples": [
         {
           "text": "A different matter"
@@ -2733,7 +2733,7 @@
       "description": "Change to a different topic."
     },
     {
-      "intent": "Bot_Control_Clarification",
+      "intent": "Bot_Control-Clarification",
       "examples": [
         {
           "text": "Can you say that again please?"
@@ -2799,7 +2799,7 @@
       "description": "Repeat or clarify last statement."
     },
     {
-      "intent": "Bot_Control_Confirm_Presence",
+      "intent": "Bot_Control-Confirm_Presence",
       "examples": [
         {
           "text": "Am I talking to someone?"
@@ -2853,7 +2853,7 @@
       "description": "Ask the bot to indicate that it is available."
     },
     {
-      "intent": "Bot_Control_Ignore_Undo",
+      "intent": "Bot_Control-Ignore_Undo",
       "examples": [
         {
           "text": "Actually, I take that back"
@@ -2901,7 +2901,7 @@
       "description": "Ask the bot to take one step back."
     },
     {
-      "intent": "Bot_Control_Reject_Response",
+      "intent": "Bot_Control-Reject_Response",
       "examples": [
         {
           "text": "Bad response"
@@ -2982,7 +2982,7 @@
       "description": "Indicate the bot's response does not address a question."
     },
     {
-      "intent": "Bot_Control_Standby",
+      "intent": "Bot_Control-Standby",
       "examples": [
         {
           "text": "Back again soon"
@@ -3048,7 +3048,7 @@
       "description": "Indicate a delay in providing input to the bot."
     },
     {
-      "intent": "Bot_Control_Start_Over",
+      "intent": "Bot_Control-Start_Over",
       "examples": [
         {
           "text": "Actually, let's start over"
@@ -3114,7 +3114,7 @@
       "description": "Restart bot or current flow."
     },
     {
-      "intent": "Bot_Control_Unsure",
+      "intent": "Bot_Control-Unsure",
       "examples": [
         {
           "text": "I don t know what you need"
@@ -11515,7 +11515,7 @@
           "mcr": true
         }
       },
-      "conditions": "#Bot_Control_Approve_Response",
+      "conditions": "#Bot_Control-Approve_Response",
       "dialog_node": "node_4_1616093407904",
       "digress_out": "allow_all",
       "digress_out_slots": "allow_returning"
@@ -12044,7 +12044,7 @@
         "selector": "user_input",
         "dialog_node": "node_2_1487301792316"
       },
-      "conditions": "#Bot_Control_Reject_Response",
+      "conditions": "#Bot_Control-Reject_Response",
       "dialog_node": "node_5_1616095586373",
       "previous_sibling": "node_4_1616093407904"
     },
