@@ -135,12 +135,23 @@ async function getPandL(url, cont, gettingPage){
 
 			const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
 
-			//const phtml = await page.evaluate(() => document.querySelector('body').outerHTML).catch((err) => {});
-
-
+			let phtml = await page.evaluate(el => el.innerHTML, await page.$('body'));
+			phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
+			phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
+			phtml = phtml.replace(/<link([\S\s]*?)>/gi, "");
+			phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
+			phtml = phtml.replace(/<iframe([\S\s]*?)>/gi, "");
+			phtml = phtml.replace(/<\/iframe>/gi, "");
+			phtml = phtml.replace(/<li([\S\s]*?)>([\S\s]*?)<\/li>/gi, "");
+			phtml = phtml.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
+			phtml = phtml.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
+			phtml = phtml.replace(/<img([\S\s]*?)>/gi, "");
+			phtml = phtml.replace(/<a ([\S\s]*?)>/gi, "");
+			phtml = phtml.replace(/<\/a>/gi, "");
+			phtml = phtml.replace(/<!--([\S\s]*?)-->/gi, "");
 
 			let header = {"Content-type": "application/json", "authorization": "Basic " + Buffer.from("apikey:" + data.apikey).toString("base64") };
-			let bod = {"url": url, "features": {"summarization": {"limit": 8 } } };
+			let bod = {"html": phtml, "features": {"summarization": {"limit": 8 } } };
 			let wurl = data.url + "/v1/analyze?version=2020-08-01";
 
 			let outJSON = { 
