@@ -126,12 +126,8 @@ async function getPandL(url, cont, gettingPage){
 			
 			let pageTitle = await page.title().catch((err) => {});
 			pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
-			let pname = url.split("/");
-			pname = pname[pname.length-1];
-			if(!pname || 0 === pname.length){
-					pname = "index";
-			}
-			pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_").substring(0, 100);
+			let pname = url.replace(/http.*\/\//, "");
+			pname = pname.replace(/\?.*/,"").substring(0, 230);
 			iterate +=1;
 
 			const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
@@ -171,9 +167,11 @@ async function getPandL(url, cont, gettingPage){
 			(function(outJSON, pname,iterate, options){
 				request(options, function (error, response, body) {
 				  if (!error && response.statusCode == 200) {
-				    let out = body
-				    outJSON.text = out.summarization.text;
+				  	let out = body
+				  	outJSON.text = out.summarization.text;
 					fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".json", JSON.stringify(outJSON));
+				  }else{
+					  console.log(error);
 				  }
 				});
 			  })(outJSON, pname,iterate, options);
