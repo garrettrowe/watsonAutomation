@@ -119,76 +119,77 @@ async function setGettingPage(gp) {
 
 async function getPandL(url, cont, gettingPage){
 	try {
-			await setGettingPage(true).catch((err) => {});
-			console.log("processing: " + url);
+		await setGettingPage(true).catch((err) => {});
+		console.log("processing: " + url);
     		let page = await getPage(browser).catch((err) => {console.log(err); });
-			await page.goto(url, {waitUntil: 'networkidle0'}).catch((err) => {});
-			
-			let pageTitle = await page.title().catch((err) => {});
-			pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
-			let pname = url.replace(/http.*\/\//, "");
-			pname = pname.replace(/\?.*/,"").substring(0, 230);
-			iterate +=1;
+		await page.goto(url, {waitUntil: 'networkidle0'}).catch((err) => {});
 
-			const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
+		let pageTitle = await page.title().catch((err) => {});
+		pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
+		let pname = url.replace(/http.*\/\//, "");
+		pname = pname.replace(/\?.*/,"").substring(0, 230);
+		iterate +=1;
 
-			let phtml = await page.evaluate(el => el.innerHTML, await page.$('body'));
-			phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
-			phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
-			phtml = phtml.replace(/<link([\S\s]*?)>/gi, "");
-			phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
-			phtml = phtml.replace(/<iframe([\S\s]*?)>/gi, "");
-			phtml = phtml.replace(/<\/iframe>/gi, "");
-			phtml = phtml.replace(/<li([\S\s]*?)>([\S\s]*?)<\/li>/gi, "");
-			phtml = phtml.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
-			phtml = phtml.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
-			phtml = phtml.replace(/<img([\S\s]*?)>/gi, "");
-			phtml = phtml.replace(/<a ([\S\s]*?)>/gi, "");
-			phtml = phtml.replace(/<\/a>/gi, "");
-			phtml = phtml.replace(/<!--([\S\s]*?)-->/gi, "");
+		const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
 
-			let header = {"Content-type": "application/json", "authorization": "Basic " + Buffer.from("apikey:" + data.apikey).toString("base64") };
-			let bod = {"html": phtml, "features": {"summarization": {"limit": 8 } } };
-			let wurl = data.url + "/v1/analyze?version=2020-08-01";
+		let phtml = await page.evaluate(el => el.innerHTML, await page.$('body')).catch((err) => {});
+		phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
+		phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
+		phtml = phtml.replace(/<link([\S\s]*?)>/gi, "");
+		phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
+		phtml = phtml.replace(/<iframe([\S\s]*?)>/gi, "");
+		phtml = phtml.replace(/<\/iframe>/gi, "");
+		phtml = phtml.replace(/<li([\S\s]*?)>([\S\s]*?)<\/li>/gi, "");
+		phtml = phtml.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
+		phtml = phtml.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
+		phtml = phtml.replace(/<img([\S\s]*?)>/gi, "");
+		phtml = phtml.replace(/<a ([\S\s]*?)>/gi, "");
+		phtml = phtml.replace(/<\/a>/gi, "");
+		phtml = phtml.replace(/<!--([\S\s]*?)-->/gi, "");
 
-			let outJSON = { 
-				    title: pageTitle,
-				    text: null, 
-				    source_link: url
-			};
+		let header = {"Content-type": "application/json", "authorization": "Basic " + Buffer.from("apikey:" + data.apikey).toString("base64") };
+		let bod = {"html": phtml, "features": {"summarization": {"limit": 8 } } };
+		let wurl = data.url + "/v1/analyze?version=2020-08-01";
 
-			var options = {
-			  uri: wurl,
-			  headers: header,
-			  method: 'POST',
-			  json: bod
-			};
+		let outJSON = { 
+			    title: pageTitle,
+			    text: null, 
+			    source_link: url
+		};
 
-			(function(outJSON, pname,iterate, options){
-				request(options, function (error, response, body) {
-				  if (!error && response.statusCode == 200) {
-				  	let out = body
-				  	outJSON.text = out.summarization.text;
-					fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".json", JSON.stringify(outJSON));
-				  }else{
-					  console.log(error);
-				  }
-				});
-			  })(outJSON, pname,iterate, options);
+		var options = {
+		  uri: wurl,
+		  headers: header,
+		  method: 'POST',
+		  json: bod
+		};
 
-			 sel = "a[href]";
-			 links = await page.evaluate((sel) => {
-				let elements = Array.from(document.querySelectorAll(sel));
-				let links = elements.map(element => {
-				    return element.getAttribute('href');
-				})
-				return links;
-			    }, sel).catch((err) => {});
-			console.log("got: " + links.length + " at " + url);
+		(function(outJSON, pname,iterate, options){
+			request(options, function (error, response, body) {
+			  if (!error && response.statusCode == 200) {
+				let out = body
+				outJSON.text = out.summarization.text;
+				fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".json", JSON.stringify(outJSON));
+				console.log("wrote " + pname + "-" + iterate + ".json");
+			  }else{
+				  console.log(error);
+			  }
+			});
+		  })(outJSON, pname,iterate, options);
 
-			if(page)
-				await page.close().catch((err) => {console.log(err); });
+		 sel = "a[href]";
+		 links = await page.evaluate((sel) => {
+			let elements = Array.from(document.querySelectorAll(sel));
+			let links = elements.map(element => {
+			    return element.getAttribute('href');
+			})
 			return links;
+		    }, sel).catch((err) => {});
+		console.log("got: " + links.length + " at " + url);
+
+		if(page)
+			await page.close().catch((err) => {console.log(err); });
+		return links;
 		}catch (err) {
 		    console.log("error:" +err);
 		}finally{
