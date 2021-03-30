@@ -19,16 +19,28 @@ var myArgs = process.argv.slice(2);
 		    	var allDivs = $('div div');
 			var topZindex = 5000;
 			var targetRoles = ["dialog","modal","alert","alertdialog"];
+			var targetClasses = ["dialog","modal","alert","alertdialog", "message", "survey"];
 			allDivs.each(function(){
-			    var currentZindex = parseInt($(this).css('z-index'), 10);
-			    if(currentZindex > topZindex) {
-				$(this).hide();
-				return true;
-			    }
-			    if(targetRoles.includes($(this).attr("role"))) {
-				$(this).hide();
-				return true;
-			    }
+				try{
+					var currentZindex = parseInt($(this).css('z-index'), 10);
+					if(currentZindex > topZindex) {
+						$(this).hide();
+						return true;
+					}
+					if(targetRoles.includes($(this).attr("role"))) {
+						$(this).hide();
+						return true;
+					}
+					var classList = $(this).attr('class').split(/\s+/);
+					  for (var i = 0; i < classList.length; i++) {
+					    	for (var j = 0; j < targetClasses.length; j++) {
+						    if (classList[i].includes(targetClasses[j])) {
+							$(this).hide();
+							return true;
+						    }
+						}
+					  }
+				}catch(fail){}
 			});
 		} catch(err) {}
 	    }).catch((err) => {console.log(err);});
