@@ -31,7 +31,7 @@ var myArgs = process.argv.slice(2);
 			    }
 			});
 		} catch(err) {}
-	    });
+	    }).catch((err) => {console.log(err);});
 	await page.screenshot({path: '/root/site.png'}).catch((err) => {});
 	await browser.close().catch((err) => {});
 })();
