@@ -131,7 +131,7 @@ async function getPandL(url, cont, gettingPage){
 			if(!pname || 0 === pname.length){
 					pname = "index";
 			}
-			pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_");
+			pname = pname.replace(/[- |\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi,"_").substring(0, 100);
 
 			const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
 
