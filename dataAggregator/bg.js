@@ -33,8 +33,8 @@ var myArgs = process.argv.slice(2);
 			});
 		} catch(err) {}
 	    });
-	await page.addScriptTag({url: 'https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/popBreaker.js'}).catch((err) => {console.log(err);});
-	await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => {});
+	//await page.addScriptTag({url: 'https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/popBreaker.js'}).catch((err) => {console.log(err);});
+	//await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => {});
 	await page.screenshot({path: '/root/site.png'}).catch((err) => {});
 	await browser.close().catch((err) => {});
 })();
