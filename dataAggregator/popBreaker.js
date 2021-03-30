@@ -1,5 +1,5 @@
 var allDivs = $('div div');
-var topZindex = 100;
+var topZindex = 5000;
 var targetRoles = ["dialog","modal","alert","alertdialog"];
 allDivs.each(function(){
     var currentZindex = parseInt($(this).css('z-index'), 10);
