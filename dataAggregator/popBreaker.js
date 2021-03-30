@@ -12,3 +12,4 @@ allDivs.each(function(){
         return true;
     }
 });
+alert("hi");
