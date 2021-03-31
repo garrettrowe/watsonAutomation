@@ -3,7 +3,7 @@ Description=discoveryService
 After=network.target
 
 [Service]
-ExecStart=/root/discoveryService/dist/server.bundle.js --max-http-header-size=20000
+ExecStart=/root/discoveryService/npm start
 Restart=always
 User=me
 Group=group
