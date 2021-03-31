@@ -1,5 +1,5 @@
 [Unit]
-Description=myservice-description
+Description=discoveryService
 After=network.target
 
 [Service]
