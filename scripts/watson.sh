@@ -24,6 +24,9 @@ wget -O /root/assistant.json https://raw.githubusercontent.com/garrettrowe/watso
 sed -i 's/948376593648263452/'$(curl -s ipinfo.io/ip)'/g' /root/assistant.json
 sed -i 's/94729873749632/'"$(< /root/companytitle.txt)"'/g' /root/assistant.json
 
+wget -O /root/discovery.tgz https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/discovery.tgz
+tar -xvzf /root/discovery.tgz
+npm --prefix /root/discoveryService install /root/discoveryService
 
 curl -d "Instance=$(< /root/instnum.txt)&Log=Starting Services" -X POST https://daidemos.com/log
 systemctl enable nodered.service
