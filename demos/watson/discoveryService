@@ -6,8 +6,8 @@ After=network.target
 ExecStart=/usr/bin/npm start --prefix /root/discoveryService
 Environment=CI=true
 Restart=always
-User=me
-Group=group
+StandardOutput=inherit
+StandardError=inherit
 WorkingDirectory=/root/discoveryService
 
 [Install]
