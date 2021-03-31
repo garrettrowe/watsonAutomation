@@ -1,0 +1,15 @@
+[Unit]
+Description=myservice-description
+After=network.target
+
+[Service]
+ExecStart=dist/server.bundle.js --max-http-header-size=20000e
+Restart=always
+User=me
+Group=group
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/root/node_modules/discovery-expert-assist
+
+[Install]
+WantedBy=multi-user.target
