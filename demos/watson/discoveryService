@@ -3,7 +3,7 @@ Description=myservice-description
 After=network.target
 
 [Service]
-ExecStart=dist/server.bundle.js --max-http-header-size=20000e
+ExecStart=/root/node_modules/discovery-expert-assist/dist/server.bundle.js --max-http-header-size=20000e
 Restart=always
 User=me
 Group=group
