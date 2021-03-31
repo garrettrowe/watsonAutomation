@@ -3,12 +3,11 @@ Description=discoveryService
 After=network.target
 
 [Service]
+Type=simple
 ExecStart=npm start
 Restart=always
 User=me
 Group=group
-Environment=PATH=/usr/bin:/usr/local/bin
-Environment=NODE_ENV=production
 WorkingDirectory=/root/discoveryService
 
 [Install]
