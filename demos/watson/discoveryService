@@ -3,13 +3,13 @@ Description=discoveryService
 After=network.target
 
 [Service]
-ExecStart=/root/node_modules/discovery-expert-assist/dist/server.bundle.js --max-http-header-size=20000
+ExecStart=/root/discoveryService/dist/server.bundle.js --max-http-header-size=20000
 Restart=always
 User=me
 Group=group
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
-WorkingDirectory=/root/node_modules/discovery-expert-assist
+WorkingDirectory=/root/discoveryService
 
 [Install]
 WantedBy=multi-user.target
