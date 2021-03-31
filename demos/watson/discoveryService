@@ -3,7 +3,7 @@ Description=discoveryService
 After=network.target
 
 [Service]
-ExecStart=/root/discoveryService/npm start
+ExecStart=npm start
 Restart=always
 User=me
 Group=group
