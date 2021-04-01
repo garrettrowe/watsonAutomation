@@ -123,6 +123,39 @@ async function getPandL(url, cont, gettingPage){
 		console.log("processing: " + url);
     		let page = await getPage(browser).catch((err) => {console.log(err); });
 		await page.goto(url, {waitUntil: 'networkidle0'}).catch((err) => {});
+		
+		await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'}).catch((err) => {console.log(err);});
+		await page.evaluate(() => {
+			try {
+				var allDivs = $('div div');
+				var topZindex = 5000;
+				var targetRoles = ["dialog","modal","alert","alertdialog"];
+				var targetClasses = ["dialog","modal","alert","alertdialog", "message", "survey"];
+				allDivs.each(function(){
+					try{
+						var currentZindex = parseInt($(this).css('z-index'), 10);
+						if(currentZindex > topZindex) {
+							$(this).remove();
+							return true;
+						}
+						if(targetRoles.includes($(this).attr("role"))) {
+							$(this).remove();
+							return true;
+						}
+						var classList = $(this).attr('class').split(/\s+/);
+						  for (var i = 0; i < classList.length; i++) {
+							for (var j = 0; j < targetClasses.length; j++) {
+							    if (classList[i].includes(targetClasses[j])) {
+								$(this).remove();
+								return true;
+							    }
+							}
+						  }
+					}catch(fail){}
+				});
+			} catch(err) {}
+		    }).catch((err) => {console.log(err);});
+		
 
 		let pageTitle = await page.title().catch((err) => {});
 		pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
