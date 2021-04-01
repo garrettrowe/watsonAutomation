@@ -118,11 +118,22 @@ async function setGettingPage(gp) {
 
 
 async function getPandL(url, cont, gettingPage){
+	let links = [];
 	try {
 		await setGettingPage(true).catch((err) => {});
 		console.log("processing: " + url);
     		let page = await getPage(browser).catch((err) => {console.log(err); });
 		await page.goto(url, {waitUntil: 'networkidle0'}).catch((err) => {});
+		
+		sel = "a[href]";
+		 links = await page.evaluate((sel) => {
+			let elements = Array.from(document.querySelectorAll(sel));
+			let links = elements.map(element => {
+			    return element.getAttribute('href');
+			})
+			return links;
+		    }, sel).catch((err) => {return [];});
+		console.log("got: " + links.length + " at " + url);
 		
 		await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'}).catch((err) => {console.log(err);});
 		await page.evaluate(() => {
@@ -210,15 +221,7 @@ async function getPandL(url, cont, gettingPage){
 			});
 		  })(outJSON, pname,iterate, options);
 
-		 sel = "a[href]";
-		 links = await page.evaluate((sel) => {
-			let elements = Array.from(document.querySelectorAll(sel));
-			let links = elements.map(element => {
-			    return element.getAttribute('href');
-			})
-			return links;
-		    }, sel).catch((err) => {});
-		console.log("got: " + links.length + " at " + url);
+		 
 
 		if(page)
 			await page.close().catch((err) => {console.log(err); });
@@ -228,6 +231,7 @@ async function getPandL(url, cont, gettingPage){
 		}finally{
 			await setGettingPage(false).catch((err) => {});
 			cont();
+			return links;
 		}
 
 }
