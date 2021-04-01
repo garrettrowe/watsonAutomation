@@ -107,8 +107,8 @@ async function configWebChat(page, wi){
 		await page.waitForSelector('.IntegrationCard__icon--webChat',{timeout: 80000}).catch((err) => { console.error(err); return false; });
 		await page.$eval('.IntegrationCard__icon--webChat', el => el.click()).catch((err) => {console.error(err); return false;});
 		console.log("opened webchat");
-		await page.waitForSelector('#tab-style',{timeout: 80000}).catch((err) => {});
-		await page.click('#tab-style').catch((err) => {console.error(err);});
+		await page.waitForSelector('#tab-style',{timeout: 80000}).catch((err) => {console.error(err);});
+		await page.click('#tab-style').catch((err) => {console.error(err); page.screenshot({path: 'no_style_tab.png'});});
 		console.log("style tab");
 		await page.waitForSelector('#integration_public_bot_name',{timeout: 80000}).catch((err) => {});
 		await page.$eval('#integration_public_bot_name', el => el.value = '').catch((err) => {console.error(err);});
@@ -123,7 +123,7 @@ async function configWebChat(page, wi){
 
 		await page.click('#tab-homescreen').catch((err) => {console.error(err);return false;});
 		console.log("homescreen tab");
-		await page.waitForSelector('.bx--toggle__switch',{timeout: 8000}).catch((err) => {console.error(err);return false;});
+		await page.waitForSelector('.bx--toggle__switch',{timeout: 80000}).catch((err) => {page.screenshot({path: 'no_home_screen.png'}); console.error(err);return false;});
 		await page.click('.bx--toggle__switch').catch((err) => {console.error(err);});
 		await page.waitForSelector('[id="#web_chat_home_screen_greeting"]',{timeout: 8000}).catch((err) => {});
 		let inputss2 = await page.$('[id="#web_chat_home_screen_starter_2"]',{timeout: 8000}).catch((err) => {});
