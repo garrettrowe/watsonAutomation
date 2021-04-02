@@ -137,20 +137,10 @@ async function getPandL(url, cont, gettingPage){
 	try {
 		await setGettingPage(true).catch((err) => {});
 		console.log("processing: " + url);
-    		let page = await getPage(browser).catch((err) => {console.log(err); });
+    	let page = await getPage(browser).catch((err) => {console.log(err); });
 		await page.goto(url, {waitUntil: 'networkidle0'}).catch((err) => {});
 		
-		sel = "a[href]";
-		 links = await page.evaluate((sel) => {
-		 	let links = [];
-		 	try{
-				let elements = Array.from(document.querySelectorAll(sel));
-				links = elements.map(element => {
-				    return element.getAttribute('href');
-				})
-			}catch(err){}
-			return links;
-		    }, sel).catch((err) => {console.log(err); });
+		links = await page.$$eval('a', links => links.map(a => a.href)).catch((err) => {console.log(err); });
 		console.log("got: " + links.length + " at " + url);
 		
 		await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'}).catch((err) => {});
