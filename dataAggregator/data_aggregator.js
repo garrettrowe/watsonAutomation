@@ -152,6 +152,10 @@ async function getPandL(url, cont, gettingPage){
 				var targetRoles = ["dialog","modal","alert","alertdialog"];
 				var targetClasses = ["dialog","modal","alert","alertdialog", "message", "survey", "hidden"];
 				allDivs.each(function(){
+					$(this).find(":hidden").remove();
+				}
+				allDivs = $('div div');
+				allDivs.each(function(){
 					try{
 						var currentZindex = parseInt($(this).css('z-index'), 10);
 						if(currentZindex > topZindex) {
@@ -171,7 +175,6 @@ async function getPandL(url, cont, gettingPage){
 							    }
 							}
 						}
-						$(this).find(":hidden").remove();
 					}catch(fail){}
 				});
 			} catch(err) {}
