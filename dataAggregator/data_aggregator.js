@@ -51,7 +51,8 @@ crawler.on("fetchstart", function(queueItem, responseBuffer, response) {
 		return;
 	}
     var excludefiles = [".pdf",".xml",".rss",".doc",".xml",".ppt",".jpg",".png",".gif",".ico",".bmp"];
-    if (!excludefiles.includes(queueItem.url.slice(-4))) {
+    var excludefilesl = [".woff",".json",".woff2"];
+    if (!excludefiles.includes(queueItem.url.slice(-4).toLowerCase()) &&  !excludefilesl.includes(queueItem.url.slice(-5).toLowerCase())  ) {
     	 console.log("doing fetch: " + queueItem.url);
 		 getPandL(queueItem.url, cont).then(outp => {
 		 		if(outp){
