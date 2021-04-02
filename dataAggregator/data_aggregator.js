@@ -203,7 +203,7 @@ async function getPandL(url, cont, gettingPage){
 		phtml = phtml.replace(/<\/a>/gi, "");
 		phtml = phtml.replace(/<!--([\S\s]*?)-->/gi, "");
 
-		console.log("doc length: " + phtml.length);
+		console.log(url + " doc length: " + phtml.length);
 		if (phtml.length){
 			let header = {"Content-type": "application/json", "authorization": "Basic " + Buffer.from("apikey:" + data.apikey).toString("base64") };
 			let bod = {"html": phtml, "features": {"summarization": {"limit": 8 } } };
@@ -234,15 +234,15 @@ async function getPandL(url, cont, gettingPage){
 						fse.outputFileSync("/root/da/crawl/" + pname  + iterate + ".json", JSON.stringify(outJSON));
 						console.log("wrote " + pname + iterate + ".json");
 					} else{
-						console.log("Dupe hash, skipping");
+						console.log("Dupe hash, skipping " + pname);
 					}
 				  }else{
-					  console.log("Error calling NLU: " + JSON.stringify(response));
+					  console.log("Error calling NLU on: " + pname + " : " + body);
 				  }
 				});
 			  })(outJSON, pname,iterate, options);
 		 } else {
-			 console.log("Empty Doc, skipping");
+			 console.log("Empty Doc, skipping " + url);
 		 }
 
 		if(page)
