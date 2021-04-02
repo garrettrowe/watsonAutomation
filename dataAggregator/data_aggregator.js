@@ -22,11 +22,11 @@ crawler.scanSubdomains = true;
 crawler.ignoreWWWDomain = false;
 crawler.downloadUnsupported = false;
 crawler.ignoreInvalidSSL = true;
-crawler.supportedMimeTypes = ["text/html","text"];
+crawler.supportedMimeTypes = [/^text\/html/i,];
 crawler.interval = 1000; 
 crawler.maxConcurrency = 1;
 crawler.listenerTTL = 120000;
-crawler.allowedProtocols ["http","https"];
+crawler.allowedProtocols [/^http(s)?$/i];
 
 var gettingPage = false
 
