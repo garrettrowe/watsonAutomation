@@ -107,8 +107,8 @@ async function configWebChat(page, wi){
 		await page.waitForSelector('.IntegrationCard__icon--webChat',{timeout: 80000}).catch((err) => { console.error(err); return false; });
 		await page.$eval('.IntegrationCard__icon--webChat', el => el.click()).catch((err) => {console.error(err); return false;});
 		console.log("opened webchat");
-		await page.waitForSelector('#tab-style',{timeout: 80000}).catch((err) => {console.error(err);});
-		await page.click('#tab-style').catch((err) => {console.error(err); page.screenshot({path: 'no_style_tab.png'});});
+		await page.waitForSelector('#tab-0',{timeout: 80000}).catch((err) => {console.error(err);});
+		await page.click('#tab-0').catch((err) => {console.error(err); page.screenshot({path: 'no_style_tab.png'});});
 		console.log("style tab");
 		await page.waitForSelector('#integration_public_bot_name',{timeout: 80000}).catch((err) => {});
 		await page.$eval('#integration_public_bot_name', el => el.value = '').catch((err) => {console.error(err);});
@@ -121,7 +121,7 @@ async function configWebChat(page, wi){
 		}
 		await page.type('#integration_public_bot_name', asName, {delay: 20}).catch((err) => {console.error(err);});
 
-		await page.click('#tab-homescreen').catch((err) => {console.error(err);return false;});
+		await page.click('#tab-1').catch((err) => {console.error(err);return false;});
 		console.log("homescreen tab");
 		await page.waitForSelector('.bx--toggle__switch',{timeout: 80000}).catch((err) => {page.screenshot({path: 'no_home_screen.png'}); console.error(err);return false;});
 		await page.click('.bx--toggle__switch').catch((err) => {console.error(err);});
@@ -133,13 +133,13 @@ async function configWebChat(page, wi){
 		await inputss2.click({ clickCount: 3 }).catch((err) => {console.error(err); });
 		await inputss2.type("Welcome to " + cname + ". How can I help you?", {delay: 20}).catch((err) => {console.error(err);});
 
-		await page.click('#tab-embed').catch((err) => {console.error(err);});
+		await page.click('#tab-5').catch((err) => {console.error(err);});
 		console.log("embed tab");
 		const epre = await page.waitForSelector('.bx--snippet-container',{timeout: 8000}).catch((err) => {});
 		const embedcode = await page.$eval('pre', element => element.innerHTML).catch((err) => {});
 		socket.emit('embed', {"r":myArgs[0], "code":embedcode});
 
-		await page.click('#tab-suggestions').catch((err) => {console.error(err);});
+		await page.click('#tab-3').catch((err) => {console.error(err);});
 		console.log("suggestions tab");
 		await page.waitForSelector('.bx--toggle__switch',{timeout: 8000}).catch((err) => {console.error(err); return false;});
 		await page.click('.bx--toggle__switch').catch((err) => {console.error(err);});
