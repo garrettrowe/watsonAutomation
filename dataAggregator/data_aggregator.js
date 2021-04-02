@@ -50,7 +50,7 @@ crawler.on("fetchstart", function(queueItem, responseBuffer, response) {
 		queueItem.status = "queued";
 		return;
 	}
-    var excludefiles = [".pdf",".xml",".rss",".doc",".xml",".ppt",".jpg",".png",".gif",".ico",".bmp","woff"];
+    var excludefiles = [".pdf",".xml",".rss",".doc",".xml",".ppt",".jpg",".png",".gif",".ico",".bmp"];
     if (!excludefiles.includes(queueItem.url.slice(-4))) {
     	 console.log("doing fetch: " + queueItem.url);
 		 getPandL(queueItem.url, cont).then(outp => {
