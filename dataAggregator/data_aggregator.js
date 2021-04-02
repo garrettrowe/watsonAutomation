@@ -14,7 +14,6 @@ var cont = null;
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 var crawler = new Crawler(myArgs[0].replace(/^http:\/\//i, "https://"));
-crawler.queueURL(myArgs[0]);
 crawler.maxDepth = 4;
 crawler.userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0";
 crawler.respectRobotsTxt = false;
@@ -66,6 +65,7 @@ crawler.on("fetchstart", function(queueItem, responseBuffer, response) {
 });
 
 crawler.on("complete", function () {
+	crawler.queueURL(myArgs[0]);
 	setInterval(function(){ 
 		crawler.queue.countItems({
 		    status: "queued"
@@ -138,12 +138,13 @@ async function getPandL(url, cont, gettingPage){
 		await setGettingPage(true).catch((err) => {});
 		console.log("processing: " + url);
     	let page = await getPage(browser).catch((err) => {console.log(err); });
-		await page.goto(url, {waitUntil: 'networkidle0'}).catch((err) => {});
+		await page.goto(url, {waitUntil: 'networkidle2'}).catch((err) => {});
+		await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'}).catch((err) => {});
 		
 		links = await page.$$eval('a', links => links.map(a => a.href)).catch((err) => {console.log(err); });
 		console.log("got: " + links.length + " at " + url);
 		
-		await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'}).catch((err) => {});
+		
 		await page.evaluate(() => {
 			try {
 				var allDivs = $('div div');
