@@ -192,16 +192,10 @@ async function getPandL(url, cont, gettingPage){
 		let phtml = await page.evaluate(el => el.innerHTML, await page.$('body')).catch((err) => {});
 		phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
 		phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
-		phtml = phtml.replace(/<link([\S\s]*?)>/gi, "");
 		phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
-		phtml = phtml.replace(/<iframe([\S\s]*?)>/gi, "");
-		phtml = phtml.replace(/<\/iframe>/gi, "");
 		phtml = phtml.replace(/<li([\S\s]*?)>([\S\s]*?)<\/li>/gi, "");
 		phtml = phtml.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
 		phtml = phtml.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
-		phtml = phtml.replace(/<img([\S\s]*?)>/gi, "");
-		phtml = phtml.replace(/<a ([\S\s]*?)>/gi, "");
-		phtml = phtml.replace(/<\/a>/gi, "");
 		phtml = phtml.replace(/<!--([\S\s]*?)-->/gi, "");
 
 		console.log(url + " doc length: " + phtml.length);
