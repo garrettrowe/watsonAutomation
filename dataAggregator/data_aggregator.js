@@ -150,7 +150,7 @@ async function getPandL(url, cont, gettingPage){
 				var allDivs = $('div div');
 				var topZindex = 5000;
 				var targetRoles = ["dialog","modal","alert","alertdialog"];
-				var targetClasses = ["dialog","modal","alert","alertdialog", "message", "survey"];
+				var targetClasses = ["dialog","modal","alert","alertdialog", "message", "survey", "hidden"];
 				allDivs.each(function(){
 					try{
 						var currentZindex = parseInt($(this).css('z-index'), 10);
@@ -163,14 +163,15 @@ async function getPandL(url, cont, gettingPage){
 							return true;
 						}
 						var classList = $(this).attr('class').split(/\s+/);
-						  for (var i = 0; i < classList.length; i++) {
+						for (var i = 0; i < classList.length; i++) {
 							for (var j = 0; j < targetClasses.length; j++) {
 							    if (classList[i].includes(targetClasses[j])) {
 								$(this).remove();
 								return true;
 							    }
 							}
-						  }
+						}
+						$(this).find(":hidden").remove();
 					}catch(fail){}
 				});
 			} catch(err) {}
