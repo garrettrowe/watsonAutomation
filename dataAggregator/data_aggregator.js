@@ -53,7 +53,7 @@ crawler.on("fetchstart", function(queueItem, responseBuffer, response) {
 	}
 	queueItem.url = queueItem.url.trim();
     var ea = [".js"];
-    var eb = [".pdf",".xml",".rss",".doc",".xls",".ppt",".jpg",".png",".gif",".ico",".bmp"];
+    var eb = [".pdf",".xml",".rss",".doc",".xls",".ppt",".jpg",".png",".gif",".ico",".bmp",".svg"];
     var ec = [".woff",".json",".woff2"];
     if (!ea.includes(queueItem.url.slice(-3).toLowerCase()) && !eb.includes(queueItem.url.slice(-4).toLowerCase()) &&  !ec.includes(queueItem.url.slice(-5).toLowerCase())  ) {
     	 console.log("doing fetch: " + queueItem.url);
