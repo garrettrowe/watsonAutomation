@@ -187,11 +187,11 @@ async function getPandL(url, cont, gettingPage){
 		let pageTitle = await page.title().catch((err) => {});
 		pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
 		let pname = url.replace(/http.*\/\//, "").replace(/\/$/, "");
-		iterate +=1;
+		
 
 		const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
 
-		let phtml = await page.evaluate(el => el.innerHTML, await page.$('body')).catch((err) => {});
+		let phtml = await page.content().catch((err) => {});
 		phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
 		phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
 		phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
@@ -199,48 +199,54 @@ async function getPandL(url, cont, gettingPage){
 		phtml = phtml.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
 		phtml = phtml.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
 		phtml = phtml.replace(/<!--([\S\s]*?)-->/gi, "");
+		
+		let summarizeitems = [phtml];
+		summarizeitems.push(phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi));
+		
+		for (var i = 0; i < summarizeitems.length; i++) {
+			if (summarizeitems[i]){
+				iterate +=1;
+				console.log(url + " doc length: " + summarizeitems[i].length);
+				let header = {"Content-type": "application/json", "authorization": "Basic " + Buffer.from("apikey:" + data.apikey).toString("base64") };
+				let bod = {"html": summarizeitems[i], "features": {"summarization": {"limit": 8 } } };
+				let wurl = data.url + "/v1/analyze?version=2020-08-01";
 
-		console.log(url + " doc length: " + phtml.length);
-		if (phtml.length){
-			let header = {"Content-type": "application/json", "authorization": "Basic " + Buffer.from("apikey:" + data.apikey).toString("base64") };
-			let bod = {"html": phtml, "features": {"summarization": {"limit": 8 } } };
-			let wurl = data.url + "/v1/analyze?version=2020-08-01";
+				let outJSON = { 
+					    title: pageTitle,
+					    text: null, 
+					    source_link: url
+				};
 
-			let outJSON = { 
-				    title: pageTitle,
-				    text: null, 
-				    source_link: url
-			};
+				var options = {
+				  uri: wurl,
+				  headers: header,
+				  method: 'POST',
+				  json: bod
+				};
 
-			var options = {
-			  uri: wurl,
-			  headers: header,
-			  method: 'POST',
-			  json: bod
-			};
+				(function(outJSON, pname,iterate, options){
+					request(options, function (error, response, body) {
+					  if (!error && response.statusCode == 200) {
+						let out = body
+						outJSON.text = out.summarization.text;
 
-			(function(outJSON, pname,iterate, options){
-				request(options, function (error, response, body) {
-				  if (!error && response.statusCode == 200) {
-					let out = body
-					outJSON.text = out.summarization.text;
-
-					let ojsH = hashCode(outJSON.text);
-					if (!outitems.includes(ojsH)){
-						outitems.push(ojsH);
-						fse.outputFileSync("/root/da/crawl/" + pname  + iterate + ".json", JSON.stringify(outJSON));
-						console.log("wrote " + pname + iterate + ".json");
-					} else{
-						console.log("Dupe hash, skipping " + pname);
-					}
-				  }else{
-					  console.log("Error calling NLU on: " + pname + " : " + JSON.stringify(body));
-				  }
-				});
-			  })(outJSON, pname,iterate, options);
-		 } else {
-			 console.log("Empty Doc, skipping " + url);
-		 }
+						let ojsH = hashCode(outJSON.text);
+						if (!outitems.includes(ojsH)){
+							outitems.push(ojsH);
+							fse.outputFileSync("/root/da/crawl/" + pname  + iterate + ".json", JSON.stringify(outJSON));
+							console.log("wrote " + pname + iterate + ".json");
+						} else{
+							console.log("Dupe hash, skipping " + pname);
+						}
+					  }else{
+						  console.log("Error calling NLU on: " + pname + " : " + JSON.stringify(body));
+					  }
+					});
+				  })(outJSON, pname,iterate, options);
+			 } else {
+				 console.log("Empty Doc, skipping " + url);
+			 }
+		}
 
 		if(page)
 			await page.close().catch((err) => {});
