@@ -147,14 +147,14 @@ async function getPandL(url, cont, gettingPage){
 		
 		await page.evaluate(() => {
 			try {
-				var allDivs = $('div div');
+				var allDivs = $('div');
 				var topZindex = 5000;
 				var targetRoles = ["dialog","modal","alert","alertdialog"];
 				var targetClasses = ["dialog","modal","alert","alertdialog", "message", "survey", "hidden"];
 				allDivs.each(function(){
 					$(this).find(":hidden").remove();
 				});
-				allDivs = $('div div');
+				allDivs = $('div');
 				allDivs.each(function(){
 					try{
 						var currentZindex = parseInt($(this).css('z-index'), 10);
