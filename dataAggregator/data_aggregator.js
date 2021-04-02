@@ -237,7 +237,7 @@ async function getPandL(url, cont, gettingPage){
 						console.log("Dupe hash, skipping " + pname);
 					}
 				  }else{
-					  console.log("Error calling NLU on: " + pname + " : " + body);
+					  console.log("Error calling NLU on: " + pname + " : " + JSON.stringify(body));
 				  }
 				});
 			  })(outJSON, pname,iterate, options);
