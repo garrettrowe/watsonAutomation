@@ -19,8 +19,9 @@ crawler.userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Geck
 crawler.respectRobotsTxt = false;
 crawler.allowInitialDomainChange = true;
 crawler.scanSubdomains = true;
-crawler.ignoreWWWDomain = true;
+crawler.ignoreWWWDomain = false;
 crawler.downloadUnsupported = false;
+crawler.ignoreInvalidSSL = true;
 crawler.supportedMimeTypes = [];
 crawler.interval = 1000; 
 crawler.maxConcurrency = 1;
@@ -135,7 +136,7 @@ async function getPandL(url, cont, gettingPage){
 		    }, sel).catch((err) => {return [];});
 		console.log("got: " + links.length + " at " + url);
 		
-		await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'}).catch((err) => {console.log(err);});
+		await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'}).catch((err) => {});
 		await page.evaluate(() => {
 			try {
 				var allDivs = $('div div');
@@ -171,7 +172,7 @@ async function getPandL(url, cont, gettingPage){
 		let pageTitle = await page.title().catch((err) => {});
 		pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
 		let pname = url.replace(/http.*\/\//, "");
-		pname = pname.replace(/\?.*/,"").substring(0, 230);
+		//pname = pname.replace(/\?.*/,"").substring(0, 230);
 		iterate +=1;
 
 		const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
@@ -213,8 +214,8 @@ async function getPandL(url, cont, gettingPage){
 			  if (!error && response.statusCode == 200) {
 				let out = body
 				outJSON.text = out.summarization.text;
-				fse.outputFileSync("/root/da/crawl/" + pname + "-" + iterate + ".json", JSON.stringify(outJSON));
-				console.log("wrote " + pname + "-" + iterate + ".json");
+				fse.outputFileSync("/root/da/crawl/" + pname  + iterate + ".json", JSON.stringify(outJSON));
+				console.log("wrote " + pname + iterate + ".json");
 			  }else{
 				  console.log(error);
 			  }
@@ -225,9 +226,8 @@ async function getPandL(url, cont, gettingPage){
 
 		if(page)
 			await page.close().catch((err) => {console.log(err); });
-		return links;
 		}catch (err) {
-		    console.log("error:" +err);
+		    console.log("error: " +err);
 		}finally{
 			await setGettingPage(false).catch((err) => {});
 			cont();
