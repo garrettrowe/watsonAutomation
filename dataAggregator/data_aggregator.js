@@ -233,18 +233,20 @@ async function getPandL(url, cont, gettingPage){
 						outitems.push(ojsH);
 						fse.outputFileSync("/root/da/crawl/" + pname  + iterate + ".json", JSON.stringify(outJSON));
 						console.log("wrote " + pname + iterate + ".json");
+					} else{
+						console.log("Dupe hash, skipping");
 					}
 				  }else{
-					  console.log(error);
+					  console.log("Error calling NLU: " + JSON.stringify(response));
 				  }
 				});
 			  })(outJSON, pname,iterate, options);
 		 } else {
-
+			 console.log("Empty Doc, skipping");
 		 }
 
 		if(page)
-			await page.close().catch((err) => {console.log(err); });
+			await page.close().catch((err) => {});
 		}catch (err) {
 		    console.log("getPandL error:" +err);
 		}finally{
