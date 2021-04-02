@@ -50,9 +50,10 @@ crawler.on("fetchstart", function(queueItem, responseBuffer, response) {
 		queueItem.status = "queued";
 		return;
 	}
-    var excludefiles = [".pdf",".xml",".rss",".doc",".xml",".ppt",".jpg",".png",".gif",".ico",".bmp"];
-    var excludefilesl = [".woff",".json",".woff2"];
-    if (!excludefiles.includes(queueItem.url.slice(-4).toLowerCase()) &&  !excludefilesl.includes(queueItem.url.slice(-5).toLowerCase())  ) {
+    var excludefiles2 = [".js"];
+    var excludefiles3 = [".pdf",".xml",".rss",".doc",".xml",".ppt",".jpg",".png",".gif",".ico",".bmp"];
+    var excludefiles4 = [".woff",".json",".woff2"];
+    if (!excludefiles2.includes(queueItem.url.slice(-3).toLowerCase()) && !excludefiles3.includes(queueItem.url.slice(-4).toLowerCase()) &&  !excludefiles4.includes(queueItem.url.slice(-5).toLowerCase())  ) {
     	 console.log("doing fetch: " + queueItem.url);
 		 getPandL(queueItem.url, cont).then(outp => {
 		 		if(outp){
