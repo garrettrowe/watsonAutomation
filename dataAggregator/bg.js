@@ -16,7 +16,7 @@ var myArgs = process.argv.slice(2);
 	await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'}).catch((err) => {console.log(err);});
 	await page.evaluate(() => {
 		try {
-		    	var allDivs = $('div div');
+		    	var allDivs = $('div');
 			var topZindex = 5000;
 			var targetRoles = ["dialog","modal","alert","alertdialog"];
 			var targetClasses = ["dialog","modal","alert","alertdialog", "message", "survey"];
