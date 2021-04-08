@@ -12,34 +12,38 @@ var myArgs = process.argv.slice(2);
 		  deviceScaleFactor: 2,
 		});
 	await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0').catch((err) => {});
-	await page.goto(myArgs[0]).catch((err) => {});
+	await page.goto(myArgs[0], {waitUntil: 'networkidle2'}).catch((err) => {});
 	await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'}).catch((err) => {console.log(err);});
 	await page.evaluate(() => {
 		try {
-		    	var allDivs = $('div');
+			var allDivs = $('div');
 			var topZindex = 5000;
 			var targetRoles = ["dialog","modal","alert","alertdialog"];
-			var targetClasses = ["dialog","modal","alert","alertdialog", "message", "survey"];
+			var targetClasses = ["dialog","modal","alert","alertdialog", "message", "survey", "hidden"];
+			allDivs.each(function(){
+				$(this).find(":hidden").remove();
+			});
+			allDivs = $('div');
 			allDivs.each(function(){
 				try{
 					var currentZindex = parseInt($(this).css('z-index'), 10);
 					if(currentZindex > topZindex) {
-						$(this).hide();
+						$(this).remove();
 						return true;
 					}
 					if(targetRoles.includes($(this).attr("role"))) {
-						$(this).hide();
+						$(this).remove();
 						return true;
 					}
 					var classList = $(this).attr('class').split(/\s+/);
-					  for (var i = 0; i < classList.length; i++) {
-					    	for (var j = 0; j < targetClasses.length; j++) {
+					for (var i = 0; i < classList.length; i++) {
+						for (var j = 0; j < targetClasses.length; j++) {
 						    if (classList[i].includes(targetClasses[j])) {
-							$(this).hide();
+							$(this).remove();
 							return true;
 						    }
 						}
-					  }
+					}
 				}catch(fail){}
 			});
 		} catch(err) {}
