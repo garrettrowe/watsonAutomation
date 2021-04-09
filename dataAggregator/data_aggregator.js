@@ -26,153 +26,158 @@ crawler.supportedMimeTypes = [/^text\/html/i];
 crawler.interval = 2000;
 crawler.maxConcurrency = 1;
 crawler.listenerTTL = 120000;
-crawler.allowedProtocols [/^http(s)?$/i];
+crawler.allowedProtocols[/^http(s)?$/i];
 
 var gettingPage = false
 
 function hashCode(str) {
-  var hash = 0, i, chr;
-  for (i = 0; i < str.length; i++) {
-    chr   = str.charCodeAt(i);
-    hash  = ((hash << 5) - hash) + chr;
-    hash |= 0; 
-  }
-  return hash;
+    var hash = 0,
+        i, chr;
+    for (i = 0; i < str.length; i++) {
+        chr = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash |= 0;
+    }
+    return hash;
 }
 
 crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
-	cont = this.wait();
-	queueItem.url = queueItem.url.trim();
-	console.log("Evaluating: " + queueItem.url);
-	if(gettingPage){
-		queueItem.status = "queued";
-		return;
-	}
+    cont = this.wait();
+    queueItem.url = queueItem.url.trim();
+    console.log("Evaluating: " + queueItem.url);
+    if (gettingPage) {
+        queueItem.status = "queued";
+        return;
+    }
 
     var ea = [".js"];
-    var eb = [".pdf",".xml",".rss",".doc",".xls",".ppt",".jpg",".png",".gif",".ico",".bmp",".svg",".mp3",".wav"];
-    var ec = [".woff",".json",".woff2"];
-    if (!ea.includes(queueItem.url.slice(-3).toLowerCase()) && !eb.includes(queueItem.url.slice(-4).toLowerCase()) &&  !ec.includes(queueItem.url.slice(-5).toLowerCase())  ) {
-    	 console.log("doing fetch: " + queueItem.url);
-    	 gettingPage = true;
-		 await getPandL(queueItem.url);
-		 gettingPage = false; 
-		 cont(); 
-		 crawler.queue.update(queueItem.id, {
-                fetched: true,
-                status: "downloaded"
-            }, function(error, queueItem) {
-                crawler._openRequests.splice(0, 1);
-                if (error) {
-                    return crawler.emit("queueerror", error, queueItem);
-                }
-                crawler.emit("fetchcomplete", queueItem, "", response);
-            });
-		 return;
-	   } 
+    var eb = [".pdf", ".xml", ".rss", ".doc", ".xls", ".ppt", ".jpg", ".png", ".gif", ".ico", ".bmp", ".svg", ".mp3", ".wav"];
+    var ec = [".woff", ".json", ".woff2"];
+    if (!ea.includes(queueItem.url.slice(-3).toLowerCase()) && !eb.includes(queueItem.url.slice(-4).toLowerCase()) && !ec.includes(queueItem.url.slice(-5).toLowerCase())) {
+        console.log("doing fetch: " + queueItem.url);
+        gettingPage = true;
+        await getPandL(queueItem.url);
+        gettingPage = false;
+        cont();
+        crawler.queue.update(queueItem.id, {
+            fetched: true,
+            status: "downloaded"
+        }, function(error, queueItem) {
+            crawler._openRequests.splice(0, 1);
+            if (error) {
+                return crawler.emit("queueerror", error, queueItem);
+            }
+            crawler.emit("fetchcomplete", queueItem, "", response);
+        });
+        return;
+    }
 });
 
-crawler.on("complete", function () {
-	console.log("Queue Complete");
-	crawler.queueURL(myArgs[0]);
-	setInterval(function(){ 
-		crawler.queue.countItems({
-		    status: "queued"
-		}, function(error, items) {
-		    if(items && !crawler.running)
-		    	crawler.start();
-		});
-	}, 5000);
-    setTimeout(function(){ 
-    	crawler.queue.countItems({
-		    status: "queued"
-		}, function(error, items) {
-			console.log("Final Check: " + items);
-		    if(items && !crawler.running)
-		    	crawler.start();
-		    else
-		    	otp = true;
-		});
-    }, 240000);   
+crawler.on("complete", function() {
+    console.log("Queue Complete");
+    crawler.queueURL(myArgs[0]);
+    setInterval(function() {
+        crawler.queue.countItems({
+            status: "queued"
+        }, function(error, items) {
+            if (items && !crawler.running)
+                crawler.start();
+        });
+    }, 5000);
+    setTimeout(function() {
+        crawler.queue.countItems({
+            status: "queued"
+        }, function(error, items) {
+            console.log("Final Check: " + items);
+            if (items && !crawler.running)
+                crawler.start();
+            else
+                otp = true;
+        });
+    }, 240000);
 });
 
 
-async function launchBrowser(){
-	try {
-		const browser = await puppeteer.launch({
-		headless: true,
-		args: ['--no-sandbox', '--disable-setuid-sandbox', '--lang=en-US'] });
-		return browser;
-	}catch (e) {
-		console.log(e);
-	}
+async function launchBrowser() {
+    try {
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--lang=en-US']
+        });
+        return browser;
+    } catch (e) {
+        console.log(e);
+    }
 }
 
-async function getPage(){
-	try {
-		if(!browser)
-			browser = await launchBrowser().catch((err) => {console.error(err); });
-		const page = await browser.newPage();
-		await page.setViewport({
-			  width: 1680,
-			  height: 925,
-			  deviceScaleFactor: 2,
-			});
-		await page.setDefaultNavigationTimeout(8000); 
-		await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0");
-		// Pass the Webdriver Test.
-		  await page.evaluateOnNewDocument(() => {
-		    Object.defineProperty(navigator, 'webdriver', {
-		      get: () => false,
-		    });
-		  });
+async function getPage() {
+    try {
+        if (!browser)
+            browser = await launchBrowser().catch((err) => {
+                console.error(err);
+            });
+        const page = await browser.newPage();
+        await page.setViewport({
+            width: 1680,
+            height: 925,
+            deviceScaleFactor: 2,
+        });
+        await page.setDefaultNavigationTimeout(8000);
+        await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0");
 
-		  // Pass the Chrome Test.
-		  await page.evaluateOnNewDocument(() => {
-		    // We can mock this in as much depth as we need for the test.
-		    window.chrome = {
-		      runtime: {},
-		      // etc.
-		    };
-		  });
+        await page.evaluateOnNewDocument(() => {
+            Object.defineProperty(navigator, 'webdriver', {
+                get: () => false,
+            });
+        });
 
-		  // Pass the Permissions Test.
-		  await page.evaluateOnNewDocument(() => {
-		    const originalQuery = window.navigator.permissions.query;
-		    return window.navigator.permissions.query = (parameters) => (
-		      parameters.name === 'notifications' ?
-			Promise.resolve({ state: Notification.permission }) :
-			originalQuery(parameters)
-		    );
-		  });
+        await page.evaluateOnNewDocument(() => {
 
-		  // Pass the Plugins Length Test.
-		  await page.evaluateOnNewDocument(() => {
-		    Object.defineProperty(navigator, 'plugins', {
-			  get: () => [
-			    {filename:'internal-pdf-viewer'},
-			    {filename:'adsfkjlkjhalkh'},
-			    {filename:'internal-nacl-plugin'}
-			  ],
-			});
-		  });
+            window.chrome = {
+                runtime: {},
+            };
+        });
 
-		  // Pass the Languages Test.
-		  await page.evaluateOnNewDocument(() => {
-		    // Overwrite the `plugins` property to use a custom getter.
-		    Object.defineProperty(navigator, 'languages', {
-		      get: () => ['en-US', 'en'],
-		    });
-		  });
-		return page;
-	}catch (e) {
-		console.log(e);
-	}
+        await page.evaluateOnNewDocument(() => {
+            const originalQuery = window.navigator.permissions.query;
+            return window.navigator.permissions.query = (parameters) => (
+                parameters.name === 'notifications' ?
+                Promise.resolve({
+                    state: Notification.permission
+                }) :
+                originalQuery(parameters)
+            );
+        });
+
+        await page.evaluateOnNewDocument(() => {
+            Object.defineProperty(navigator, 'plugins', {
+                get: () => [{
+                        filename: 'internal-pdf-viewer'
+                    },
+                    {
+                        filename: 'adsfkjlkjhalkh'
+                    },
+                    {
+                        filename: 'internal-nacl-plugin'
+                    }
+                ],
+            });
+        });
+
+        await page.evaluateOnNewDocument(() => {
+            Object.defineProperty(navigator, 'languages', {
+                get: () => ['en-US', 'en'],
+            });
+        });
+        return page;
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 function getOTP() {
-    return new Promise(function (resolve, reject) {
-        (function waitForOTP(){
+    return new Promise(function(resolve, reject) {
+        (function waitForOTP() {
             if (otp) return resolve(otp);
             setTimeout(waitForOTP, 30);
         })();
@@ -180,163 +185,204 @@ function getOTP() {
 }
 
 
-async function getPandL(url){
-	let links = [];
-	try {
-		console.log("processing: " + url);
-    	let page = await getPage().catch((err) => {console.log(err); });
-		await page.goto(url, {waitUntil: 'networkidle2'}).catch((err) => {console.log(err);});
-		
-		await page.evaluate(async() => {
-			var script = document.createElement('script');
-			script.src = "https://code.jquery.com/jquery-3.5.1.min.js";
-			document.getElementsByTagName('head')[0].appendChild(script);
+async function getPandL(url) {
+    let links = [];
+    try {
+        console.log("processing: " + url);
+        let page = await getPage().catch((err) => {
+            console.log(err);
+        });
+        await page.goto(url, {
+            waitUntil: 'networkidle2'
+        }).catch((err) => {
+            console.log(err);
+        });
 
-			while(!window.jQuery)
-				await new Promise(r => setTimeout(r, 500));
-		}).catch((err) => {console.log(err);});	
-		
-		links = await page.$$eval('a', links => links.map(a => a.href)).catch((err) => {console.log(err); });
-		
-		links.forEach(function (item, index) {
-          crawler.queueURL(item);
+        await page.evaluate(async () => {
+            var script = document.createElement('script');
+            script.src = "https://code.jquery.com/jquery-3.5.1.min.js";
+            document.getElementsByTagName('head')[0].appendChild(script);
+
+            while (!window.jQuery)
+                await new Promise(r => setTimeout(r, 500));
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        links = await page.$$eval('a', links => links.map(a => a.href)).catch((err) => {
+            console.log(err);
+        });
+
+        links.forEach(function(item, index) {
+            crawler.queueURL(item);
         });
         console.log("added: " + links.length + ", queue length: " + crawler.queue.length + " at " + url);
-		
-		await page.evaluate(() => {
-			try {
-				var allDivs = $('div');
-				var topZindex = 5000;
-				var targetRoles = ["dialog","modal","alert","alertdialog"];
-				var targetClasses = ["dialog","modal","alert","alertdialog", "message", "survey", "hidden"];
-				allDivs.each(function(){
-					$(this).find(":hidden").remove();
-				});
-				allDivs = $('div');
-				allDivs.each(function(){
-					try{
-						var currentZindex = parseInt($(this).css('z-index'), 10);
-						if(currentZindex > topZindex) {
-							$(this).remove();
-							return true;
-						}
-						if(targetRoles.includes($(this).attr("role"))) {
-							$(this).remove();
-							return true;
-						}
-						var classList = $(this).attr('class').split(/\s+/);
-						for (var i = 0; i < classList.length; i++) {
-							for (var j = 0; j < targetClasses.length; j++) {
-							    if (classList[i].includes(targetClasses[j])) {
-								$(this).remove();
-								return true;
-							    }
-							}
-						}
-					}catch(fail){}
-				});
-			} catch(err) {}
-		    }).catch((err) => {console.log(err);});
-		
 
-		let pageTitle = await page.title().catch((err) => {console.error(err);});
-		pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
-		let pname = url.replace(/http.*\/\//, "").replace(/\/$/, "");
-		
+        await page.evaluate(() => {
+            try {
+                var allDivs = $('div');
+                var topZindex = 5000;
+                var targetRoles = ["dialog", "modal", "alert", "alertdialog"];
+                var targetClasses = ["dialog", "modal", "alert", "alertdialog", "message", "survey", "hidden"];
+                allDivs.each(function() {
+                    $(this).find(":hidden").remove();
+                });
+                allDivs = $('div');
+                allDivs.each(function() {
+                    try {
+                        var currentZindex = parseInt($(this).css('z-index'), 10);
+                        if (currentZindex > topZindex) {
+                            $(this).remove();
+                            return true;
+                        }
+                        if (targetRoles.includes($(this).attr("role"))) {
+                            $(this).remove();
+                            return true;
+                        }
+                        var classList = $(this).attr('class').split(/\s+/);
+                        for (var i = 0; i < classList.length; i++) {
+                            for (var j = 0; j < targetClasses.length; j++) {
+                                if (classList[i].includes(targetClasses[j])) {
+                                    $(this).remove();
+                                    return true;
+                                }
+                            }
+                        }
+                    } catch (fail) {}
+                });
+            } catch (err) {}
+        }).catch((err) => {
+            console.log(err);
+        });
 
-		const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
 
-		let phtml = await page.content().catch((err) => {console.error(err);});
-		phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
-		phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
-		phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
-		phtml = phtml.replace(/<li([\S\s]*?)>([\S\s]*?)<\/li>/gi, "");
-		phtml = phtml.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
-		phtml = phtml.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
-		phtml = phtml.replace(/<!--([\S\s]*?)-->/gi, "");
-		
-		let summarizeitems = [];
-		summarizeitems.push(phtml);
-		summarizeitems.push(phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi));
-		
-		for (var i = 0; i < summarizeitems.length; i++) {
-			console.log(pname + " part " + i);
-			if (summarizeitems[i]){
-				iterate +=1;
-				console.log(url + " doc length: " + summarizeitems[i].length);
-				let header = {"Content-type": "application/json", "authorization": "Basic " + Buffer.from("apikey:" + data.apikey).toString("base64") };
-				let bod = {"html": summarizeitems[i], "features": {"summarization": {"limit": 8 } } };
-				let wurl = data.url + "/v1/analyze?version=2020-08-01";
+        let pageTitle = await page.title().catch((err) => {
+            console.error(err);
+        });
+        pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi, " ");
+        let pname = url.replace(/http.*\/\//, "").replace(/\/$/, "");
 
-				let outJSON = { 
-					    title: pageTitle,
-					    text: null, 
-					    source_link: url
-				};
 
-				var options = {
-				  uri: wurl,
-				  headers: header,
-				  method: 'POST',
-				  json: bod
-				};
+        const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
 
-				(async function(outJSON, pname,iterate, options){
-					try{
-						request(options, function (error, response, body) {
-							try{
-							  if (!error && response.statusCode == 200) {
-								let out = body;
-								outJSON.text = out.summarization.text;
+        let phtml = await page.content().catch((err) => {
+            console.error(err);
+        });
+        phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
+        phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
+        phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
+        phtml = phtml.replace(/<li([\S\s]*?)>([\S\s]*?)<\/li>/gi, "");
+        phtml = phtml.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
+        phtml = phtml.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
+        phtml = phtml.replace(/<!--([\S\s]*?)-->/gi, "");
 
-								let ojsH = hashCode(outJSON.text);
-								if (!outitems.includes(ojsH)){
-									outitems.push(ojsH);
-									fse.outputFileSync("/root/da/crawl/" + pname  + iterate + ".json", JSON.stringify(outJSON));
-									console.log("wrote " + pname + iterate + ".json");
-									return;
-								} else{
-									console.log("Dupe hash, skipping " + pname);
-									return;
-								}
-							  }else{
-								  console.log("Error calling NLU on: " + pname + " : " + JSON.stringify(body));
-								  return;
-							  }
-						  }catch(err){console.error(err);return;}
-						});
-					}catch(err){console.error(err);}
-				  })(outJSON, pname,iterate, options);
-			 } else {
-				 console.log("Empty Doc, skipping " + url);
-			 }
-		}
+        let summarizeitems = [];
+        summarizeitems.push(phtml);
+        summarizeitems.push(phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi));
 
-		if(page)
-				await page.close().catch((err) => {console.error(err);});
-		if(browser){
-			await browser.close().catch((err) => {console.error(err);});
-			browser = null;
-		}
-		return;
-		}catch (err) {
-		    console.log("getPandL error:" +err);
-		}
+        for (var i = 0; i < summarizeitems.length; i++) {
+            console.log(pname + " part " + i);
+            if (summarizeitems[i]) {
+                iterate += 1;
+                console.log(url + " doc length: " + summarizeitems[i].length);
+                let header = {
+                    "Content-type": "application/json",
+                    "authorization": "Basic " + Buffer.from("apikey:" + data.apikey).toString("base64")
+                };
+                let bod = {
+                    "html": summarizeitems[i],
+                    "features": {
+                        "summarization": {
+                            "limit": 8
+                        }
+                    }
+                };
+                let wurl = data.url + "/v1/analyze?version=2020-08-01";
+
+                let outJSON = {
+                    title: pageTitle,
+                    text: null,
+                    source_link: url
+                };
+
+                var options = {
+                    uri: wurl,
+                    headers: header,
+                    method: 'POST',
+                    json: bod
+                };
+
+                (async function(outJSON, pname, iterate, options) {
+                    try {
+                        request(options, function(error, response, body) {
+                            try {
+                                if (!error && response.statusCode == 200) {
+                                    let out = body;
+                                    outJSON.text = out.summarization.text;
+
+                                    let ojsH = hashCode(outJSON.text);
+                                    if (!outitems.includes(ojsH)) {
+                                        outitems.push(ojsH);
+                                        fse.outputFileSync("/root/da/crawl/" + pname + iterate + ".json", JSON.stringify(outJSON));
+                                        console.log("wrote " + pname + iterate + ".json");
+                                        return;
+                                    } else {
+                                        console.log("Dupe hash, skipping " + pname);
+                                        return;
+                                    }
+                                } else {
+                                    console.log("Error calling NLU on: " + pname + " : " + JSON.stringify(body));
+                                    return;
+                                }
+                            } catch (err) {
+                                console.error(err);
+                                return;
+                            }
+                        });
+                    } catch (err) {
+                        console.error(err);
+                    }
+                })(outJSON, pname, iterate, options);
+            } else {
+                console.log("Empty Doc, skipping " + url);
+            }
+        }
+
+        if (page)
+            await page.close().catch((err) => {
+                console.error(err);
+            });
+        if (browser) {
+            await browser.close().catch((err) => {
+                console.error(err);
+            });
+            browser = null;
+        }
+        return;
+    } catch (err) {
+        console.log("getPandL error:" + err);
+    }
 }
 
-async function main(){
-	try {
-		let browser = await launchBrowser().catch((err) => {console.error(err); });
-		console.log("start: ");
-		crawler.start();
-		const ans = await getOTP().catch((err) => {console.error(err); });
-		if(browser)
-    		await browser.close().catch((err) => {console.error(err); });
-		} catch (e) {
-      	console.log(e);
-    }finally {
-    	console.log("done: ");
-    	process.exit();
+async function main() {
+    try {
+        let browser = await launchBrowser().catch((err) => {
+            console.error(err);
+        });
+        console.log("start: ");
+        crawler.start();
+        const ans = await getOTP().catch((err) => {
+            console.error(err);
+        });
+        if (browser)
+            await browser.close().catch((err) => {
+                console.error(err);
+            });
+    } catch (e) {
+        console.log(e);
+    } finally {
+        console.log("done: ");
+        process.exit();
     }
 }
 
