@@ -184,7 +184,7 @@ async function getPandL(url, cont, gettingPage){
 	try {
 		await setGettingPage(true).catch((err) => {});
 		console.log("processing: " + url);
-    		let page = await getPage(browser).catch((err) => {console.log(err); });
+    		let page = await getPage().catch((err) => {console.log(err); });
 		await page.goto(url, {waitUntil: 'networkidle2'}).catch((err) => {console.log(err);});
 		
 		await page.evaluate(async() => {
