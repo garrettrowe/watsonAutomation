@@ -15,7 +15,7 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 var crawler = new Crawler(myArgs[0].replace(/^http:\/\//i, "https://"));
 crawler.maxDepth = 4;
-crawler.userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0";
+crawler.userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36";
 crawler.respectRobotsTxt = false;
 crawler.allowInitialDomainChange = true;
 crawler.scanSubdomains = true;
