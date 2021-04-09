@@ -142,7 +142,7 @@ async function getPandL(url, cont, gettingPage){
 		await setGettingPage(true).catch((err) => {});
 		console.log("processing: " + url);
     		let page = await getPage(browser).catch((err) => {console.log(err); });
-		await page.goto(url, {waitUntil: 'networkidle0'}).catch((err) => {});
+		await page.goto(url, {waitUntil: 'networkidle0'}).catch((err) => {console.log(err);});
 		
 		await page.evaluate(async() => {
 			var script = document.createElement('script');
@@ -158,7 +158,8 @@ async function getPandL(url, cont, gettingPage){
 		}).catch((err) => {console.log(err);});	
 		
 		console.log("got: " + links.length + " at " + url);
-		
+		var pc = await page.content().catch((err) => {console.log(err);});	
+		console.log(pc);
 		
 		await page.evaluate(() => {
 			try {
