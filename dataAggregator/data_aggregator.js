@@ -52,6 +52,7 @@ crawler.on("fetchstart", function(queueItem, responseBuffer, response) {
 		return;
 	}
 	queueItem.url = queueItem.url.trim();
+	console.log("Evaluating: " + queueItem.url);
     var ea = [".js"];
     var eb = [".pdf",".xml",".rss",".doc",".xls",".ppt",".jpg",".png",".gif",".ico",".bmp",".svg",".mp3",".wav"];
     var ec = [".woff",".json",".woff2"];
