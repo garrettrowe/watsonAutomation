@@ -97,7 +97,7 @@ async function launchBrowser(){
 		const browser = await puppeteer.launch({
 		headless: true,
 		userDataDir: '/root/da',
-		args: ['--no-sandbox'] });
+		args: ['--no-sandbox', '--disable-setuid-sandbox', '--lang=en-US] });
 		return browser;
 	}catch (e) {
 		console.log(e);
@@ -126,7 +126,7 @@ async function getPage(){
 		  // Pass the Chrome Test.
 		  await page.evaluateOnNewDocument(() => {
 		    // We can mock this in as much depth as we need for the test.
-		    window.navigator.chrome = {
+		    window.chrome = {
 		      runtime: {},
 		      // etc.
 		    };
@@ -144,12 +144,13 @@ async function getPage(){
 
 		  // Pass the Plugins Length Test.
 		  await page.evaluateOnNewDocument(() => {
-		    // Overwrite the `plugins` property to use a custom getter.
 		    Object.defineProperty(navigator, 'plugins', {
-		      // This just needs to have `length > 0` for the current test,
-		      // but we could mock the plugins too if necessary.
-		      get: () => [1, 2, 3, 4, 5],
-		    });
+			  get: () => [
+			    {filename:'internal-pdf-viewer'},
+			    {filename:'adsfkjlkjhalkh'},
+			    {filename:'internal-nacl-plugin'}
+			  ],
+			});
 		  });
 
 		  // Pass the Languages Test.
