@@ -23,17 +23,12 @@ crawler.ignoreWWWDomain = false;
 crawler.downloadUnsupported = false;
 crawler.ignoreInvalidSSL = true;
 crawler.supportedMimeTypes = [/^text\/html/i];
-crawler.interval = 1000;
-crawler.stripQuerystring = true;
+crawler.interval = 2000;
 crawler.maxConcurrency = 1;
 crawler.listenerTTL = 120000;
 crawler.allowedProtocols [/^http(s)?$/i];
 
 var gettingPage = false
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 function hashCode(str) {
   var hash = 0, i, chr;
@@ -45,31 +40,40 @@ function hashCode(str) {
   return hash;
 }
 
-crawler.on("fetchstart", function(queueItem, responseBuffer, response) {
+crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
 	cont = this.wait();
+	queueItem.url = queueItem.url.trim();
+	console.log("Evaluating: " + queueItem.url);
 	if(gettingPage){
 		queueItem.status = "queued";
 		return;
 	}
-	queueItem.url = queueItem.url.trim();
-	console.log("Evaluating: " + queueItem.url);
+
     var ea = [".js"];
     var eb = [".pdf",".xml",".rss",".doc",".xls",".ppt",".jpg",".png",".gif",".ico",".bmp",".svg",".mp3",".wav"];
     var ec = [".woff",".json",".woff2"];
     if (!ea.includes(queueItem.url.slice(-3).toLowerCase()) && !eb.includes(queueItem.url.slice(-4).toLowerCase()) &&  !ec.includes(queueItem.url.slice(-5).toLowerCase())  ) {
     	 console.log("doing fetch: " + queueItem.url);
-		 getPandL(queueItem.url, cont).then(outp => {
-		 		if(outp){
-		            outp.forEach(function (item, index) {
-		              crawler.queueURL(item);
-		            });
-		            console.log("added: " + outp.length + ", queue length: " + crawler.queue.length);
-		           }
-		    }).catch((err) => {console.error(err); });  
+    	 gettingPage = true;
+		 await getPandL(queueItem.url);
+		 gettingPage = false; 
+		 cont(); 
+		 crawler.queue.update(queueItem.id, {
+                fetched: true,
+                status: "downloaded"
+            }, function(error, queueItem) {
+                crawler._openRequests.splice(0, 1);
+                if (error) {
+                    return crawler.emit("queueerror", error, queueItem);
+                }
+                crawler.emit("fetchcomplete", queueItem, "", response);
+            });
+		 return;
 	   } 
 });
 
 crawler.on("complete", function () {
+	console.log("Queue Complete");
 	crawler.queueURL(myArgs[0]);
 	setInterval(function(){ 
 		crawler.queue.countItems({
@@ -97,7 +101,6 @@ async function launchBrowser(){
 	try {
 		const browser = await puppeteer.launch({
 		headless: true,
-		userDataDir: '/root/da',
 		args: ['--no-sandbox', '--disable-setuid-sandbox', '--lang=en-US'] });
 		return browser;
 	}catch (e) {
@@ -176,17 +179,12 @@ function getOTP() {
     });
 }
 
-async function setGettingPage(gp) {
-    gettingPage = gp;
-}
 
-
-async function getPandL(url, cont, gettingPage){
+async function getPandL(url){
 	let links = [];
 	try {
-		await setGettingPage(true).catch((err) => {});
 		console.log("processing: " + url);
-    		let page = await getPage().catch((err) => {console.log(err); });
+    	let page = await getPage().catch((err) => {console.log(err); });
 		await page.goto(url, {waitUntil: 'networkidle2'}).catch((err) => {console.log(err);});
 		
 		await page.evaluate(async() => {
@@ -200,7 +198,10 @@ async function getPandL(url, cont, gettingPage){
 		
 		links = await page.$$eval('a', links => links.map(a => a.href)).catch((err) => {console.log(err); });
 		
-		console.log("got: " + links.length + " at " + url);
+		links.forEach(function (item, index) {
+          crawler.queueURL(item);
+        });
+        console.log("added: " + links.length + ", queue length: " + crawler.queue.length + " at " + url);
 		
 		await page.evaluate(() => {
 			try {
@@ -238,14 +239,14 @@ async function getPandL(url, cont, gettingPage){
 		    }).catch((err) => {console.log(err);});
 		
 
-		let pageTitle = await page.title().catch((err) => {});
+		let pageTitle = await page.title().catch((err) => {console.error(err);});
 		pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi," ");
 		let pname = url.replace(/http.*\/\//, "").replace(/\/$/, "");
 		
 
 		const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
 
-		let phtml = await page.content().catch((err) => {});
+		let phtml = await page.content().catch((err) => {console.error(err);});
 		phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
 		phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
 		phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
@@ -254,10 +255,12 @@ async function getPandL(url, cont, gettingPage){
 		phtml = phtml.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
 		phtml = phtml.replace(/<!--([\S\s]*?)-->/gi, "");
 		
-		let summarizeitems = [phtml];
+		let summarizeitems = [];
+		summarizeitems.push(phtml);
 		summarizeitems.push(phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi));
 		
 		for (var i = 0; i < summarizeitems.length; i++) {
+			console.log(pname + " part " + i);
 			if (summarizeitems[i]){
 				iterate +=1;
 				console.log(url + " doc length: " + summarizeitems[i].length);
@@ -278,24 +281,31 @@ async function getPandL(url, cont, gettingPage){
 				  json: bod
 				};
 
-				(function(outJSON, pname,iterate, options){
-					request(options, function (error, response, body) {
-					  if (!error && response.statusCode == 200) {
-						let out = body
-						outJSON.text = out.summarization.text;
+				(async function(outJSON, pname,iterate, options){
+					try{
+						request(options, function (error, response, body) {
+							try{
+							  if (!error && response.statusCode == 200) {
+								let out = body;
+								outJSON.text = out.summarization.text;
 
-						let ojsH = hashCode(outJSON.text);
-						if (!outitems.includes(ojsH)){
-							outitems.push(ojsH);
-							fse.outputFileSync("/root/da/crawl/" + pname  + iterate + ".json", JSON.stringify(outJSON));
-							console.log("wrote " + pname + iterate + ".json");
-						} else{
-							console.log("Dupe hash, skipping " + pname);
-						}
-					  }else{
-						  console.log("Error calling NLU on: " + pname + " : " + JSON.stringify(body));
-					  }
-					});
+								let ojsH = hashCode(outJSON.text);
+								if (!outitems.includes(ojsH)){
+									outitems.push(ojsH);
+									fse.outputFileSync("/root/da/crawl/" + pname  + iterate + ".json", JSON.stringify(outJSON));
+									console.log("wrote " + pname + iterate + ".json");
+									return;
+								} else{
+									console.log("Dupe hash, skipping " + pname);
+									return;
+								}
+							  }else{
+								  console.log("Error calling NLU on: " + pname + " : " + JSON.stringify(body));
+								  return;
+							  }
+						  }catch(err){console.error(err);return;}
+						});
+					}catch(err){console.error(err);}
 				  })(outJSON, pname,iterate, options);
 			 } else {
 				 console.log("Empty Doc, skipping " + url);
@@ -303,15 +313,15 @@ async function getPandL(url, cont, gettingPage){
 		}
 
 		if(page)
-			await page.close().catch((err) => {});
+				await page.close().catch((err) => {console.error(err);});
+		if(browser){
+			await browser.close().catch((err) => {console.error(err);});
+			browser = null;
+		}
+		return;
 		}catch (err) {
 		    console.log("getPandL error:" +err);
-		}finally{
-			await setGettingPage(false).catch((err) => {});
-			cont();
-			return links;
 		}
-
 }
 
 async function main(){
