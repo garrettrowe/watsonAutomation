@@ -97,7 +97,7 @@ async function launchBrowser(){
 		const browser = await puppeteer.launch({
 		headless: true,
 		userDataDir: '/root/da',
-		args: ['--no-sandbox', '--disable-setuid-sandbox', '--lang=en-US] });
+		args: ['--no-sandbox', '--disable-setuid-sandbox', '--lang=en-US'] });
 		return browser;
 	}catch (e) {
 		console.log(e);
