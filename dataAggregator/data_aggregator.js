@@ -53,7 +53,7 @@ crawler.on("fetchstart", function(queueItem, responseBuffer, response) {
 	}
 	queueItem.url = queueItem.url.trim();
     var ea = [".js"];
-    var eb = [".pdf",".xml",".rss",".doc",".xls",".ppt",".jpg",".png",".gif",".ico",".bmp",".svg","mp3","wav"];
+    var eb = [".pdf",".xml",".rss",".doc",".xls",".ppt",".jpg",".png",".gif",".ico",".bmp",".svg",".mp3",".wav"];
     var ec = [".woff",".json",".woff2"];
     if (!ea.includes(queueItem.url.slice(-3).toLowerCase()) && !eb.includes(queueItem.url.slice(-4).toLowerCase()) &&  !ec.includes(queueItem.url.slice(-5).toLowerCase())  ) {
     	 console.log("doing fetch: " + queueItem.url);
@@ -141,9 +141,18 @@ async function getPandL(url, cont, gettingPage){
 	try {
 		await setGettingPage(true).catch((err) => {});
 		console.log("processing: " + url);
-    	let page = await getPage(browser).catch((err) => {console.log(err); });
+    		let page = await getPage(browser).catch((err) => {console.log(err); });
 		await page.goto(url, {waitUntil: 'networkidle2'}).catch((err) => {});
-		await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'}).catch((err) => {});
+		
+		await page.evaluate(async() => {
+			var script = document.createElement('script');
+			script.src = "https://code.jquery.com/jquery-3.5.1.min.js";
+			document.getElementsByTagName('head')[0].appendChild(script);
+
+			while(!window.jQuery)
+				await new Promise(r => setTimeout(r, 500));
+		}).catch((err) => {console.log(err);});	
+		await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => { console.log(err); });
 		
 		links = await page.$$eval('a', links => links.map(a => a.href)).catch((err) => {console.log(err); });
 		console.log("got: " + links.length + " at " + url);
