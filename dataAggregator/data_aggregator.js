@@ -142,7 +142,7 @@ async function getPandL(url, cont, gettingPage){
 		await setGettingPage(true).catch((err) => {});
 		console.log("processing: " + url);
     		let page = await getPage(browser).catch((err) => {console.log(err); });
-		await page.goto(url, {waitUntil: 'networkidle2'}).catch((err) => {});
+		await page.goto(url, {waitUntil: 'networkidle0'}).catch((err) => {});
 		
 		await page.evaluate(async() => {
 			var script = document.createElement('script');
