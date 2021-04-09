@@ -152,9 +152,10 @@ async function getPandL(url, cont, gettingPage){
 			while(!window.jQuery)
 				await new Promise(r => setTimeout(r, 500));
 		}).catch((err) => {console.log(err);});	
-		await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => { console.log(err); });
 		
-		links = await page.$$eval('a', links=>links.map((a) => a.href)).catch((err) => {console.log(err); });
+		links = await page.evaluate(() => {
+		  return Array.from(document.getElementsByTagName('a'), a => a.href);
+		}).catch((err) => {console.log(err);});	
 		
 		console.log("got: " + links.length + " at " + url);
 		
