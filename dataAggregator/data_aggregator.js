@@ -199,8 +199,6 @@ async function getPandL(url, cont, gettingPage){
 		links = await page.$$eval('a', links => links.map(a => a.href)).catch((err) => {console.log(err); });
 		
 		console.log("got: " + links.length + " at " + url);
-		var pc = await page.content().catch((err) => {console.log(err);});	
-		console.log(pc);
 		
 		await page.evaluate(() => {
 			try {
