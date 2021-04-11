@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 var myArgs = process.argv.slice(2);
 dotenv.config();
 const winstance = myArgs[1];
+const inst = myArgs[0];
 let bailout = true;
 let skipChat = false;
 if (myArgs.length > 2)
@@ -90,28 +91,6 @@ async function logon(page){
 
 async function configWebChat(page, wi){
 	try {
-		console.log("starting webchat configuration");
-		var wince = null;
-		while (wince == null) {
-			await page.goto("https://us-south.assistant.watson.cloud.ibm.com/us-south/" + wi , {waitUntil: 'networkidle0'}).catch((err) => {});
-			wince = await page.waitForSelector('#AssistantCard-0').catch((err) => {});
-			await page.screenshot({path: 'config_start1.png'});
-		} 
-		console.log("navigated to base page");
-		
-		if (await page.waitForSelector('div[title="Stop Walk-thru"]',{timeout: 5000}).catch((err) => {}))
-			await page.click('div[title="Stop Walk-thru"]').catch((err) => {console.error(err);});
-		await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => {});
-
-		await page.click('#AssistantCard-0').catch((err) => {return false;});
-		await page.waitForSelector('.IntegrationCard__icon--webChat',{timeout: 80000}).catch((err) => { console.error(err); return false; });
-		await page.$eval('.IntegrationCard__icon--webChat', el => el.click()).catch((err) => {console.error(err); return false;});
-		console.log("opened webchat");
-		await page.waitForSelector('#tab-0',{timeout: 80000}).catch((err) => {console.error(err);});
-		await page.click('#tab-0').catch((err) => {console.error(err); page.screenshot({path: 'no_style_tab.png'});});
-		console.log("style tab");
-		await page.waitForSelector('#integration_public_bot_name',{timeout: 80000}).catch((err) => {});
-		await page.$eval('#integration_public_bot_name', el => el.value = '').catch((err) => {console.error(err);});
 		let asName = cname + " Assistant";
 		if(asName.length>17){
 			asName = cname.split(" ")[0] + " Assistant";
@@ -119,40 +98,59 @@ async function configWebChat(page, wi){
 				asName = "My Assistant";
 			}
 		}
-		await page.type('#integration_public_bot_name', asName, {delay: 20}).catch((err) => {console.error(err);});
+		console.log("Configuring web chat for " + asName); 
+		await page.goto("https://us-south.assistant.watson.cloud.ibm.com/us-south/" + wi , {waitUntil: 'networkidle0'}).catch((err) => { });
+		await page.waitForSelector('#AssistantCard-0').catch((err) => {page.screenshot({path: 'webchat_error.png'});return false;});
 
-		await page.click('#tab-1').catch((err) => {console.error(err);return false;});
-		console.log("homescreen tab");
-		await page.waitForSelector('.bx--toggle__switch',{timeout: 80000}).catch((err) => {page.screenshot({path: 'no_home_screen.png'}); console.error(err);return false;});
-		await page.click('.bx--toggle__switch').catch((err) => {console.error(err);});
-		await page.waitForSelector('[id="#web_chat_home_screen_greeting"]',{timeout: 8000}).catch((err) => {});
-		let inputss2 = await page.$('[id="#web_chat_home_screen_starter_2"]',{timeout: 8000}).catch((err) => {});
-		await inputss2.click({ clickCount: 3 }).catch((err) => {console.error(err);});
-		await inputss2.type("Search Knowledge Base", {delay: 20}).catch((err) => {console.error(err);});
-		inputss2 = await page.$('[id="#web_chat_home_screen_greeting"]',{timeout: 8000}).catch((err) => {console.error(err);});
-		await inputss2.click({ clickCount: 3 }).catch((err) => {console.error(err); });
-		await inputss2.type("Welcome to " + cname + ". How can I help you?", {delay: 20}).catch((err) => {console.error(err);});
-
-		await page.click('#tab-5').catch((err) => {console.error(err);});
-		console.log("embed tab");
-		const epre = await page.waitForSelector('.bx--snippet-container',{timeout: 8000}).catch((err) => {});
-		const embedcode = await page.$eval('pre', element => element.innerHTML).catch((err) => {});
-		socket.emit('embed', {"r":myArgs[0], "code":embedcode});
-
-		await page.click('#tab-3').catch((err) => {console.error(err);});
-		console.log("suggestions tab");
-		await page.waitForSelector('.bx--toggle__switch',{timeout: 8000}).catch((err) => {console.error(err); return false;});
-		await page.click('.bx--toggle__switch').catch((err) => {console.error(err);});
-
-		let [sbutton] = await page.$x("//button[contains(., 'Save and exit')]").catch((err) => {console.error(err); return false;});
-		if (sbutton) {
-		    await sbutton.click().catch((err) => {console.error(err); return false; });
-		    console.log("saved");
-		}
-		const succ = await page.waitForSelector('.AssistantSkillPlaceholder__button',{timeout: 8000}).catch((err) => {console.error(err); return false;});
-			
-		if (succ){
+		await page.evaluate(async() => {
+			var script = document.createElement('script');
+			script.src = "https://code.jquery.com/jquery-3.5.1.min.js";
+			document.getElementsByTagName('head')[0].appendChild(script);
+			while(!window.jQuery)
+				await new Promise(r => setTimeout(r, 500));
 			return true;
+		}).catch((err) => {console.log(err);});	
+		await page.waitForNavigation({timeout: 5000}).catch((err) => {});
+
+		var succ = await page.evaluate(({asName,cname}) => {
+			try {
+				function readCookie(name) {
+				    var nameEQ = name + "=";
+				    var ca = document.cookie.split(';');
+				    for (var i = 0; i < ca.length; i++) {
+				        var c = ca[i];
+				        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+				        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+				    }
+				    return null;
+				}
+				var assistant = $.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/v2/assistants', {type:'GET', async:false});
+				var assistantId = assistant.responseJSON.assistants[0].assistant_id;
+				var itegration = $.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/v2/assistants/' + assistantId + '/tooling_integrations/definitions?deploy=true&agentInstanceId=' + assistantId, {
+							async:false,
+						   	type: 'POST',
+						  	contentType: "application/json; charset=utf-8",
+							dataType: 'json',
+							headers: {"X-XSRF-TOKEN" : readCookie("XSRF-TOKEN")},
+						   	data: JSON.stringify({"integration_template_id": "9de32257-f523-4784-8f8c-9db5046d3cda", "name":asName + " Chat","config":{"public":{"botName":asName,"home_screen":{"is_on":true,"greeting":"Welcome to " + cname + ". How can I help you?","starters":{"is_on":true,"buttons":[{"label":"Find nearby location","value":""},{"label":"Order Lookup","value":""},{"label":"Search Knowledge Base","value":""}]}},"service_desk":{"is_on":false},"css_variables":{},"version_to_use":"1","enable_features":{"alternateSuggestions":true},"alternate_suggestions":{"is_on":true,"contact_label":"Connect to agent","contact_option":"always"}},"private":{"authorization":{"is_on":false,"encryption":{}}}},"description":"Created by RPA"})
+						});
+	  			console.log(itegration);
+	  			var integrationID = itegration.responseJSON.id;
+	  			var serviceInstanceID = itegration.responseJSON.tenant_id;
+
+				var returnvalue = {"integrationID": integrationID, "serviceInstanceID": serviceInstanceID, "status": itegration.status};
+				return returnvalue;
+
+			} catch(err) {return err;}
+		    },{asName, cname}).catch((err) => {console.log(err);});	
+		if (succ){
+			console.log(succ);
+			if (succ.status == 201){
+				socket.emit('embed', {"r":myArgs[0], "integrationID":succ.integrationID, "serviceInstanceID": succ.serviceInstanceID});
+				return true;
+			}
+			else 
+				return false;
 		}
 		else 
 			return false;
@@ -312,3 +310,4 @@ async function main(){
 }
 
 main();
+
