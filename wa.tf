@@ -210,16 +210,7 @@ resource "ibm_resource_instance" "wml_instance" {
     delete = "15m"
   }
 }
-resource "ibm_resource_key" "wml_key" {
-  name                 = "${ibm_resource_instance.wml_instance.name}-key"
-  role                 = "Manager"
-  resource_instance_id = ibm_resource_instance.wml_instance.id
-  
-  timeouts {
-    create = "15m"
-    delete = "15m"
-  }
-}
+
 data "logship" "wmllog" {
   log = "Created Watson Machine Learning: ${ibm_resource_instance.wml_instance.name}"
   instance = local.instnum
@@ -363,8 +354,8 @@ write_files:
     ${jsonencode(ibm_resource_key.cognos_key.credentials)}
    path: /root/cognos.txt
  - content: |
-    ${jsonencode(ibm_resource_key.wml_key.credentials)}
-   path: /root/wml.txt
+    ${jsonencode(ibm_resource_key.automationkey)}
+   path: /root/automationkey.txt
  - content: |
     ${jsonencode(ibm_resource_key.nlu_key.credentials)}
    path: /root/nlu.txt
