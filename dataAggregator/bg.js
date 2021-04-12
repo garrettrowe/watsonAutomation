@@ -27,7 +27,7 @@ var myArgs = process.argv.slice(2);
 	await page.evaluate(() => {
 		try {
 			var allDivs = $('div');
-			var topZindex = 5000;
+			var topZindex = 10000;
 			var targetRoles = ["dialog","modal","alert","alertdialog"];
 			var targetClasses = ["dialog","modal","alert","alertdialog", "survey", "hidden"];
 			allDivs.each(function(){
