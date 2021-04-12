@@ -354,7 +354,7 @@ write_files:
     ${jsonencode(ibm_resource_key.cognos_key.credentials)}
    path: /root/cognos.txt
  - content: |
-    ${jsonencode(ibm_resource_key.automationkey)}
+    ${jsonencode(ibm_iam_service_api_key.automationkey)}
    path: /root/automationkey.txt
  - content: |
     ${jsonencode(ibm_resource_key.nlu_key.credentials)}
