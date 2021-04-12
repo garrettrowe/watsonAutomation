@@ -13,13 +13,23 @@ var myArgs = process.argv.slice(2);
 		});
 	await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0').catch((err) => {});
 	await page.goto(myArgs[0], {waitUntil: 'networkidle2'}).catch((err) => {});
-	await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'}).catch((err) => {console.log(err);});
+	await page.evaluate(async () => {
+            var script = document.createElement('script');
+            script.src = "https://code.jquery.com/jquery-3.5.1.min.js";
+            document.getElementsByTagName('head')[0].appendChild(script);
+
+            while (!window.jQuery)
+                await new Promise(r => setTimeout(r, 500));
+        }).catch((err) => {
+            console.log(err);
+        });
+
 	await page.evaluate(() => {
 		try {
 			var allDivs = $('div');
 			var topZindex = 5000;
 			var targetRoles = ["dialog","modal","alert","alertdialog"];
-			var targetClasses = ["dialog","modal","alert","alertdialog", "message", "survey", "hidden"];
+			var targetClasses = ["dialog","modal","alert","alertdialog", "survey", "hidden"];
 			allDivs.each(function(){
 				$(this).find(":hidden").remove();
 			});
