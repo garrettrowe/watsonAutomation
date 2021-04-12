@@ -197,6 +197,34 @@ data "logship" "cognoslog" {
   instance = local.instnum
 }
 
+resource "ibm_resource_instance" "wml_instance" {
+  name              = "${local.companysafe}-wml"
+  service           = "pm-20"
+  plan              = local.plan != "plus" ? "lite" : "v2-standard"
+  location          = "us-south"
+  resource_group_id = ibm_resource_group.group.id
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
+}
+resource "ibm_resource_key" "wml_key" {
+  name                 = "${ibm_resource_instance.wml_instance.name}-key"
+  role                 = "Manager"
+  resource_instance_id = ibm_resource_instance.wml_instance.id
+  
+  timeouts {
+    create = "15m"
+    delete = "15m"
+  }
+}
+data "logship" "wmllog" {
+  log = "Created Watson Machine Learning: ${ibm_resource_instance.wml_instance.name}"
+  instance = local.instnum
+}
+
 resource "ibm_resource_instance" "nlu_instance" {
   name              = "${local.companysafe}-nlu"
   service           = "natural-language-understanding"
@@ -334,6 +362,9 @@ write_files:
  - content: |
     ${jsonencode(ibm_resource_key.cognos_key.credentials)}
    path: /root/cognos.txt
+ - content: |
+    ${jsonencode(ibm_resource_key.wml_key.credentials)}
+   path: /root/wml.txt
  - content: |
     ${jsonencode(ibm_resource_key.nlu_key.credentials)}
    path: /root/nlu.txt
