@@ -376,6 +376,9 @@ write_files:
     ${jsonencode(ibm_resource_instance.cos_instance)}
    path: /root/icos.txt
  - content: |
+    ${jsonencode(ibm_resource_instance.wml_instance)}
+   path: /root/wml.txt
+ - content: |
     ${local.company}
    path: /root/company.txt
  - content: |
