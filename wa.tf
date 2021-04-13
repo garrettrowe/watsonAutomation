@@ -210,6 +210,19 @@ resource "ibm_resource_instance" "wml_instance" {
     delete = "15m"
   }
 }
+resource "ibm_resource_instance" "cos_instance" {
+  name              = "${local.companysafe}-cos"
+  service           = "cloud-object-storage"
+  plan              = local.plan != "plus" ? "lite" : "standard"
+  location          = "us-south"
+  resource_group_id = ibm_resource_group.group.id
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
+}
 
 data "logship" "wmllog" {
   log = "Created Watson Machine Learning: ${ibm_resource_instance.wml_instance.name}"
@@ -359,6 +372,9 @@ write_files:
  - content: |
     ${jsonencode(ibm_resource_key.nlu_key.credentials)}
    path: /root/nlu.txt
+ - content: |
+    ${jsonencode(ibm_resource_instance.cos_instance)}
+   path: /root/icos.txt
  - content: |
     ${local.company}
    path: /root/company.txt
