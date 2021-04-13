@@ -25,6 +25,7 @@ sed -i 's/948376593648263452/'$(curl -s ipinfo.io/ip)'/g' /root/assistant.json
 sed -i 's/94729873749632/'"$(< /root/companytitle.txt)"'/g' /root/assistant.json
 
 wget -O /root/discovery.tgz https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/discovery.tgz
+wget -O /root/upsell.zip https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/upsell.zip
 tar -xvzf /root/discovery.tgz -C /root
 npm --prefix /root/discoveryService install /root/discoveryService
 
