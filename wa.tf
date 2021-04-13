@@ -214,7 +214,7 @@ resource "ibm_resource_instance" "cos_instance" {
   name              = "${local.companysafe}-cos"
   service           = "cloud-object-storage"
   plan              = local.plan != "plus" ? "lite" : "standard"
-  location          = "us-south"
+  location          = "global"
   resource_group_id = ibm_resource_group.group.id
 
   timeouts {
