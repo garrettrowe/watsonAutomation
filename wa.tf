@@ -210,6 +210,19 @@ resource "ibm_resource_instance" "wml_instance" {
     delete = "15m"
   }
 }
+resource "ibm_resource_instance" "dsx_instance" {
+  name              = "${local.companysafe}-dsx"
+  service           = "data-science-experience"
+  plan              = local.plan != "plus" ? "free-v1" : "standard-v1"
+  location          = "us-south"
+  resource_group_id = ibm_resource_group.group.id
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
+}
 resource "ibm_resource_instance" "cos_instance" {
   name              = "${local.companysafe}-cos"
   service           = "cloud-object-storage"
