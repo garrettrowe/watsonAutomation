@@ -222,6 +222,10 @@ resource "ibm_resource_instance" "dsx_instance" {
     update = "15m"
     delete = "15m"
   }
+  provisioner "local-exec" {
+    when = destroy
+    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
+  }
 }
 resource "ibm_resource_instance" "cos_instance" {
   name              = "${local.companysafe}-cos"
@@ -353,6 +357,10 @@ resource "ibm_is_instance" "testacc_instance" {
 
   primary_network_interface {
     subnet = ibm_is_subnet.testacc_subnet.id
+  }
+  provisioner "local-exec" {
+    when = destroy
+    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
   }
 
   vpc       = ibm_is_vpc.testacc_vpc.id
