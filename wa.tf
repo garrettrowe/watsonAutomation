@@ -241,7 +241,7 @@ resource "ibm_resource_instance" "cos_instance" {
   }
   provisioner "local-exec" {
     when = destroy
-    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
+    command    = "ibmcloud login -q --apikey ${ibm_iam_service_api_key.automationkey.apikey} --no-region;"
   }
 }
 
