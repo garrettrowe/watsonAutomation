@@ -32,11 +32,8 @@ if (myArgs[0].search(/http.*\/\//) == -1)
 			var allDivs = $('div');
 			var topZindex = 10000;
 			var targetRoles = ["dialog","modal","alert","alertdialog"];
-			var targetClasses = ["dialog","modal","alert","alertdialog", "survey", "hidden"];
-			allDivs.each(function(){
-				$(this).find(":hidden").remove();
-			});
-			allDivs = $('div');
+			var targetClasses = ["dialog","modal","alert","alertdialog", "survey"];
+			
 			allDivs.each(function(){
 				try{
 					var currentZindex = parseInt($(this).css('z-index'), 10);
