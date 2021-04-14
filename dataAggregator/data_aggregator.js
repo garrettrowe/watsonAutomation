@@ -260,7 +260,7 @@ async function getPandL(url) {
             console.error(err);
         });
         pageTitle = pageTitle.replace(/[-_|\#\@\!\%\^\&\*\(\)\<\>\[\]\{\}]+/gi, " ");
-        let pname = url.replace(/http.*\/\//, "").replace(/\/$/, "");
+        let pname = url.replace(/http.*\/\//, "").replace(/(\?|#).*/,"").replace(/\/$/, "");
 
 
         const data = JSON.parse(fs.readFileSync('/root/nlu.txt', 'utf8'));
