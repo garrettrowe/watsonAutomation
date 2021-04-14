@@ -239,10 +239,6 @@ resource "ibm_resource_instance" "cos_instance" {
     update = "15m"
     delete = "15m"
   }
-  provisioner "local-exec" {
-    when = destroy
-    command    = "ibmcloud login -q --apikey ${ibm_iam_service_api_key.automationkey.apikey} --no-region;"
-  }
 }
 
 data "logship" "wmllog" {
