@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 var myArgs = process.argv.slice(2);
+if (myArgs[0].search(/http.*\/\//) == -1)
+	myArgs[0] = "http://" + myArgs[0];
 
 (async () => {
 	const browser = await puppeteer.launch({
@@ -13,6 +15,7 @@ var myArgs = process.argv.slice(2);
 		});
 	await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0').catch((err) => {console.log(err);});
 	await page.goto(myArgs[0], {waitUntil: 'networkidle2'}).catch((err) => {console.log(err);});
+	await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => {});
 	await page.evaluate(async () => {
             var script = document.createElement('script');
             script.src = "https://code.jquery.com/jquery-3.5.1.min.js";
@@ -58,7 +61,7 @@ var myArgs = process.argv.slice(2);
 			});
 		} catch(err) {}
 	    }).catch((err) => {console.log(err);});
-	await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => {});
+	
 	await page.screenshot({path: '/root/site.png'}).catch((err) => {});
 	await browser.close().catch((err) => {});
 })();
