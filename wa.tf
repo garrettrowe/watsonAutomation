@@ -239,6 +239,10 @@ resource "ibm_resource_instance" "cos_instance" {
     update = "15m"
     delete = "15m"
   }
+  provisioner "local-exec" {
+    when = destroy
+    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
+  }
 }
 
 data "logship" "wmllog" {
