@@ -22,6 +22,7 @@ wget -O /root/logo.png https://daidemos.com/$(< /root/company.txt).png
 wget -O /root/companyurl.txt https://daidemos.com/$(< /root/company.txt).txt
 wget -O /root/ip.txt icanhazip.com
 if ! grep -Fxq "null" /root/companyurloverride.txt; then mv /root/companyurloverride.txt /root/companyurl.txt; fi
+if ! grep -qi 'https*://' /root/companyurl.txt; then echo http://$(< /root/companyurl.txt) > /root/companyurl.txt; fi
 
 apt-get update
 curl -d "Instance=$(< /root/instnum.txt)&Log=Patching VSI" -X POST https://daidemos.com/log
