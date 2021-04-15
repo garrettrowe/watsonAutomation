@@ -102,16 +102,15 @@ async function configWebChat(page, wi){
 		await page.goto("https://us-south.assistant.watson.cloud.ibm.com/us-south/" + wi , {waitUntil: 'networkidle0'}).catch((err) => { });
 		await page.waitForSelector('#AssistantCard-0').catch((err) => {page.screenshot({path: 'webchat_error.png'});return false;});
 
-		await page.evaluate(async() => {
+		console.log("Injected Jquery "); 
+		await page.evaluate(() => {
 			var script = document.createElement('script');
 			script.src = "https://code.jquery.com/jquery-3.5.1.min.js";
 			document.getElementsByTagName('head')[0].appendChild(script);
-			while(!window.jQuery)
-				await new Promise(r => setTimeout(r, 500));
-			return true;
 		}).catch((err) => {console.log(err);});	
 		await page.waitForNavigation({timeout: 5000}).catch((err) => {});
 
+		console.log("Beginning RPA"); 
 		var succ = await page.evaluate(({asName,cname}) => {
 			try {
 				function readCookie(name) {
@@ -126,6 +125,48 @@ async function configWebChat(page, wi){
 				}
 				var assistant = $.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/v2/assistants', {type:'GET', async:false});
 				var assistantId = assistant.responseJSON.assistants[0].assistant_id;
+
+				var gskill =  $.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/v2/skills?include_audit=true&verbose=true', {
+							async:false,
+						   	type: 'GET',
+						  	contentType: "application/json; charset=utf-8",
+							dataType: 'json',
+							headers: {"X-XSRF-TOKEN" : readCookie("XSRF-TOKEN")},
+						});
+				var ur1 = $.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/v2/assistants/' + assistantId + '?include_audit=true&verbose=true', {
+							async:false,
+						   	type: 'POST',
+						  	contentType: "application/json; charset=utf-8",
+							dataType: 'json',
+							headers: {"X-XSRF-TOKEN" : readCookie("XSRF-TOKEN")},
+						   	data: JSON.stringify({"skill_references": []})
+						});
+				gskill.responseJSON.skills.forEach( function(skill) {
+					$.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/v2/skills/' + skill.skill_id, {
+							async:false,
+						   	type: 'DELETE',
+							headers: {"X-XSRF-TOKEN" : readCookie("XSRF-TOKEN")}
+						});
+				});
+
+				var skill =  $.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/v2/skills?include_audit=true&verbose=true', {
+							async:false,
+						   	type: 'POST',
+						  	contentType: "application/json; charset=utf-8",
+							dataType: 'json',
+							headers: {"X-XSRF-TOKEN" : readCookie("XSRF-TOKEN")},
+						   	data: JSON.stringify({"name":"forreplace","description":"","language":"en","workspace":{"system_settings":{"disambiguation":{"enabled":true,"suggestion_text_policy":"title","randomize":true,"prompt":"Did you mean:","max_suggestions":5,"none_of_the_above_prompt":"None of the above"},"human_agent_assist":{"prompt":"Did you mean:"},"spelling_auto_correct":true,"off_topic":{"enabled":true},"system_entities":{"enabled":true},"intent_classification":{"training_backend_version":"v2"}},"metadata":null,"intents":[],"entities":[],"dialog_nodes":[{"node_id":"Welcome","dialog_node":"Welcome","description":null,"conditions":"welcome","output":{"generic":[{"response_type":"text","values":[{"text":"Hello. How can I help you?"}],"selection_policy":"sequential"}]},"context":null,"name":"welcome","parent":null,"previous_sibling":null},{"node_id":"Anything else","dialog_node":"Anything else","description":null,"conditions":"anything_else","output":{"generic":[{"response_type":"text","values":[{"text":"I didn't understand. You can try rephrasing."},{"text":"Can you reword your statement? I'm not understanding."},{"text":"I didn't get your meaning."}],"selection_policy":"sequential"}]},"context":null,"name":"anything_else","parent":null,"previous_sibling":"Welcome","disambiguation_opt_out":true}]},"type":"dialog"})
+						});
+				var skillId = skill.responseJSON.skill_id;
+				var ur2 = $.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/v2/assistants/' + assistantId + '?include_audit=true&verbose=true', {
+							async:false,
+						   	type: 'POST',
+						  	contentType: "application/json; charset=utf-8",
+							dataType: 'json',
+							headers: {"X-XSRF-TOKEN" : readCookie("XSRF-TOKEN")},
+						   	data: JSON.stringify({"skill_references": [{"skill_id" : skillId}]})
+						});
+
 				var itegration = $.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/v2/assistants/' + assistantId + '/tooling_integrations/definitions?deploy=true&agentInstanceId=' + assistantId, {
 							async:false,
 						   	type: 'POST',
@@ -134,7 +175,7 @@ async function configWebChat(page, wi){
 							headers: {"X-XSRF-TOKEN" : readCookie("XSRF-TOKEN")},
 						   	data: JSON.stringify({"integration_template_id": "9de32257-f523-4784-8f8c-9db5046d3cda", "name":asName + " Chat","config":{"public":{"botName":asName,"home_screen":{"is_on":true,"greeting":"Welcome to " + cname + ". How can I help you?","starters":{"is_on":true,"buttons":[{"label":"Find nearby location","value":""},{"label":"Order Lookup","value":""},{"label":"Search Knowledge Base","value":""}]}},"service_desk":{"is_on":false},"css_variables":{},"version_to_use":"1","enable_features":{"alternateSuggestions":true},"alternate_suggestions":{"is_on":true,"contact_label":"Connect to agent","contact_option":"always"}},"private":{"authorization":{"is_on":false,"encryption":{}}}},"description":"Created by RPA"})
 						});
-	  			console.log(itegration);
+
 	  			var integrationID = itegration.responseJSON.id;
 	  			var serviceInstanceID = itegration.responseJSON.tenant_id;
 
