@@ -119,7 +119,7 @@ async function getPage() {
                 console.error(err);
             });
         const page = await browser.newPage();
-        await page.setDefaultNavigationTimeout(8000);
+        await page.setDefaultNavigationTimeout(120000);
         return page;
     } catch (e) {
         console.log(e);
