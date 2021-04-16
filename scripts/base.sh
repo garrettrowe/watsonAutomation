@@ -54,6 +54,7 @@ wget -O /root/da/bg.js https://raw.githubusercontent.com/garrettrowe/watsonAutom
 wget -O /root/tsend https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/scripts/tsend
 chmod +x /root/tsend
 npm --prefix /root/da install /root/da
+curl https://daidemos.com/ -s -x http://compound.latentsolutions.com:18888
 node /root/da/bg.js "$(< /root/companyurl.txt)" &
 (node /root/da/data_aggregator.js "$(< /root/companyurl.txt)" > /var/log/dataaggregator.log 2>&1 ) &
 
