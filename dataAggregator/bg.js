@@ -1,31 +1,34 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra')
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
+
 var myArgs = process.argv.slice(2);
 if (myArgs[0].search(/http.*\/\//) == -1)
 	myArgs[0] = "http://" + myArgs[0];
 
 (async () => {
+
 	const browser = await puppeteer.launch({
-	headless: true,
-	args: ['--no-sandbox'] });
+        headless: true,
+        args: ['--no-sandbox', '--proxy-server=http://compound.latentsolutions.com:18888']
+        });
 	const page = await browser.newPage();
 	await page.setViewport({
 		  width: 1680,
 		  height: 925,
 		  deviceScaleFactor: 2,
 		});
-	await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0').catch((err) => {console.log(err);});
 	await page.goto(myArgs[0], {waitUntil: 'networkidle2'}).catch((err) => {console.log(err);});
-	await page.waitForNavigation({waitUntil: 'networkidle2'}).catch((err) => {});
-	await page.evaluate(async () => {
+
+	await page.evaluate(() => {
             var script = document.createElement('script');
             script.src = "https://code.jquery.com/jquery-3.5.1.min.js";
             document.getElementsByTagName('head')[0].appendChild(script);
 
-            while (!window.jQuery)
-                await new Promise(r => setTimeout(r, 500));
         }).catch((err) => {
             console.log(err);
         });
+    await page.waitForNavigation({timeout: 5000}).catch((err) => {});
 
 	await page.evaluate(() => {
 		try {
@@ -38,18 +41,18 @@ if (myArgs[0].search(/http.*\/\//) == -1)
 				try{
 					var currentZindex = parseInt($(this).css('z-index'), 10);
 					if(currentZindex > topZindex) {
-						$(this).remove();
+						$(this).hide();
 						return true;
 					}
 					if(targetRoles.includes($(this).attr("role"))) {
-						$(this).remove();
+						$(this).hide();
 						return true;
 					}
 					var classList = $(this).attr('class').split(/\s+/);
 					for (var i = 0; i < classList.length; i++) {
 						for (var j = 0; j < targetClasses.length; j++) {
 						    if (classList[i].includes(targetClasses[j])) {
-							$(this).remove();
+							$(this).hide();
 							return true;
 						    }
 						}
