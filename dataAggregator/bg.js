@@ -19,7 +19,15 @@ if (myArgs[0].search(/http.*\/\//) == -1)
 		  deviceScaleFactor: 2,
 		});
 	page.setDefaultNavigationTimeout(120000);
-	await page.goto(myArgs[0], {waitUntil: 'networkidle2'}).catch((err) => {console.log(err);});
+	
+	const maxRetryNumber = 10;
+	for (let retryNumber = 1; retryNumber <= maxRetryNumber; retryNumber++) {
+		const response = await page.goto(myArgs[0], {waitUntil: 'networkidle2'}).catch((err) => {console.log(err);});
+		if (response.status() < 400) {
+		    break;
+		}
+		await delay(1000 * retryNumber);
+	}
 
 	await page.evaluate(() => {
             var script = document.createElement('script');
