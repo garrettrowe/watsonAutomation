@@ -4302,6 +4302,33 @@
       "description": ""
     },
     {
+      "intent": "General_Conversation-search",
+      "examples": [
+        {
+          "text": "can you help me search"
+        },
+        {
+          "text": "can you look up"
+        },
+        {
+          "text": "search for bandai new products"
+        },
+        {
+          "text": "Search Knowledge Base"
+        },
+        {
+          "text": "search the internet"
+        },
+        {
+          "text": "search the knowledge base"
+        },
+        {
+          "text": "search to repository"
+        }
+      ],
+      "description": "intent for search skill"
+    },
+    {
       "intent": "General_Conversation-Start_Over",
       "examples": [
         {
@@ -4381,6 +4408,39 @@
         }
       ],
       "description": ""
+    },
+    {
+      "intent": "General_Conversation-translate",
+      "examples": [
+        {
+          "text": "can you translate this"
+        },
+        {
+          "text": "can you translate this for me?"
+        },
+        {
+          "text": "can you translate this into french"
+        },
+        {
+          "text": "can you translate this into spanish"
+        },
+        {
+          "text": "how do you say that in chinese"
+        },
+        {
+          "text": "how do you say that in french"
+        },
+        {
+          "text": "how do you say that in german"
+        },
+        {
+          "text": "how do you say that in japanese"
+        },
+        {
+          "text": "how do you say that in russian"
+        }
+      ],
+      "description": "how do you say that in spanish"
     },
     {
       "intent": "General_Conversation-VA_State",
@@ -5265,64 +5325,31 @@
       ]
     },
     {
-      "intent": "General_Conversation-search",
+      "intent": "Upsell-Product_Recommendation",
       "examples": [
         {
-          "text": "can you help me search"
+          "text": "can i get a special"
         },
         {
-          "text": "can you look up"
+          "text": "Do you have any deals"
         },
         {
-          "text": "search for bandai new products"
+          "text": "do you have any special offers"
         },
         {
-          "text": "Search Knowledge Base"
+          "text": "is there a bonus offer"
         },
         {
-          "text": "search the internet"
+          "text": "what are the deals"
         },
         {
-          "text": "search the knowledge base"
+          "text": "what are your current offers?"
         },
         {
-          "text": "search to repository"
+          "text": "what's the special this month?"
         }
       ],
-      "description": "intent for search skill"
-    },
-    {
-      "intent": "General_Conversation-translate",
-      "examples": [
-        {
-          "text": "can you translate this"
-        },
-        {
-          "text": "can you translate this for me?"
-        },
-        {
-          "text": "can you translate this into french"
-        },
-        {
-          "text": "can you translate this into spanish"
-        },
-        {
-          "text": "how do you say that in chinese"
-        },
-        {
-          "text": "how do you say that in french"
-        },
-        {
-          "text": "how do you say that in german"
-        },
-        {
-          "text": "how do you say that in japanese"
-        },
-        {
-          "text": "how do you say that in russian"
-        }
-      ],
-      "description": "how do you say that in spanish"
+      "description": ""
     }
   ],
   "entities": [
@@ -8526,7 +8553,7 @@
       "next_step": {
         "behavior": "skip_user_input"
       },
-      "conditions": "$off_topic_counter > 1",
+      "conditions": "$off_topic_counter > 5",
       "dialog_node": "node_16_1516311593513",
       "digress_out": "allow_all"
     },
@@ -9287,7 +9314,7 @@
       "digress_in": "returns",
       "dialog_node": "node_2_1612493218066",
       "digress_out": "allow_all",
-      "previous_sibling": "node_3_1616002490180",
+      "previous_sibling": "node_4_1618562913973",
       "digress_out_slots": "allow_returning"
     },
     {
@@ -9373,6 +9400,28 @@
       "dialog_node": "node_2_1615917434597",
       "digress_out": "allow_all",
       "digress_out_slots": "allow_returning"
+    },
+    {
+      "type": "standard",
+      "title": "would you like to hear offer",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Are you interested in hearing about our special offer?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1618562913973",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "dialog_node": "node_2_1618562873889"
     },
     {
       "type": "standard",
@@ -11520,10 +11569,21 @@
           "mcr": true
         }
       },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "user_input",
+        "dialog_node": "node_2_1618562873889"
+      },
       "conditions": "#Bot_Control-Approve_Response",
       "dialog_node": "node_4_1616093407904",
       "digress_out": "allow_all",
       "digress_out_slots": "allow_returning"
+    },
+    {
+      "type": "folder",
+      "title": "Upsell",
+      "dialog_node": "node_4_1618562913973",
+      "previous_sibling": "node_3_1616002490180"
     },
     {
       "type": "standard",
@@ -12054,6 +12114,20 @@
       "previous_sibling": "node_4_1616093407904"
     },
     {
+      "type": "standard",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_2_1618562873889",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_6_1618554887364"
+      },
+      "conditions": "#Bot_Control-Approve_Response",
+      "dialog_node": "node_5_1618562956135"
+    },
+    {
       "type": "response_condition",
       "output": {
         "text": {
@@ -12323,6 +12397,30 @@
       },
       "conditions": "@option || @sys-number || @zero_match || @branchLocation",
       "dialog_node": "node_6_1615917434597"
+    },
+    {
+      "type": "standard",
+      "title": "upsell",
+      "parent": "node_4_1618562913973",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "upsell": true
+          },
+          "result_variable": "webhook_result_3"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Upsell-Product_Recommendation",
+      "dialog_node": "node_6_1618554887364",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_2_1618562873889"
     },
     {
       "type": "standard",
@@ -13154,6 +13252,20 @@
       "previous_sibling": "node_7_1520999320489"
     },
     {
+      "type": "standard",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_6_1618554887364",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_2_1518731420715"
+      },
+      "conditions": "#Bot_Control-Approve_Response",
+      "dialog_node": "node_8_1618562997331"
+    },
+    {
       "type": "response_condition",
       "output": {
         "generic": [
@@ -13305,6 +13417,13 @@
     },
     {
       "type": "response_condition",
+      "parent": "node_6_1618554887364",
+      "conditions": "anything_else",
+      "dialog_node": "response_2_1618555141523",
+      "previous_sibling": "response_3_1618555140660"
+    },
+    {
+      "type": "response_condition",
       "output": {
         "generic": [
           {
@@ -13328,6 +13447,45 @@
       "conditions": "@CC_DisputeTypes:CCBalance",
       "dialog_node": "response_3_1615921187910",
       "previous_sibling": "response_8_1615921170806"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Yes, we've crafted this limited time offer just for you:"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "user_defined": {
+              "text": "<? $webhook_result_3.upsell ?>",
+              "template_name": "upsell"
+            },
+            "response_type": "user_defined"
+          },
+          {
+            "values": [
+              {
+                "text": "If you are interested I can transfer you to one of our agents."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_6_1618554887364",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "conditions": "$webhook_result_3",
+      "dialog_node": "response_3_1618555140660",
+      "previous_sibling": "node_8_1618562997331"
     },
     {
       "type": "response_condition",
