@@ -35,8 +35,8 @@ if (myArgs[0].search(/http.*\/\//) == -1)
 		try {
 			var allDivs = $('div');
 			var topZindex = 10000;
-			var targetRoles = ["dialog","modal","alert","alertdialog"];
-			var targetClasses = ["dialog","modal","alert","alertdialog", "survey"];
+			var targetRoles = ["modal","alert","alertdialog"];
+			var targetClasses = ["modal","alert","alertdialog", "survey"];
 			
 			allDivs.each(function(){
 				try{
