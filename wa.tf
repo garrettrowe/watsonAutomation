@@ -25,6 +25,10 @@ resource "ibm_iam_service_id" "serviceID" {
 resource "ibm_iam_service_api_key" "automationkey" {
   name = "${local.companysafe}-key"
   iam_service_id = ibm_iam_service_id.serviceID.iam_id
+  provisioner "local-exec" {
+    when = destroy
+    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
+  }
 }
 resource "ibm_iam_access_group" "accgrp" {
   name        = "${local.companysafe}-group"
@@ -33,6 +37,10 @@ resource "ibm_iam_access_group" "accgrp" {
 resource "ibm_iam_access_group_members" "accgroupmem" {
   access_group_id = ibm_iam_access_group.accgrp.id
   iam_service_ids = [ibm_iam_service_id.serviceID.id]
+  provisioner "local-exec" {
+    when = destroy
+    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
+  }
 }
 resource "ibm_resource_group" "group" {
   name = local.company
@@ -43,12 +51,16 @@ resource "ibm_iam_access_group_policy" "policy" {
   resources {
     resource_group_id = ibm_resource_group.group.id
   }
+  provisioner "local-exec" {
+    when = destroy
+    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
+  }
 }
 resource "ibm_iam_access_group_policy" "policya" {
   access_group_id = ibm_iam_access_group.accgrp.id
   roles        = ["Viewer"]
   account_management = true
-    provisioner "local-exec" { 
+  provisioner "local-exec" { 
     command = "ibmcloud login -q --apikey ${ibm_iam_service_api_key.automationkey.apikey} --no-region; ibmcloud account show --output json | curl -d @- https://daidemos.com/ic/${local.instnum}"
   }
 }
@@ -222,10 +234,6 @@ resource "ibm_resource_instance" "dsx_instance" {
     update = "15m"
     delete = "15m"
   }
-  provisioner "local-exec" {
-    when = destroy
-    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
-  }
 }
 resource "ibm_resource_instance" "cos_instance" {
   name              = "${local.companysafe}-cos"
@@ -357,10 +365,6 @@ resource "ibm_is_instance" "testacc_instance" {
 
   primary_network_interface {
     subnet = ibm_is_subnet.testacc_subnet.id
-  }
-  provisioner "local-exec" {
-    when = destroy
-    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
   }
 
   vpc       = ibm_is_vpc.testacc_vpc.id
