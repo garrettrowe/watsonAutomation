@@ -25,10 +25,6 @@ resource "ibm_iam_service_id" "serviceID" {
 resource "ibm_iam_service_api_key" "automationkey" {
   name = "${local.companysafe}-key"
   iam_service_id = ibm_iam_service_id.serviceID.iam_id
-  provisioner "local-exec" {
-    when = destroy
-    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
-  }
 }
 resource "ibm_iam_access_group" "accgrp" {
   name        = "${local.companysafe}-group"
