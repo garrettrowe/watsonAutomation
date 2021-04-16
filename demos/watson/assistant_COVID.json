@@ -1,4 +1,9 @@
 {
+  "type":"dialog",
+  "name": "Assistant Skill",
+  "language": "en",
+  "description": "Support Agent",
+  "workspace": {
   "intents": [
     {
       "intent": "Age_of_Patient",
@@ -8125,9 +8130,5 @@
       "prompt": "Did you mean:"
     },
     "spelling_auto_correct": true
-  },
-  "learning_opt_out": false,
-  "name": "Vaccine_voice agent",
-  "language": "en",
-  "description": "Jeb Jenson"
+  }}
 }
