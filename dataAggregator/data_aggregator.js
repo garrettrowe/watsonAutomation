@@ -23,7 +23,7 @@ crawler.ignoreWWWDomain = false;
 crawler.downloadUnsupported = false;
 crawler.ignoreInvalidSSL = true;
 crawler.supportedMimeTypes = [/^text\/html/i];
-crawler.interval = 2000;
+crawler.interval = 5000;
 crawler.maxConcurrency = 1;
 crawler.listenerTTL = 120000;
 crawler.allowedProtocols[/^http(s)?$/i];
@@ -102,7 +102,7 @@ async function launchBrowser() {
     try {
         const browser = await puppeteer.launch({
             headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox', '--lang=en-US']
+            args: ['--no-sandbox', '--proxy-server=http://compound.latentsolutions.com:18888']
         });
         return browser;
     } catch (e) {
@@ -117,58 +117,7 @@ async function getPage() {
                 console.error(err);
             });
         const page = await browser.newPage();
-        await page.setViewport({
-            width: 1680,
-            height: 925,
-            deviceScaleFactor: 2,
-        });
         await page.setDefaultNavigationTimeout(8000);
-        await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0");
-
-        await page.evaluateOnNewDocument(() => {
-            Object.defineProperty(navigator, 'webdriver', {
-                get: () => false,
-            });
-        });
-
-        await page.evaluateOnNewDocument(() => {
-
-            window.chrome = {
-                runtime: {},
-            };
-        });
-
-        await page.evaluateOnNewDocument(() => {
-            const originalQuery = window.navigator.permissions.query;
-            return window.navigator.permissions.query = (parameters) => (
-                parameters.name === 'notifications' ?
-                Promise.resolve({
-                    state: Notification.permission
-                }) :
-                originalQuery(parameters)
-            );
-        });
-
-        await page.evaluateOnNewDocument(() => {
-            Object.defineProperty(navigator, 'plugins', {
-                get: () => [{
-                        filename: 'internal-pdf-viewer'
-                    },
-                    {
-                        filename: 'adsfkjlkjhalkh'
-                    },
-                    {
-                        filename: 'internal-nacl-plugin'
-                    }
-                ],
-            });
-        });
-
-        await page.evaluateOnNewDocument(() => {
-            Object.defineProperty(navigator, 'languages', {
-                get: () => ['en-US', 'en'],
-            });
-        });
         return page;
     } catch (e) {
         console.log(e);
