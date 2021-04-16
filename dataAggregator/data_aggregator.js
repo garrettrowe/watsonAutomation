@@ -1,5 +1,7 @@
 var Crawler = require("simplecrawler");
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra')
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
 var request = require('request');
 const fs = require('fs');
 const fse = require('fs-extra');
