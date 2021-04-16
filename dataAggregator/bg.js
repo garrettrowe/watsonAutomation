@@ -10,7 +10,7 @@ if (myArgs[0].search(/http.*\/\//) == -1)
 
 	const browser = await puppeteer.launch({
         headless: true,
-        args: ['--no-sandbox', '--proxy-server=https://compound.latentsolutions.com:18888']
+        args: ['--no-sandbox', '--proxy-server=http://compound.latentsolutions.com:18888']
         });
 	const page = await browser.newPage();
 	await page.setViewport({
