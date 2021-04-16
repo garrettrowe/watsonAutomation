@@ -1,5 +1,4 @@
 {
-  "type":"dialog",
   "intents": [
     {
       "intent": "Account_Access-Authorized_User",
