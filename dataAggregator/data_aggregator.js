@@ -173,8 +173,8 @@ async function getPandL(url) {
             try {
                 var allDivs = $('div');
                 var topZindex = 5000;
-                var targetRoles = ["dialog", "modal", "alert", "alertdialog"];
-                var targetClasses = ["dialog", "modal", "alert", "alertdialog", "message", "survey", "hidden"];
+                var targetRoles = ["modal", "alert", "alertdialog"];
+                var targetClasses = ["modal", "alert", "alertdialog", "message", "survey", "hidden"];
                 allDivs.each(function() {
                     $(this).find(":hidden").remove();
                 });
