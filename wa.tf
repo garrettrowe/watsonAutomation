@@ -37,10 +37,6 @@ resource "ibm_iam_access_group" "accgrp" {
 resource "ibm_iam_access_group_members" "accgroupmem" {
   access_group_id = ibm_iam_access_group.accgrp.id
   iam_service_ids = [ibm_iam_service_id.serviceID.id]
-  provisioner "local-exec" {
-    when = destroy
-    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
-  }
 }
 resource "ibm_resource_group" "group" {
   name = local.company
