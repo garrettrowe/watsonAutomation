@@ -18,6 +18,7 @@ if (myArgs[0].search(/http.*\/\//) == -1)
 		  height: 925,
 		  deviceScaleFactor: 2,
 		});
+	await page.setDefaultNavigationTimeout(120000).catch((err) => {console.log(err);});
 	await page.goto(myArgs[0], {waitUntil: 'networkidle2'}).catch((err) => {console.log(err);});
 
 	await page.evaluate(() => {
