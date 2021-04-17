@@ -51,11 +51,12 @@ crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
         queueItem.status = "queued";
         return;
     }
+    var qii = queueItem.url.replace(/\?.*/,"");
 
     var ea = [".js"];
     var eb = [".pdf", ".xml", ".rss", ".doc", ".xls", ".ppt", ".jpg", ".png", ".gif", ".ico", ".bmp", ".svg", ".mp3", ".wav", ".css"];
     var ec = [".woff", ".json", ".woff2"];
-    if (!ea.includes(queueItem.url.slice(-3).toLowerCase()) && !eb.includes(queueItem.url.slice(-4).toLowerCase()) && !ec.includes(queueItem.url.slice(-5).toLowerCase())) {
+    if (!ea.includes(qii.slice(-3).toLowerCase()) && !eb.includes(qii.slice(-4).toLowerCase()) && !ec.includes(qii.slice(-5).toLowerCase())) {
         console.log("doing fetch: " + queueItem.url);
         gettingPage = true;
         await getPandL(queueItem.url);
