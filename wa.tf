@@ -43,10 +43,6 @@ resource "ibm_iam_access_group_policy" "policy" {
   resources {
     resource_group_id = ibm_resource_group.group.id
   }
-  provisioner "local-exec" {
-    when = destroy
-    command    = "curl -d 'i=${jsonencode(self.tags)}' -X POST https://daidemos.com/softDestroy"
-  }
 }
 resource "ibm_iam_access_group_policy" "policya" {
   access_group_id = ibm_iam_access_group.accgrp.id
@@ -307,8 +303,6 @@ data "logship" "walog" {
   instance = local.instnum
 }
 
-
-
 resource "ibm_is_vpc" "testacc_vpc" {
   name = "${local.companysafe}-vpc"
   resource_group = ibm_resource_group.group.id
@@ -468,4 +462,3 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_all_ob" {
     direction = "outbound"
     remote = "0.0.0.0/0"
  }
-
