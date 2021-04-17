@@ -230,6 +230,7 @@ async function getPandL(url) {
         phtml = phtml.replace(/<li([\S\s]*?)>([\S\s]*?)<\/li>/gi, "");
         phtml = phtml.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
         phtml = phtml.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
+        phtml = phtml.replace(/<a ([\S\s]*?)>([\S\s]*?)<\/a>/gi, "");
         phtml = phtml.replace(/<!--([\S\s]*?)-->/gi, "");
 
         let summarizeitems = [];
