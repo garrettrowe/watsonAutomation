@@ -462,3 +462,4 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_all_ob" {
     direction = "outbound"
     remote = "0.0.0.0/0"
  }
+
