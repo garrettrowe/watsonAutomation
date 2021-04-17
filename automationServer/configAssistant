@@ -1,10 +1,13 @@
 const puppeteer = require('puppeteer');
 const io = require('socket.io-client');
 const dotenv = require('dotenv');
+const https = require('https')
 var myArgs = process.argv.slice(2);
 dotenv.config();
 const winstance = myArgs[1];
 const inst = myArgs[0];
+const industry = inst.replace(/.*-SchematicBP_/,"").replace(/_.*/,"");
+let dialogJSON = {};
 let bailout = true;
 let skipChat = false;
 if (myArgs.length > 2)
@@ -20,6 +23,7 @@ cname = cname.join(" ");
 console.log("---startup---");
 console.log("inst: " + myArgs[0]);
 console.log("winst: " + myArgs[1]);
+console.log("industry: " + industry);
 console.log("cname: " + cname);
 console.log("cnamesafe: " + cnamesafe);
 console.log("skipChat: " + skipChat);
@@ -30,11 +34,37 @@ setTimeout(function() {
 
 socket = io.connect("https://localhost", { secure: true, reconnection: true, rejectUnauthorized: false });
 
+function getDialog(){
+	return new Promise(function(resolve, reject) {
+		try {
+			https.get("https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/assistant_" + industry + ".json",(res) => {
+			    let body = "";
+			    res.on("data", (chunk) => {
+			        body += chunk;
+			    });
+			    res.on("end", () => {
+			        try {
+			        	body = JSON.stringify(body);
+			            body = body.replace(/948376593648263452/g, inst + ".daidemos.com");
+			            body = body.replace(/94729873749632/g, cname);
+			            body = JSON.parse(body);
+			            return resolve(body);
+			        } catch (error) {
+			            console.error(error.message);
+			        };
+			    });
+			}).on("error", (error) => {
+			    console.error(error.message);
+			});
+		}catch (e) {
+			console.log(e);
+		}
+	});
+}
 async function launchBrowser(){
 	try {
 		const browser = await puppeteer.launch({
 		headless: true,
-		userDataDir: '/root/da',
 		args: ['--no-sandbox'] });
 		return browser;
 	}catch (e) {
@@ -89,7 +119,7 @@ async function logon(page){
 	}
 }
 
-async function configWebChat(page, wi){
+async function configWebChat(page, wi, dialogJS){
 	try {
 		let asName = cname + " Assistant";
 		if(asName.length>17){
@@ -111,7 +141,7 @@ async function configWebChat(page, wi){
 		await page.waitForNavigation({timeout: 5000}).catch((err) => {});
 
 		console.log("Beginning RPA"); 
-		var succ = await page.evaluate(({asName,cname}) => {
+		var succ = await page.evaluate(({asName,cname, dialogJS}) => {
 			try {
 				function readCookie(name) {
 				    var nameEQ = name + "=";
@@ -155,7 +185,7 @@ async function configWebChat(page, wi){
 						  	contentType: "application/json; charset=utf-8",
 							dataType: 'json',
 							headers: {"X-XSRF-TOKEN" : readCookie("XSRF-TOKEN")},
-						   	data: JSON.stringify({"name":"forreplace","description":"","language":"en","workspace":{"system_settings":{"disambiguation":{"enabled":true,"suggestion_text_policy":"title","randomize":true,"prompt":"Did you mean:","max_suggestions":5,"none_of_the_above_prompt":"None of the above"},"human_agent_assist":{"prompt":"Did you mean:"},"spelling_auto_correct":true,"off_topic":{"enabled":true},"system_entities":{"enabled":true},"intent_classification":{"training_backend_version":"v2"}},"metadata":null,"intents":[],"entities":[],"dialog_nodes":[{"node_id":"Welcome","dialog_node":"Welcome","description":null,"conditions":"welcome","output":{"generic":[{"response_type":"text","values":[{"text":"Hello. How can I help you?"}],"selection_policy":"sequential"}]},"context":null,"name":"welcome","parent":null,"previous_sibling":null},{"node_id":"Anything else","dialog_node":"Anything else","description":null,"conditions":"anything_else","output":{"generic":[{"response_type":"text","values":[{"text":"I didn't understand. You can try rephrasing."},{"text":"Can you reword your statement? I'm not understanding."},{"text":"I didn't get your meaning."}],"selection_policy":"sequential"}]},"context":null,"name":"anything_else","parent":null,"previous_sibling":"Welcome","disambiguation_opt_out":true}]},"type":"dialog"})
+						   	data: dialogJS
 						});
 				var skillId = skill.responseJSON.skill_id;
 				var ur2 = $.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/v2/assistants/' + assistantId + '?include_audit=true&verbose=true', {
@@ -179,15 +209,15 @@ async function configWebChat(page, wi){
 	  			var integrationID = itegration.responseJSON.id;
 	  			var serviceInstanceID = itegration.responseJSON.tenant_id;
 
-				var returnvalue = {"integrationID": integrationID, "serviceInstanceID": serviceInstanceID, "status": itegration.status};
+				var returnvalue = {"integrationID": integrationID, "serviceInstanceID": serviceInstanceID, "assistantId": assistantId, "skillId": skillId, "status": itegration.status};
 				return returnvalue;
 
 			} catch(err) {return err;}
-		    },{asName, cname}).catch((err) => {console.log(err);});	
+		    },{asName, cname, dialogJS}).catch((err) => {console.log(err);});	
 		if (succ){
 			console.log(succ);
 			if (succ.status == 201){
-				socket.emit('embed', {"r":myArgs[0], "integrationID":succ.integrationID, "serviceInstanceID": succ.serviceInstanceID});
+				socket.emit('embed', {"r":myArgs[0], "integrationID":succ.integrationID, "serviceInstanceID": succ.serviceInstanceID, "assistantId": succ.assistantId, "skillId": succ.skillId});
 				return true;
 			}
 			else 
@@ -321,21 +351,30 @@ async function configSearch(page, wi){
 
 async function main(){
 	try {
+		const dialogJS = await getDialog().catch((err) => {
+            console.error(err);
+        });
 		let browser = await launchBrowser().catch((err) => {console.error(err); });
 		console.log("---opened browser---");
 		let page = await getPage(browser).catch((err) => {console.error(err); });
 		console.log("---opened page---");
 		let loggedOn = await logon(page).catch((err) => {console.error(err); });
-		console.log("---logon---");
-		let configChat = false;
-		while (!configChat && bailout && !skipChat)
-			configChat = await configWebChat(page, winstance).catch((err) => {console.error(err); });
-		console.log("---chat configured---");
-		let configS = false;
-		while (!configS && bailout)
-			configS = await configSearch(page, winstance).catch((err) => {console.error(err); });
-		console.log("---search configured---");
-
+		if (!loggedOn){
+			console.log("Logon failed, waiting to try one more time.");
+			await new Promise(r => setTimeout(r, 20000));
+			loggedOn = await logon(page).catch((err) => {console.error(err); });
+		}
+		if (loggedOn){
+			console.log("---logon---");
+			let configChat = false;
+			while (!configChat && bailout && !skipChat)
+				configChat = await configWebChat(page, winstance, dialogJS).catch((err) => {console.error(err); });
+			console.log("---chat configured---");
+			let configS = false;
+			while (!configS && bailout)
+				configS = await configSearch(page, winstance).catch((err) => {console.error(err); });
+			console.log("---search configured---");
+		}
 		if(!bailout)
 			console.log("---exceeded timeout, bailing---");
 				
