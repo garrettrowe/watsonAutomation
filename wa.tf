@@ -17,6 +17,7 @@ data "logship" "startlog" {
   log = "Starting Terraform"
   instance = local.instnum
   ip = data.local_file.configs.content)[0]
+
 }
 
 resource "ibm_iam_service_id" "serviceID" {
