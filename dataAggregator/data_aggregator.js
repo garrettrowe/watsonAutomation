@@ -48,8 +48,11 @@ crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
     queueItem.url = queueItem.url.trim();
     console.log("Evaluating: " + queueItem.url);
     if (gettingPage) {
-        queueItem.status = "queued";
-         console.log("too soon, back to queue: " + queueItem.url);
+        console.log("too soon, back to queue: " + queueItem.url);
+        crawler.queue.update(queueItem.id, {
+            fetched: false,
+            status: "queued"
+        });
         return;
     }
     var qii = queueItem.url.replace(/\?.*/,"");
