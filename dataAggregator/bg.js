@@ -28,7 +28,7 @@ if (myArgs[0].search(/http.*\/\//) == -1)
 			    break;
 			}
 		    }
-		await delay(1000 * retryNumber);
+		await new Promise(r => setTimeout(r, 5000));
 	}
 
 	await page.evaluate(() => {
