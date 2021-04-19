@@ -44,7 +44,6 @@ function hashCode(str) {
 }
 
 crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
-    cont = this.wait();
     queueItem.url = queueItem.url.trim();
     console.log("Evaluating: " + queueItem.url);
     if (gettingPage) {
@@ -65,9 +64,10 @@ crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
     var eb = [".pdf", ".xml", ".rss", ".doc", ".xls", ".ppt", ".jpg", ".png", ".gif", ".ico", ".bmp", ".svg", ".mp3", ".wav", ".css"];
     var ec = [".woff", ".json", ".woff2"];
     if (!ea.includes(qii.slice(-3).toLowerCase()) && !eb.includes(qii.slice(-4).toLowerCase()) && !ec.includes(qii.slice(-5).toLowerCase())) {
+        cont = this.wait();
         console.log("doing fetch: " + queueItem.url);
         gettingPage = true;
-        await getPandL(queueItem.url);
+        await getPandL(queueItem.url).catch((err) => {console.log(err);});
         gettingPage = false;
         cont();
         crawler.queue.update(queueItem.id, {
