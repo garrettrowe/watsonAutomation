@@ -161,7 +161,7 @@ async function getPandL(url) {
                     break;
                 }
             }
-            await delay(1000 * retryNumber);
+            await new Promise(r => setTimeout(r, 5000));
         }
 
         await page.evaluate(async () => {
