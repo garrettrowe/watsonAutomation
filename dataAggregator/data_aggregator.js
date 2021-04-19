@@ -49,6 +49,7 @@ crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
     console.log("Evaluating: " + queueItem.url);
     if (gettingPage) {
         queueItem.status = "queued";
+         console.log("too soon, back to queue: " + queueItem.url);
         return;
     }
     var qii = queueItem.url.replace(/\?.*/,"");
