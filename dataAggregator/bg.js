@@ -23,9 +23,11 @@ if (myArgs[0].search(/http.*\/\//) == -1)
 	const maxRetryNumber = 10;
 	for (let retryNumber = 1; retryNumber <= maxRetryNumber; retryNumber++) {
 		const response = await page.goto(myArgs[0], {waitUntil: 'networkidle2'}).catch((err) => {console.log(err);});
-		if (response.status() < 400) {
-		    break;
-		}
+		if (response) {
+			if (response.status() < 400) {
+			    break;
+			}
+		    }
 		await delay(1000 * retryNumber);
 	}
 
