@@ -52,6 +52,10 @@ crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
         crawler.queue.update(queueItem.id, {
             fetched: false,
             status: "queued"
+        },function(error, queueItem) {
+            if (error) {
+                return crawler.emit("queueerror", error, queueItem);
+            }
         });
         return;
     }
