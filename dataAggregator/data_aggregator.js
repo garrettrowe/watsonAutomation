@@ -81,6 +81,17 @@ crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
             crawler.emit("fetchcomplete", queueItem, "", response);
         });
         return;
+    }else {
+        crawler.queue.update(queueItem.id, {
+            fetched: true,
+            status: "downloaded"
+        }, function(error, queueItem) {
+            crawler._openRequests.splice(0, 1);
+            if (error) {
+                return crawler.emit("queueerror", error, queueItem);
+            }
+            crawler.emit("fetchcomplete", queueItem, "", response);
+        });
     }
 });
 
@@ -91,7 +102,7 @@ crawler.on("complete", function() {
         crawler.queue.countItems({
             status: "queued"
         }, function(error, items) {
-            if (items && !crawler.running)
+            if (items)
                 crawler.start();
         });
     }, 5000);
@@ -100,7 +111,7 @@ crawler.on("complete", function() {
             status: "queued"
         }, function(error, items) {
             console.log("Final Check: " + items);
-            if (items && !crawler.running)
+            if (items)
                 crawler.start();
             else
                 otp = true;
