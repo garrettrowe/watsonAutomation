@@ -7366,9 +7366,12 @@
           "mcr": true
         }
       },
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
       "conditions": "#Business_Information-Find_Nearest_Location || #Business_Information-Location",
       "dialog_node": "node_10_1510538100098",
-      "digress_out": "allow_all_never_return"
+      "digress_out": "allow_all"
     },
     {
       "type": "standard",
@@ -7738,6 +7741,16 @@
       },
       "conditions": "#Business_Information-Make_Appointment",
       "dialog_node": "node_1_1615917434595"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_10_1510538100098",
+      "conditions": "true",
+      "dialog_node": "node_1_1618899461929",
+      "previous_sibling": "response_4_1618873439786"
     },
     {
       "type": "standard",
@@ -9096,6 +9109,7 @@
       "context": {
         "lastresponse": "<? output ?>"
       },
+      "conditions": "",
       "dialog_node": "node_2_1618562873889"
     },
     {
@@ -11215,7 +11229,7 @@
     },
     {
       "type": "frame",
-      "parent": "node_10_1510538100098",
+      "parent": "node_1_1618899461929",
       "actions": [
         {
           "name": "main_webhook",
@@ -11234,13 +11248,12 @@
       },
       "next_step": {
         "behavior": "jump_to",
-        "selector": "user_input",
+        "selector": "body",
         "dialog_node": "node_2_1618562873889"
       },
       "conditions": "#Bot_Control-Approve_Response",
       "dialog_node": "node_4_1616093407904",
       "digress_out": "allow_all",
-      "previous_sibling": "response_4_1618873439786",
       "digress_out_slots": "allow_returning"
     },
     {
@@ -11737,7 +11750,7 @@
       "output": {
         "generic": []
       },
-      "parent": "node_10_1510538100098",
+      "parent": "node_1_1618899461929",
       "next_step": {
         "behavior": "jump_to",
         "selector": "user_input",
