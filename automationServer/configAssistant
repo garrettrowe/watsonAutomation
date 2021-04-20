@@ -1,32 +1,51 @@
 const puppeteer = require('puppeteer');
 const io = require('socket.io-client');
 const dotenv = require('dotenv');
-const https = require('https')
+const https = require('https');
+const sqlite3 = require('sqlite3');
 var myArgs = process.argv.slice(2);
 dotenv.config();
 const winstance = myArgs[1];
 const inst = myArgs[0];
-const industry = inst.replace(/.*-SchematicBP_/,"").replace(/_.*/,"");
-let dialogJSON = {};
+let instJSON = null;
 let bailout = true;
 let skipChat = false;
 if (myArgs.length > 2)
 	skipChat = myArgs[2];
-let  cnamesafe = myArgs[0].split("-")[0].replace(/_/g, "-").toLowerCase();
-let  cname = myArgs[0].split("-")[0].replace(/_/g, " ").split(" ");
+let cnamesafe = null;
+let cname = null;
 
-for (let i = 0; i < cname.length; i++) {
-    cname[i] = cname[i][0].toUpperCase() + cname[i].substr(1);
+let db = new sqlite3.Database('/root/demobuilder.db', sqlite3.OPEN_READONLY, (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log("---read db---");
+});
+
+db.serialize(() => {
+  db.each('SELECT json FROM tfscript where instance = "' + inst + '"', (err, row) => {
+    if (err) {
+      console.error(err.message);
+    }
+    instJSON = JSON.parse(Buffer.from(row.json, 'base64').toString('utf-8'));
+  });
+});
+
+db.close((err) => {
+  if (err) {
+    console.error(err.message);
+  }
+});
+
+function getInstJSON() {
+    return new Promise(function(resolve, reject) {
+        (function waitForOTP() {
+            if (instJSON) return resolve(instJSON);
+            setTimeout(waitForOTP, 30);
+        })();
+    });
 }
-cname = cname.join(" ");
 
-console.log("---startup---");
-console.log("inst: " + myArgs[0]);
-console.log("winst: " + myArgs[1]);
-console.log("industry: " + industry);
-console.log("cname: " + cname);
-console.log("cnamesafe: " + cnamesafe);
-console.log("skipChat: " + skipChat);
 
 setTimeout(function() {
     bailout = false;
@@ -37,7 +56,7 @@ socket = io.connect("https://localhost", { secure: true, reconnection: true, rej
 function getDialog(){
 	return new Promise(function(resolve, reject) {
 		try {
-			https.get("https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/assistant_" + industry + ".json",(res) => {
+			https.get("https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/assistant_" + instJSON.industry + ".json",(res) => {
 			    let body = "";
 			    res.on("data", (chunk) => {
 			        body += chunk;
@@ -47,6 +66,10 @@ function getDialog(){
 			        	body = JSON.stringify(body);
 			            body = body.replace(/948376593648263452/g, inst + ".daidemos.com");
 			            body = body.replace(/94729873749632/g, cname);
+			            if (instJSON.product1 != "")
+			            	body = body.replace(/092384274278423847512625/g, instJSON.product1);
+			            else
+			            	body = body.replace(/092384274278423847512625/g, cname + " products");
 			            body = JSON.parse(body);
 			            return resolve(body);
 			        } catch (error) {
@@ -351,6 +374,18 @@ async function configSearch(page, wi){
 
 async function main(){
 	try {
+		console.log("---startup---");
+		instJSON = await getInstJSON().catch((err) => {console.error(err); });
+
+		cnamesafe = instJSON.companySafe;
+		cname = instJSON.company;
+
+		console.log("inst: " + myArgs[0]);
+		console.log("winst: " + myArgs[1]);
+		console.log(instJSON);
+		console.log("skipChat: " + skipChat);
+
+
 		const dialogJS = await getDialog().catch((err) => {
             console.error(err);
         });
