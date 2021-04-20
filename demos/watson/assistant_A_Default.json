@@ -9109,6 +9109,7 @@
       "context": {
         "lastresponse": "<? output ?>"
       },
+      "conditions": "",
       "dialog_node": "node_2_1618562873889"
     },
     {
