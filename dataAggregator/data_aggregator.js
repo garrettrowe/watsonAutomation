@@ -132,6 +132,17 @@ async function launchBrowser() {
         console.log(e);
     }
 }
+async function launchHBrowser() {
+    try {
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--proxy-server=http://compound.latentsolutions.com:18889', '--ignore-certificate-errors']
+        });
+        return browser;
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 async function getPage() {
     try {
@@ -169,8 +180,27 @@ async function getPandL(url) {
         for (let retryNumber = 1; retryNumber <= maxRetryNumber; retryNumber++) {
             const response = await page.goto(url, {waitUntil: 'networkidle2'}).catch((err) => {console.log(err);});
             if (response) {
+                console.log("Response: " + response.status() + " - " + url );
                 if (response.status() < 400) {
                     break;
+                }
+                if (retryNumber > 1 && response.status() == 403 ){
+                    if (page)
+                        await page.close().catch((err) => {
+                            console.error(err);
+                        });
+                    if (browser) {
+                        await browser.close().catch((err) => {
+                            console.error(err);
+                        });
+                        browser = null;
+                    }
+                    browser = await launchHBrowser().catch((err) => {
+                        console.error(err);
+                    });
+                    page = await getPage().catch((err) => {
+                        console.log(err);
+                    });
                 }
             }
             await new Promise(r => setTimeout(r, 5000));
