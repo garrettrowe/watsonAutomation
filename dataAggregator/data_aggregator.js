@@ -125,7 +125,7 @@ async function launchBrowser() {
     try {
         const browser = await puppeteer.launch({
             headless: true,
-            args: ['--no-sandbox', '--proxy-server=http://compound.latentsolutions.com:18889', '--ignore-certificate-errors']
+            args: ['--no-sandbox', '--ignore-certificate-errors']
         });
         return browser;
     } catch (e) {
