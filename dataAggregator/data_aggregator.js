@@ -332,7 +332,12 @@ async function getPandL(url) {
             await page.close().catch((err) => {
                 console.error(err);
             });
-        
+         if (browser) {
+            await browser.close().catch((err) => {
+                console.error(err);
+            });
+            browser = null;
+        }
         return;
     } catch (err) {
         console.log("getPandL error:" + err);
