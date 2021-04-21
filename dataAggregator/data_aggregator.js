@@ -45,25 +45,26 @@ function hashCode(str) {
 
 crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
     queueItem.url = queueItem.url.trim();
-    console.log("Evaluating: " + queueItem.url);
-    if (gettingPage) {
-        console.log("too soon, back to queue: " + queueItem.url);
-        crawler.queue.update(queueItem.id, {
-            fetched: false,
-            status: "queued"
-        },function(error, queueItem) {
-            if (error) {
-                return crawler.emit("queueerror", error, queueItem);
-            }
-        });
-        return;
-    }
+   
     var qii = queueItem.url.replace(/\?.*/,"");
 
     var ea = [".js"];
     var eb = [".pdf", ".xml", ".rss", ".doc", ".xls", ".ppt", ".jpg", ".png", ".gif", ".ico", ".bmp", ".svg", ".mp3", ".wav", ".css"];
     var ec = [".woff", ".json", ".woff2"];
     if (!ea.includes(qii.slice(-3).toLowerCase()) && !eb.includes(qii.slice(-4).toLowerCase()) && !ec.includes(qii.slice(-5).toLowerCase())) {
+        
+        if (gettingPage) {
+            crawler.queue.update(queueItem.id, {
+                fetched: false,
+                status: "queued"
+            },function(error, queueItem) {
+                if (error) {
+                    return crawler.emit("queueerror", error, queueItem);
+                }
+            });
+            return;
+        }
+        
         cont = this.wait();
         console.log("doing fetch: " + queueItem.url);
         gettingPage = true;
@@ -124,7 +125,7 @@ async function launchBrowser() {
     try {
         const browser = await puppeteer.launch({
             headless: true,
-            args: ['--no-sandbox', '--proxy-server=http://compound.latentsolutions.com:18888', '--ignore-certificate-errors']
+            args: ['--no-sandbox', '--proxy-server=http://compound.latentsolutions.com:18889', '--ignore-certificate-errors']
         });
         return browser;
     } catch (e) {
@@ -246,6 +247,7 @@ async function getPandL(url) {
             console.error(err);
         });
         phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
+        phtml = phtml.replace(/<link([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
         phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
         phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
         phtml = phtml.replace(/<li([\S\s]*?)>([\S\s]*?)<\/li>/gi, "");
@@ -259,10 +261,10 @@ async function getPandL(url) {
         summarizeitems.push(phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi));
 
         for (var i = 0; i < summarizeitems.length; i++) {
-            console.log(pname + " part " + i);
             if (summarizeitems[i]) {
+            if (summarizeitems[i].length > 30 ){
                 iterate += 1;
-                console.log(url + " doc length: " + summarizeitems[i].length);
+                console.log("Part " + i + " doc length: " + summarizeitems[i].length + " - " + url );
                 let header = {
                     "Content-type": "application/json",
                     "authorization": "Basic " + Buffer.from("apikey:" + data.apikey).toString("base64")
@@ -321,8 +323,8 @@ async function getPandL(url) {
                         console.error(err);
                     }
                 })(outJSON, pname, iterate, options);
+                }
             } else {
-                console.log("Empty Doc, skipping " + url);
             }
         }
 
@@ -330,12 +332,7 @@ async function getPandL(url) {
             await page.close().catch((err) => {
                 console.error(err);
             });
-        if (browser) {
-            await browser.close().catch((err) => {
-                console.error(err);
-            });
-            browser = null;
-        }
+        
         return;
     } catch (err) {
         console.log("getPandL error:" + err);
