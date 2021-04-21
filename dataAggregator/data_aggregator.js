@@ -198,6 +198,15 @@ async function getPandL(url) {
 
         await page.evaluate(() => {
             try {
+                $('.collapse').show();
+                $("[role='tabpanel']").show();
+                $("iframe").remove();
+                $("nav").remove();
+                $('*').contents().each(function() {
+                    if(this.nodeType === Node.COMMENT_NODE) {
+                        $(this).remove();
+                    }
+                });
                 var allDivs = $('div');
                 var topZindex = 5000;
                 var targetRoles = ["modal", "alert", "alertdialog"];
@@ -246,23 +255,23 @@ async function getPandL(url) {
         let phtml = await page.content().catch((err) => {
             console.error(err);
         });
+
         phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
-        phtml = phtml.replace(/<link([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
         phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
         phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
-        phtml = phtml.replace(/<li([\S\s]*?)>([\S\s]*?)<\/li>/gi, "");
-        phtml = phtml.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
-        phtml = phtml.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
-        phtml = phtml.replace(/<a ([\S\s]*?)>([\S\s]*?)<\/a>/gi, "");
-        phtml = phtml.replace(/<!--([\S\s]*?)-->/gi, "");
 
         let summarizeitems = [];
         summarizeitems.push(phtml);
-        summarizeitems.push(phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi));
+        try{
+            phtml.match(/<p([\S\s]*?)>([\S\s]*?)<\/p>/gi).forEach(element => summarizeitems.push("<html><body>" + element + "</body></html>"));
+        }catch(fail){}
+        try{
+            phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi).forEach(element => summarizeitems.push("<html><body>" + element + "</body></html>"));
+        }catch(fail){}
 
         for (var i = 0; i < summarizeitems.length; i++) {
             if (summarizeitems[i]) {
-            if (summarizeitems[i].length > 30 ){
+            if (summarizeitems[i].length > 50 ){
                 iterate += 1;
                 console.log("Part " + i + " doc length: " + summarizeitems[i].length + " - " + url );
                 let header = {
