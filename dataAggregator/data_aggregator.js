@@ -301,7 +301,7 @@ async function getPandL(url) {
 
         for (var i = 0; i < summarizeitems.length; i++) {
             if (summarizeitems[i]) {
-            if (summarizeitems[i].length > 50 ){
+            if (summarizeitems[i].length > 100 ){
                 iterate += 1;
                 console.log("Part " + i + " doc length: " + summarizeitems[i].length + " - " + url );
                 let header = {
