@@ -202,22 +202,27 @@ async function getPandL(url) {
                         console.log(err);
                     });
                 }
+                if (retryNumber > 1 && response.status() == 404 ){
+                    return;
+                }
             }
             await new Promise(r => setTimeout(r, 5000));
         }
 
-        await page.evaluate(async () => {
+        links = await page.evaluate(async () => {
             var script = document.createElement('script');
             script.src = "https://code.jquery.com/jquery-3.5.1.min.js";
             document.getElementsByTagName('head')[0].appendChild(script);
 
-            while (!window.jQuery)
-                await new Promise(r => setTimeout(r, 500));
-        }).catch((err) => {
-            console.log(err);
-        });
+            var retries = 0;
 
-        links = await page.$$eval('a', links => links.map(a => a.href)).catch((err) => {
+            while (!window.jQuery && retries < 10){
+                retries += 1;
+                await new Promise(r => setTimeout(r, 500));
+            }
+
+            return  $('a').map(function(i,el) { return $(el).attr('href'); }).get();
+        }).catch((err) => {
             console.log(err);
         });
 
