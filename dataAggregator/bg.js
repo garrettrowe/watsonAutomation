@@ -84,15 +84,21 @@ async function getPage() {
             await new Promise(r => setTimeout(r, 5000));
         }
 
-	await page.evaluate(() => {
+	await page.evaluate(async () => {
             var script = document.createElement('script');
             script.src = "https://code.jquery.com/jquery-3.5.1.min.js";
             document.getElementsByTagName('head')[0].appendChild(script);
+		
+	    var retries = 0;
+
+            while (!window.jQuery && retries < 10){
+                retries += 1;
+                await new Promise(r => setTimeout(r, 500));
+            }
 
         }).catch((err) => {
             console.log(err);
         });
-    await page.waitForNavigation({timeout: 5000}).catch((err) => {});
 
 	await page.evaluate(() => {
 		try {
