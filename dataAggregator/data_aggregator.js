@@ -216,7 +216,7 @@ async function getPandL(url) {
 
             var retries = 0;
 
-            while (!window.jQuery && retries < 10){
+            while (!$ && retries < 10){
                 retries += 1;
                 await new Promise(r => setTimeout(r, 500));
             }
