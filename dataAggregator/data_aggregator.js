@@ -244,7 +244,7 @@ async function getPandL(url) {
                 });
                 var allDivs = $('div');
                 var topZindex = 5000;
-                var targetRoles = ["modal", "alert", "alertdialog"];
+                var targetRoles = ["modal", "alert", "alertdialog", "tooltip"];
                 var targetClasses = ["modal", "alert", "alertdialog", "survey", "hidden"];
                 allDivs.each(function() {
                     $(this).find(":hidden").remove();
