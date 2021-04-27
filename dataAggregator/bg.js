@@ -104,7 +104,7 @@ async function getPage() {
 		try {
 			var allDivs = $('div');
 			var topZindex = 10000;
-			var targetRoles = ["modal","alert","alertdialog"];
+			var targetRoles = ["modal","alert","alertdialog","tooltip"];
 			var targetClasses = ["modal","alert","alertdialog", "survey"];
 			
 			allDivs.each(function(){
