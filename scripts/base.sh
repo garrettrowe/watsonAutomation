@@ -14,11 +14,14 @@ done
 while [ ! -f /root/companyurloverride.txt ]; do
     sleep 1
 done
+while [ ! -f /root/companycompact.txt ]; do
+    sleep 1
+done
 curl -d "Instance=$(< /root/instnum.txt)&Log=Booting VSI" -X POST https://daidemos.com/log
 mkdir /root/demo
 mkdir /root/da
-wget -O /root/logosmall.png https://daidemos.com/$(< /root/company.txt).small.png
-wget -O /root/logo.png https://daidemos.com/$(< /root/company.txt).png
+wget -O /root/logosmall.png https://daidemos.com/$(< /root/companycompact.txt).small.png
+wget -O /root/logo.png https://daidemos.com/$(< /root/companycompact.txt).png
 wget -O /root/ip.txt icanhazip.com
 
 apt-get update
