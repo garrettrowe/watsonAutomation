@@ -25,7 +25,7 @@ crawler.ignoreWWWDomain = false;
 crawler.downloadUnsupported = false;
 crawler.ignoreInvalidSSL = true;
 crawler.supportedMimeTypes = [/^text\/html/i];
-crawler.interval = 5000;
+crawler.interval = 10000;
 crawler.maxConcurrency = 1;
 crawler.listenerTTL = 120000;
 crawler.allowedProtocols[/^http(s)?$/i];
