@@ -91,7 +91,12 @@ async function getPage() {
 		
 	    var retries = 0;
 
-            while (!$ && retries < 10){
+            while (!window.jQuery && retries < 20){
+                retries += 1;
+                await new Promise(r => setTimeout(r, 500));
+            }
+	    retries = 0;
+	    while (!$ && retries < 10){
                 retries += 1;
                 await new Promise(r => setTimeout(r, 500));
             }
