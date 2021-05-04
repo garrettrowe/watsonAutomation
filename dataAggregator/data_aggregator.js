@@ -220,6 +220,11 @@ async function getPandL(url) {
                 retries += 1;
                 await new Promise(r => setTimeout(r, 500));
             }
+            retries = 0;
+            while (!$ && retries < 10){
+                retries += 1;
+                await new Promise(r => setTimeout(r, 500));
+            }
 
             return  $('a').map(function(i,el) { return $(el).attr('href'); }).get();
         }).catch((err) => {
