@@ -107,6 +107,10 @@ async function getPage() {
 
 	await page.evaluate(() => {
 		try {
+			$("[aria-label~='Close']").trigger('click');
+			$("[aria-label|='Close']").trigger('click');
+			$("[aria-label~='close']").trigger('click');
+			$("[aria-label|='close']").trigger('click');
 			var allDivs = $('div');
 			var topZindex = 10000;
 			var targetRoles = ["modal","alert","alertdialog","tooltip"];
