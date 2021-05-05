@@ -238,6 +238,10 @@ async function getPandL(url) {
 
         await page.evaluate(() => {
             try {
+                $("[aria-label~='Close']").trigger('click');
+                $("[aria-label|='Close']").trigger('click');
+                $("[aria-label~='close']").trigger('click');
+                $("[aria-label|='close']").trigger('click');
                 $('.collapse').show();
                 $("[role='tabpanel']").show();
                 $("iframe").remove();
