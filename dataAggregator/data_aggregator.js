@@ -399,6 +399,29 @@ async function getPandL(url) {
 
                                 } else {
                                     console.log("Error calling NLU on: " + pname + " : " + JSON.stringify(body));
+                                    out = outJSON.text.replace(/<html([\S\s]*?)>([\S\s]*?)<\/html>/gi, "");
+                                    out = out.replace(/<body([\S\s]*?)>([\S\s]*?)<\/body>/gi, "");
+                                    out = out.replace(/&[a-z]+;/g, "");
+                                    out = "." + out.replace(/<.\w*[^>]*>/gi, ".").trim();
+                                    out = out.replace(/\.[\w \\/]{0,80}(?=\.)/gi, ".");
+                                    out = out.replace(/( )+/gi, " ");
+                                    out = out.replace(/([\t\n])+/gi, ".");
+                                    out = out.replace(/\..{0,60}\./gi, ".");
+                                    out = out.replace(/\. */gi, ".");
+                                    out = out.replace(/\.+/gi, ".");
+                                    out = out.replace(/\.+/gi, ". ");
+                                    out = out.replace(/^\. */, "");
+                                    outJSON.text = out;
+                                    let ojsH = hashCode(outJSON.text);
+                                    if (!outitems.includes(ojsH) && outJSON.text.length > 150) {
+                                        outitems.push(ojsH);
+                                        fse.outputFileSync("/root/da/crawl/" + pname + iterate + ".json", JSON.stringify(outJSON));
+                                        console.log("wrote " + pname + iterate + ".json");
+                                        return;
+                                    } else {
+                                        console.log("Dupe hash, skipping " + pname);
+                                        return;
+                                    }
                                     return;
                                 }
                             } catch (err) {
