@@ -6,12 +6,15 @@ var myArgs = process.argv.slice(2);
 if (myArgs[0].search(/http.*\/\//) == -1)
         myArgs[0] = "http://" + myArgs[0];
 
+let width = 2560
+let height = 1600
+
 async function launchBrowser() {
     try {
         const browser = await puppeteer.launch({
             executablePath: '/usr/bin/google-chrome',
             headless: true,
-            defaultViewport: { 2560, 1600 },
+            defaultViewport: { width, height },
             ignoreHTTPSErrors: true,
             args: [   '--no-sandbox', 
                       '--ignore-certificate-errors', 
@@ -39,7 +42,7 @@ async function launchHBrowser() {
         const browser = await puppeteer.launch({
             executablePath: '/usr/bin/google-chrome',
             headless: true,
-            defaultViewport: { 2560, 1600 },
+            defaultViewport: { width, height },
 	    ignoreHTTPSErrors: true,
 	    args: [   myArgs[1],
 		      '--no-sandbox', 
