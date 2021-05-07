@@ -406,9 +406,7 @@ async function getPandL(url) {
                                             return;
                                         }
                                     }else{
-                                        out = outJSON.text.replace(/<html([\S\s]*?)>([\S\s]*?)<\/html>/gi, "");
-                                        out = out.replace(/<body([\S\s]*?)>([\S\s]*?)<\/body>/gi, "");
-                                        out = out.replace(/&[a-z]+;/g, "");
+                                        out = outJSON.text.replace(/&[a-z]+;/g, "");
                                         out = "." + out.replace(/<.\w*[^>]*>/gi, ".").trim();
                                         out = out.replace(/\.[\w \\/]{0,80}(?=\.)/gi, ".");
                                         out = out.replace(/( )+/gi, " ");
@@ -433,9 +431,7 @@ async function getPandL(url) {
 
                                 } else {
                                     console.log("Error calling NLU on: " + pname + " : " + JSON.stringify(body));
-                                    out = outJSON.text.replace(/<html([\S\s]*?)>([\S\s]*?)<\/html>/gi, "");
-                                    out = out.replace(/<body([\S\s]*?)>([\S\s]*?)<\/body>/gi, "");
-                                    out = out.replace(/&[a-z]+;/g, "");
+                                    out = outJSON.text.replace(/&[a-z]+;/g, "");
                                     out = "." + out.replace(/<.\w*[^>]*>/gi, ".").trim();
                                     out = out.replace(/\.[\w \\/]{0,80}(?=\.)/gi, ".");
                                     out = out.replace(/( )+/gi, " ");
