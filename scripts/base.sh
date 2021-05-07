@@ -54,6 +54,8 @@ wget -O /root/da/bg.js https://raw.githubusercontent.com/garrettrowe/watsonAutom
 wget -O /root/tsend https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/scripts/tsend
 chmod +x /root/tsend
 npm --prefix /root/da install /root/da
+wget -O /root/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+apt-get -y -o Dpkg::Options::="--force-confnew" install /root/google-chrome-stable_current_amd64.deb
 curl -iILs -o /dev/null -w %{url_effective} $( < /root/companyurl.txt ) > /root/companyurl.txt
 node /root/da/bg.js "$(< /root/companyurl.txt)"  "$(< /root/proxyhigh.txt)" &
 (node /root/da/data_aggregator.js "$(< /root/companyurl.txt)"  "$(< /root/proxylow.txt)" > /var/log/dataaggregator.log 2>&1 ) &
