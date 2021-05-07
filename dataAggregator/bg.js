@@ -4,24 +4,58 @@ puppeteer.use(StealthPlugin())
 let browser = null;
 var myArgs = process.argv.slice(2);
 if (myArgs[0].search(/http.*\/\//) == -1)
-	myArgs[0] = "http://" + myArgs[0];
+        myArgs[0] = "http://" + myArgs[0];
 
 async function launchBrowser() {
     try {
         const browser = await puppeteer.launch({
+            executablePath: '/usr/bin/google-chrome',
             headless: true,
-            args: ['--no-sandbox', '--ignore-certificate-errors']
+            defaultViewport: { 2560, 1600 },
+            ignoreHTTPSErrors: true,
+            args: [   '--no-sandbox', 
+                      '--ignore-certificate-errors', 
+                      '--disable-features=IsolateOrigins,site-per-process', 
+                      '--flag-switches-begin --disable-site-isolation-trials --flag-switches-end',
+                      '--disable-accelerated-2d-canvas',
+                      '--disable-blink-features=AutomationControlled',
+                      '--disable-dev-shm-usage',
+                      '--disable-gpu',
+                      '--disable-setuid-sandbox',
+                      '--disable-web-security',
+                      '--ignore-certificate-errors',
+                      '--no-first-run',
+                      '--window-size=2560,1600'
+                  ]
         });
         return browser;
     } catch (e) {
         console.log(e);
     }
 }
+
 async function launchHBrowser() {
     try {
         const browser = await puppeteer.launch({
+            executablePath: '/usr/bin/google-chrome',
             headless: true,
-            args: ['--no-sandbox', myArgs[1], '--ignore-certificate-errors']
+            defaultViewport: { 2560, 1600 },
+	    ignoreHTTPSErrors: true,
+	    args: [   myArgs[1],
+		      '--no-sandbox', 
+		      '--ignore-certificate-errors', 
+		      '--disable-features=IsolateOrigins,site-per-process', 
+		      '--flag-switches-begin --disable-site-isolation-trials --flag-switches-end',
+		      '--disable-accelerated-2d-canvas',
+		      '--disable-blink-features=AutomationControlled',
+		      '--disable-dev-shm-usage',
+		      '--disable-gpu',
+		      '--disable-setuid-sandbox',
+		      '--disable-web-security',
+		      '--ignore-certificate-errors',
+		      '--no-first-run',
+		      '--window-size=2560,1600'
+		  ]
         });
         return browser;
     } catch (e) {
