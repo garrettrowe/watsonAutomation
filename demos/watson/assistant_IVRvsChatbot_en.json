@@ -1,4 +1,9 @@
 {
+  "type":"dialog",
+  "name": "Customer Self Service",
+  "language": "en",
+  "description": "Self Service",
+  "workspace": {
   "intents": [
     {
       "intent": "Account_Access-Authorized_User",
@@ -13815,9 +13820,5 @@
       "training_backend_version": "v2"
     },
     "spelling_auto_correct": true
-  },
-  "learning_opt_out": false,
-  "name": "Assistant Skill - IVRvsChatbot",
-  "language": "en",
-  "description": "Support Agent"
+  }}
 }
