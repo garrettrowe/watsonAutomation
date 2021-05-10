@@ -6260,7 +6260,7 @@
   },
   "webhooks": [
     {
-      "url": "https://DataAIDemoBuilder272115.daidemos.com/translate",
+      "url": "https://948376593648263452/translate",
       "name": "main_webhook",
       "headers": []
     }
@@ -7443,7 +7443,7 @@
       "output": {
         "text": {
           "values": [
-            "Desafortunadamente no puedo ayudarte a cerrar una cuenta. Tendrá que hablar con un Agente de Servicio al Cliente Banco Estado."
+            "Desafortunadamente no puedo ayudarte a cerrar una cuenta. Tendrá que hablar con un Agente de Servicio al Cliente 94729873749632."
           ],
           "selection_policy": "sequential"
         }
@@ -7693,7 +7693,7 @@
       "output": {
         "text": {
           "values": [
-            "Desafortunadamente no puedo ayudarte con las disputas de facturación de tarjetas de crédito. Tendrá que hablar con un Agente de Servicio al Cliente Banco Estado para ayudarle."
+            "Desafortunadamente no puedo ayudarte con las disputas de facturación de tarjetas de crédito. Tendrá que hablar con un Agente de Servicio al Cliente 94729873749632 para ayudarle."
           ],
           "selection_policy": "sequential"
         }
@@ -7765,7 +7765,7 @@
       "output": {
         "text": {
           "values": [
-            "Puede configurar fácilmente recordatorios de pago desde la configuración de su cuenta.  Simplemente ingrese a su cuenta Banco Estado, luego vaya a su sección de Configuración y seleccione la notificación adecuada a sus necesidades."
+            "Puede configurar fácilmente recordatorios de pago desde la configuración de su cuenta.  Simplemente ingrese a su cuenta 94729873749632, luego vaya a su sección de Configuración y seleccione la notificación adecuada a sus necesidades."
           ],
           "selection_policy": "sequential"
         }
@@ -7904,7 +7904,7 @@
       "output": {
         "text": {
           "values": [
-            "No estoy seguro de lo que quieres decir. Puede ayudarle hablar con un agente de servicio al cliente Banco Estado."
+            "No estoy seguro de lo que quieres decir. Puede ayudarle hablar con un agente de servicio al cliente 94729873749632."
           ],
           "selection_policy": "sequential"
         }
@@ -8602,7 +8602,7 @@
             "selection_policy": "sequential"
           },
           {
-            "title": "He encontrado 5 ubicaciones cercanas Banco Estado. ¿A cuál te gustaría ir?",
+            "title": "He encontrado 5 ubicaciones cercanas 94729873749632. ¿A cuál te gustaría ir?",
             "options": [
               {
                 "label": "63 Madison Ave ",
@@ -8754,7 +8754,7 @@
       "output": {
         "text": {
           "values": [
-            "Desafortunadamente no puedo ayudarte a cambiar tus preguntas de seguridad. Tendrá que hablar con un Agente de Servicio al Cliente Banco Estado para ayudarle."
+            "Desafortunadamente no puedo ayudarte a cambiar tus preguntas de seguridad. Tendrá que hablar con un Agente de Servicio al Cliente 94729873749632 para ayudarle."
           ],
           "selection_policy": "sequential"
         }
@@ -9056,7 +9056,7 @@
         },
         "ui_action": {
           "notification_display": {
-            "DisplayText": "El asistente virtual puede entregar sin problemas a un agente en vivo Banco Estado que luego puede dirigirse al usuario."
+            "DisplayText": "El asistente virtual puede entregar sin problemas a un agente en vivo 94729873749632 que luego puede dirigirse al usuario."
           }
         }
       },
@@ -9127,7 +9127,7 @@
       "output": {
         "text": {
           "values": [
-            "Desafortunadamente por cargos fraudulentos a una cuenta tendrá que hablar a un agente del Servicio al Cliente Banco Estado."
+            "Desafortunadamente por cargos fraudulentos a una cuenta tendrá que hablar a un agente del Servicio al Cliente 94729873749632."
           ],
           "selection_policy": "sequential"
         }
@@ -9151,7 +9151,7 @@
       "output": {
         "text": {
           "values": [
-            "Puedes ver los detalles de tu dirección en tu sección de Configuración de Cuenta desde tu cuenta en línea Banco Estado."
+            "Puedes ver los detalles de tu dirección en tu sección de Configuración de Cuenta desde tu cuenta en línea 94729873749632."
           ],
           "selection_policy": "sequential"
         }
@@ -9497,7 +9497,7 @@
       "output": {
         "text": {
           "values": [
-            "¿Sí? Hablemos un poco más de CuentaRUT."
+            "¿Sí? Hablemos un poco más de 092384274278423847512625."
           ]
         }
       },
@@ -9514,7 +9514,7 @@
       "output": {
         "text": {
           "values": [
-            "Encuentra el saldo de la cuenta en la sección Balance de Cuentas en su cuenta en línea Banco Estado."
+            "Encuentra el saldo de la cuenta en la sección Balance de Cuentas en su cuenta en línea 94729873749632."
           ],
           "selection_policy": "sequential"
         }
@@ -9597,7 +9597,7 @@
       "output": {
         "text": {
           "values": [
-            "¿No? Hablemos un poco más de CuentaRUT."
+            "¿No? Hablemos un poco más de 092384274278423847512625."
           ]
         }
       },
@@ -9654,7 +9654,7 @@
       "output": {
         "text": {
           "values": [
-            "¿No está seguro? Hablemos un poco más de CuentaRUT."
+            "¿No está seguro? Hablemos un poco más de 092384274278423847512625."
           ]
         }
       },
@@ -9672,7 +9672,7 @@
       "output": {
         "text": {
           "values": [
-            "Para realizar cambios en las fechas de vencimiento, deberá hablar con un Agente de Servicio al Cliente Banco Estado."
+            "Para realizar cambios en las fechas de vencimiento, deberá hablar con un Agente de Servicio al Cliente 94729873749632."
           ],
           "selection_policy": "sequential"
         }
@@ -9957,7 +9957,7 @@
       "output": {
         "text": {
           "values": [
-            "Puede iniciar sesión en su cuenta Banco Estado y descargar sentencias anteriores. Si necesita una copia física enviada a usted, tendrá que hablar con uno de nuestros Agentes de Servicio al Cliente."
+            "Puede iniciar sesión en su cuenta 94729873749632 y descargar sentencias anteriores. Si necesita una copia física enviada a usted, tendrá que hablar con uno de nuestros Agentes de Servicio al Cliente."
           ],
           "selection_policy": "sequential"
         }
@@ -9984,7 +9984,7 @@
           {
             "values": [
               {
-                "text": "Un momento mientras recupero una lista de sus cuentas Banco Estado."
+                "text": "Un momento mientras recupero una lista de sus cuentas 94729873749632."
               }
             ],
             "response_type": "text",
@@ -10180,7 +10180,7 @@
       "output": {
         "text": {
           "values": [
-            "Puede leer acerca de la historia de Banco Estado y nuestro compromiso con el servicio al cliente en nuestra página Acerca de nosotros."
+            "Puede leer acerca de la historia de 94729873749632 y nuestro compromiso con el servicio al cliente en nuestra página Acerca de nosotros."
           ],
           "selection_policy": "sequential"
         }
@@ -10223,7 +10223,7 @@
       "output": {
         "text": {
           "values": [
-            "Adiós, ¡gracias por elegir Banco Estado!"
+            "Adiós, ¡gracias por elegir 94729873749632!"
           ],
           "selection_policy": "sequential"
         }
@@ -10820,7 +10820,7 @@
           "name": "main_webhook",
           "type": "webhook",
           "parameters": {
-            "sms": "Visit Banco Estado at: $webhook_result_4.location",
+            "sms": "Visit 94729873749632 at: $webhook_result_4.location",
             "phone": "$phone"
           },
           "result_variable": "webhook_result_2"
