@@ -13268,8 +13268,7 @@
       },
       "intent_classification": {
         "training_backend_version": "v2"
-      },
-      "spelling_auto_correct": true
+      }
     }
   }
 }
