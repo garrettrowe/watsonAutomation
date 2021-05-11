@@ -13265,9 +13265,6 @@
       },
       "human_agent_assist": {
         "prompt": "つまり"
-      },
-      "intent_classification": {
-        "training_backend_version": "v2"
       }
     }
   }
