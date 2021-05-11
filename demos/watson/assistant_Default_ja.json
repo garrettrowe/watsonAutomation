@@ -4,7 +4,6 @@
   "language": "ja",
   "description": "Support Agent",
   "workspace": {
-    {
   "intents": [
     {
       "intent": "アカウント_アクセス-Fraudulent_使用のレポート",
