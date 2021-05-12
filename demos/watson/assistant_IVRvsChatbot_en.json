@@ -1,8 +1,8 @@
 {
   "type":"dialog",
-  "name": "Customer Self Service",
+  "name": "IVR v Chatbot",
   "language": "en",
-  "description": "Self Service",
+  "description": "IVR versus Chatbot",
   "workspace": {
   "intents": [
     {
