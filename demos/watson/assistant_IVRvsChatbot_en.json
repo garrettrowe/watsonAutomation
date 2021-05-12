@@ -7290,9 +7290,10 @@
       "output": {},
       "parent": "slot_5_1619536920022",
       "context": {
-        "mobile_number": "@sys-number"
+        "phone": "@phone.literal",
+        "mobile_number": "@phone.literal"
       },
-      "conditions": "@sys-number",
+      "conditions": "@phone.literal",
       "event_name": "input",
       "dialog_node": "handler_5_1619536920049"
     },
@@ -7310,11 +7311,17 @@
     {
       "type": "event_handler",
       "output": {
+        "text": {
+          "values": [
+            "Certainly let me check for your ability to upgrade.  Please confirm the phone number on the account including country code? EG: 1-832-734-5835"
+          ],
+          "selection_policy": "sequential"
+        },
         "generic": [
           {
             "values": [
               {
-                "text": "Certainly let me check for your ability to upgrade.  What is the phone number attached to the account?"
+                "text": "Certainly let me check for your ability to upgrade.  Please confirm the phone number on the account including country code? EG: 1-832-734-5835"
               }
             ],
             "response_type": "text",
@@ -7323,6 +7330,9 @@
         ]
       },
       "parent": "slot_5_1619536920022",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
       "event_name": "focus",
       "dialog_node": "handler_6_1619536920049",
       "previous_sibling": "handler_5_1619536920049"
@@ -9208,9 +9218,9 @@
     },
     {
       "type": "standard",
-      "title": "upsell - copy 1",
+      "title": "upsell - send confirmation",
       "output": {},
-      "parent": "node_6_1619575608357",
+      "parent": "node_7_1619575492995",
       "actions": [
         {
           "name": "main_webhook",
@@ -9226,8 +9236,35 @@
           "mcr": true
         }
       },
-      "conditions": "#Upsell-Product_Recommendation",
-      "dialog_node": "node_2_1619575662431"
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "#Bot_Control-Approve_Response",
+      "dialog_node": "node_2_1619575662431",
+      "previous_sibling": "node_7_1619575719686"
+    },
+    {
+      "type": "standard",
+      "title": "Send Offer Via SMS",
+      "parent": "node_2_1619575662431",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "sms": "$webhook_result_3",
+            "phone": "$mobile_number"
+          },
+          "result_variable": "webhook_result_2"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "true",
+      "dialog_node": "node_2_1620790699428"
     },
     {
       "type": "standard",
@@ -10477,26 +10514,13 @@
     },
     {
       "type": "standard",
-      "output": {
-        "generic": [
-          {
-            "values": [
-              {
-                "text": "To move forward with completing the purchase of this special offer please confirm the zip code of the shipping address."
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          }
-        ]
-      },
-      "parent": "node_2_1619575662431",
+      "parent": "node_2_1620790699428",
       "metadata": {
         "_customization": {
-          "mcr": false
+          "mcr": true
         }
       },
-      "conditions": "#Bot_Control-Approve_Response",
+      "conditions": "true",
       "dialog_node": "node_3_1619575662433"
     },
     {
@@ -11947,47 +11971,6 @@
       "dialog_node": "node_5_1618562956135"
     },
     {
-      "type": "standard",
-      "title": "Capture Zip",
-      "output": {
-        "generic": []
-      },
-      "parent": "node_3_1619575662433",
-      "context": {
-        "shipping_zip": "<? input.txt ?>"
-      },
-      "metadata": {
-        "_customization": {
-          "mcr": false
-        }
-      },
-      "next_step": {
-        "behavior": "skip_user_input"
-      },
-      "conditions": "true",
-      "dialog_node": "node_5_1619576481772"
-    },
-    {
-      "type": "standard",
-      "title": "Confirm Zip Code ",
-      "output": {
-        "generic": [
-          {
-            "values": [
-              {
-                "text": "Thank you.  The zip code $shipping_zip is confirmed.  Would you like me to send you a confirmation number?"
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          }
-        ]
-      },
-      "parent": "node_5_1619576481772",
-      "conditions": "true",
-      "dialog_node": "node_5_1619576735916"
-    },
-    {
       "type": "response_condition",
       "output": {
         "text": {
@@ -12263,15 +12246,6 @@
       "dialog_node": "node_6_1618554887364",
       "digress_out": "allow_all",
       "previous_sibling": "node_2_1618562873889"
-    },
-    {
-      "type": "standard",
-      "parent": "node_7_1619575492995",
-      "next_step": {
-        "behavior": "skip_user_input"
-      },
-      "conditions": "#Bot_Control-Approve_Response",
-      "dialog_node": "node_6_1619575608357"
     },
     {
       "type": "standard",
@@ -12705,14 +12679,13 @@
       },
       "parent": "node_7_1619575492995",
       "conditions": "#Bot_Control-Reject_Response",
-      "dialog_node": "node_7_1619575719686",
-      "previous_sibling": "node_6_1619575608357"
+      "dialog_node": "node_7_1619575719686"
     },
     {
       "type": "standard",
       "title": "Send confirmation number",
       "output": {},
-      "parent": "node_5_1619576735916",
+      "parent": "node_3_1619575662433",
       "actions": [
         {
           "name": "main_webhook",
@@ -13224,7 +13197,7 @@
           {
             "values": [
               {
-                "text": "Ok, confirmation has been sent!!"
+                "text": "Ok, confirmation has been sent!!  Is there anything else that I can help you with such as more information on 092384274278423847512625 or something else?"
               }
             ],
             "response_type": "text",
@@ -13379,15 +13352,6 @@
               "template_name": "upsell"
             },
             "response_type": "user_defined"
-          },
-          {
-            "values": [
-              {
-                "text": "If you are interested I can transfer you to one of our agents."
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
           }
         ]
       },
@@ -13397,7 +13361,7 @@
       },
       "conditions": "$webhook_result_3",
       "dialog_node": "response_4_1619575662433",
-      "previous_sibling": "node_3_1619575662433"
+      "previous_sibling": "node_2_1620790699428"
     },
     {
       "type": "response_condition",
@@ -13448,25 +13412,6 @@
       "conditions": "anything_else",
       "dialog_node": "response_5_1619575662433",
       "previous_sibling": "response_4_1619575662433"
-    },
-    {
-      "type": "response_condition",
-      "output": {
-        "generic": [
-          {
-            "values": [],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          }
-        ]
-      },
-      "parent": "node_5_1619576481772",
-      "context": {
-        "shipping_zip": "<? input.txt ?>"
-      },
-      "disabled": true,
-      "dialog_node": "response_5_1619576608357",
-      "previous_sibling": "node_5_1619576735916"
     },
     {
       "type": "response_condition",
@@ -13563,6 +13508,13 @@
     },
     {
       "type": "response_condition",
+      "parent": "node_2_1620790699428",
+      "conditions": "anything_else",
+      "dialog_node": "response_7_1620790733387",
+      "previous_sibling": "response_8_1620790732398"
+    },
+    {
+      "type": "response_condition",
       "output": {
         "text": {
           "values": [
@@ -13608,6 +13560,26 @@
     {
       "type": "response_condition",
       "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "To move forward with completing the purchase of this special offer please confirm the zip code of the shipping address."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1620790699428",
+      "conditions": "$webhook_result_2",
+      "dialog_node": "response_8_1620790732398",
+      "previous_sibling": "node_3_1619575662433"
+    },
+    {
+      "type": "response_condition",
+      "output": {
         "text": {
           "values": [
             "Okay, location @sys-number on the list."
@@ -13631,7 +13603,7 @@
           {
             "values": [
               {
-                "text": ""
+                "text": "Thank you.  The zip code $shipping_zip is confirmed.  Would you like me to send you a confirmation number via SMS to $mobile_number ?"
               }
             ],
             "response_type": "text",
@@ -13640,9 +13612,13 @@
         ]
       },
       "parent": "node_3_1619575662433",
-      "disabled": true,
+      "context": {
+        "lastresponse": "<? output ?>",
+        "shipping_zip": "<? input.txt ?>"
+      },
+      "conditions": "true",
       "dialog_node": "response_9_1619576077258",
-      "previous_sibling": "node_5_1619576481772"
+      "previous_sibling": "node_7_1619576875542"
     },
     {
       "type": "slot",
@@ -13752,6 +13728,7 @@
     },
     {
       "type": "slot",
+      "output": {},
       "parent": "node_3_1619535945905",
       "variable": "mobile_number",
       "dialog_node": "slot_5_1619536920022",
@@ -13820,5 +13797,6 @@
       "training_backend_version": "v2"
     },
     "spelling_auto_correct": true
-  }}
 }
+						   
+}}
