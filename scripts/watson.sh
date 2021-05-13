@@ -5,7 +5,7 @@ export USER=root
 while [ ! -f /root/instnum.txt ]; do
     sleep 1
 done
-while [ ! -f /root/companysafe.txt ]; do
+while [ ! -f /root/resourceGroup.txt ]; do
     sleep 1
 done
 while [ ! -f /root/companytitle.txt ]; do
@@ -19,7 +19,7 @@ while [ ! -f /root/demo.txt ]; do
 done
 
 curl -d "Instance=$(< /root/instnum.txt)&Log=Localizing: $(< /root/industry.txt)/$(< /root/demo.txt) " -X POST https://daidemos.com/log
-wget -O /root/.node-red/flows_$(< /root/companysafe.txt)-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/flows.json
+wget -O /root/.node-red/flows_$(< /root/resourceGroup.txt)-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/flows.json
 
 wget -O /root/discovery.tgz https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/discovery.tgz
 wget -O /root/upsell.zip https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/upsell.zip
