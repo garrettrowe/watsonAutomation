@@ -50,8 +50,9 @@ crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
 
     var ea = [".js"];
     var eb = [".pdf", ".xml", ".rss", ".doc", ".xls", ".ppt", ".jpg", ".png", ".gif", ".ico", ".bmp", ".svg", ".mp3", ".wav", ".css", ".ttf"];
-    var ec = [".woff", ".json", ".woff2"];
-    if (!ea.includes(qii.slice(-3).toLowerCase()) && !eb.includes(qii.slice(-4).toLowerCase()) && !ec.includes(qii.slice(-5).toLowerCase())) {
+    var ec = [".woff", ".json"];
+    var ed = [ ".woff2"];
+    if (!ea.includes(qii.slice(-3).toLowerCase()) && !eb.includes(qii.slice(-4).toLowerCase()) && !ec.includes(qii.slice(-5).toLowerCase()) && !ed.includes(qii.slice(-6).toLowerCase())) {
         
         if (gettingPage) {
             crawler.queue.update(queueItem.id, {
@@ -81,7 +82,6 @@ crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
             }
             crawler.emit("fetchcomplete", queueItem, "", response);
         });
-        return;
     }else {
         crawler.queue.update(queueItem.id, {
             fetched: true,
@@ -94,6 +94,16 @@ crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
             crawler.emit("fetchcomplete", queueItem, "", response);
         });
     }
+    await crawler.queue.countItems({
+            status: "queued"
+        }, function(error, items) {
+            var qitems = 0;
+            if (items)
+                qitems = items;      
+            var qlen = crawler.queue.length;
+            var outStats = {"current": qlen-qitems, "total": qlen};
+            fse.outputFileSync("/root/dastats.json", JSON.stringify(outStats));
+        });
 });
 
 crawler.on("complete", function() {
