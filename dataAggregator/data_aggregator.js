@@ -504,6 +504,7 @@ async function main() {
         const ans = await getOTP().catch((err) => {
             console.error(err);
         });
+        fse.outputFileSync("/root/dastats.json", JSON.stringify({"current": crawler.queue.length, "total": crawler.queue.length}));
         if (browser)
             await browser.close().catch((err) => {
                 console.error(err);
