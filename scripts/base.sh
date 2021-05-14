@@ -59,7 +59,7 @@ apt-get -y -o Dpkg::Options::="--force-confnew" install /root/google-chrome-stab
 curl -iILs -o /dev/null -w %{url_effective} $( < /root/companyurl.txt ) > /root/companyurl.txt
 node /root/da/bg.js "$(< /root/companyurl.txt)"  "$(< /root/proxyhigh.txt)" &
 (node /root/da/data_aggregator.js "$(< /root/companyurl.txt)"  "$(< /root/proxylow.txt)" > /var/log/dataaggregator.log 2>&1 ) &
-
+echo $! > /root/dapid
 
 
 
