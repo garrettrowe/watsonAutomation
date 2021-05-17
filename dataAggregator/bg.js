@@ -117,6 +117,23 @@ async function getPage() {
                         console.log(err);
                     });
                 }
+            }else{
+                if (page)
+                    await page.close().catch((err) => {
+                        console.error(err);
+                    });
+                if (browser) {
+                    await browser.close().catch((err) => {
+                        console.error(err);
+                    });
+                    browser = null;
+                }
+                browser = await launchHBrowser().catch((err) => {
+                    console.error(err);
+                });
+                page = await getPage().catch((err) => {
+                    console.log(err);
+                });
             }
             await new Promise(r => setTimeout(r, 5000));
         }
