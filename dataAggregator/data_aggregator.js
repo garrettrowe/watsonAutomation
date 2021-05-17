@@ -166,22 +166,22 @@ async function launchHBrowser() {
             executablePath: '/usr/bin/google-chrome',
             headless: true,
             defaultViewport: { width, height },
-	    ignoreHTTPSErrors: true,
-	    args: [   myArgs[1],
-		      '--no-sandbox', 
-		      '--ignore-certificate-errors', 
-		      '--disable-features=IsolateOrigins,site-per-process', 
-		      '--flag-switches-begin --disable-site-isolation-trials --flag-switches-end',
-		      '--disable-accelerated-2d-canvas',
-		      '--disable-blink-features=AutomationControlled',
-		      '--disable-dev-shm-usage',
-		      '--disable-gpu',
-		      '--disable-setuid-sandbox',
-		      '--disable-web-security',
-		      '--ignore-certificate-errors',
-		      '--no-first-run',
-		      '--window-size=2560,1600'
-		  ]
+        ignoreHTTPSErrors: true,
+        args: [   myArgs[1],
+              '--no-sandbox', 
+              '--ignore-certificate-errors', 
+              '--disable-features=IsolateOrigins,site-per-process', 
+              '--flag-switches-begin --disable-site-isolation-trials --flag-switches-end',
+              '--disable-accelerated-2d-canvas',
+              '--disable-blink-features=AutomationControlled',
+              '--disable-dev-shm-usage',
+              '--disable-gpu',
+              '--disable-setuid-sandbox',
+              '--disable-web-security',
+              '--ignore-certificate-errors',
+              '--no-first-run',
+              '--window-size=2560,1600'
+          ]
         });
         return browser;
     } catch (e) {
@@ -250,6 +250,23 @@ async function getPandL(url) {
                 if (retryNumber > 1 && response.status() == 404 ){
                     return;
                 }
+            }else{
+                if (page)
+                    await page.close().catch((err) => {
+                        console.error(err);
+                    });
+                if (browser) {
+                    await browser.close().catch((err) => {
+                        console.error(err);
+                    });
+                    browser = null;
+                }
+                browser = await launchHBrowser().catch((err) => {
+                    console.error(err);
+                });
+                page = await getPage().catch((err) => {
+                    console.log(err);
+                });
             }
             await new Promise(r => setTimeout(r, 5000));
         }
