@@ -4,7 +4,6 @@
   "language": "en",
   "description": "Self Service",
   "workspace": {
-  {
   "intents": [
     {
       "intent": "Bot_Control-Approve_Response",
