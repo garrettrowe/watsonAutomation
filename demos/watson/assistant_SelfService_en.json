@@ -1,6 +1,6 @@
 {
   "type":"dialog",
-  "name": "Customer Self Service",
+  "name": "Banking Self Service",
   "language": "en",
   "description": "Self Service",
   "workspace": {
