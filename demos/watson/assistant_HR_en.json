@@ -1,8 +1,8 @@
 {
   "type":"dialog",
-  "name": "Customer Self Service",
+  "name": "Employee HR Self Service",
   "language": "en",
-  "description": "Self Service",
+  "description": "Employee HR Self Service",
   "workspace": {
   "intents": [
     {
