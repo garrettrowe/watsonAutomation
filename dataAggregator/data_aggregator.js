@@ -404,6 +404,7 @@ async function getPandL(url) {
                 let outJSON = {
                     title: pageTitle,
                     text: summarizeitems[i],
+                    html: summarizeitems[i],
                     source_link: url
                 };
 
