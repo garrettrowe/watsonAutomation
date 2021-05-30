@@ -423,6 +423,7 @@ async function getPandL(url) {
                                     let out = body;
                                     if (typeof(out.summarization) != "undefined"){
                                         outJSON.text = out.summarization.text;
+                                        outJSON.html = "<html><body><div><p>" + out.summarization.text.replace(/\&/g, "&amp;") + "</p></div></body></html>";
                                         let ojsH = hashCode(outJSON.text);
                                         if (!outitems.includes(ojsH) && outJSON.text.length > 150) {
                                             outitems.push(ojsH);
