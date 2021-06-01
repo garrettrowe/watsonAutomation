@@ -364,14 +364,15 @@ async function getPandL(url) {
         phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
         phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
         phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
+        phtml = phtml.replace(/<!--([\S\s]*?)>([\S\s]*?)<\/s-->/gi, "");
 
         let summarizeitems = [];
         summarizeitems.push(phtml);
         try{
-            phtml.match(/<p([\S\s]*?)>([\S\s]*?)<\/p>/gi).forEach(element => summarizeitems.push("<html><body>" + element + "</body></html>"));
+            phtml.match(/<p([\S\s]*?)>([\S\s]*?)<\/p>/gi).forEach(element => summarizeitems.push("<html><body><div><p>" + element + "</p></div></body></html>"));
         }catch(fail){}
         try{
-            phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi).forEach(element => summarizeitems.push("<html><body>" + element + "</body></html>"));
+            phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi).forEach(element => summarizeitems.push("<html><body><div><p>" + element + "</p></div></body></html>"));
         }catch(fail){}
 
         for (var i = 0; i < summarizeitems.length; i++) {
@@ -435,7 +436,9 @@ async function getPandL(url) {
                                             return;
                                         }
                                     }else{
-                                        out = outJSON.text.replace(/&[a-z]+;/g, "");
+                                        let out = outJSON.text.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
+                                        out = outJSON.text.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
+                                        out = out.replace(/&[a-z]+;/g, "");
                                         out = "." + out.replace(/<.\w*[^>]*>/gi, ".").trim();
                                         out = out.replace(/\.[\w \\/]{0,80}(?=\.)/gi, ".");
                                         out = out.replace(/( )+/gi, " ");
@@ -446,6 +449,7 @@ async function getPandL(url) {
                                         out = out.replace(/\.+/gi, ". ");
                                         out = out.replace(/^\. */, "");
                                         outJSON.text = out;
+                                        outJSON.html = "<html><body><div><p>" + out.replace(/\&/g, "&amp;") + "</p></div></body></html>";
                                         let ojsH = hashCode(outJSON.text);
                                         if (!outitems.includes(ojsH) && outJSON.text.length > 150) {
                                             outitems.push(ojsH);
