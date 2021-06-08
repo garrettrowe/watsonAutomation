@@ -28,6 +28,8 @@ if [ $dvar -gt 0 ]
 then
 wget -O /root/.node-red/flows_$(< /root/resourceGroup.txt)-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/flowsV2.json
 wget -O /root/discovery.tgz https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/discoV2.tgz
+wget -O /root/10k.tgz https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/10k.tgz
+tar -xvzf /root/10k.tgz -C /root
 else
 wget -O /root/.node-red/flows_$(< /root/resourceGroup.txt)-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/flows.json
 wget -O /root/discovery.tgz https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/discovery.tgz
