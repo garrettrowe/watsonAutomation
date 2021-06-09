@@ -29,6 +29,7 @@ then
 wget -O /root/.node-red/flows_$(< /root/resourceGroup.txt)-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/flowsV2.json
 wget -O /root/discovery.tgz https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/discoV2.tgz
 wget -O /root/10k.tgz https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/10k.tgz
+wget -O /root/finance_dte_model.zip https://daidemos.com/static/tools/finance_dte_model.zip
 tar -xvzf /root/10k.tgz -C /root
 else
 wget -O /root/.node-red/flows_$(< /root/resourceGroup.txt)-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/flows.json
