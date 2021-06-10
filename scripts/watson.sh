@@ -23,7 +23,7 @@ done
 
 curl -d "Instance=$(< /root/instnum.txt)&Log=Localizing: $(< /root/industry.txt)/$(< /root/demo.txt) " -X POST https://daidemos.com/log
 
-dvar=`cat watsondiscoveryInst.txt | grep -c '{"discovery.version":"2'`
+dvar=`cat /root/watsondiscoveryInst.txt | grep -c '{"discovery.version":"2'`
 if [ $dvar -gt 0 ]
 then
 wget -O /root/.node-red/flows_$(< /root/resourceGroup.txt)-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/flowsV2.json
