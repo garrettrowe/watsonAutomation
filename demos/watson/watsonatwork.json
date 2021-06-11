@@ -1,0 +1,5145 @@
+{
+  "type":"dialog",
+  "name": "Watson@Work",
+  "language": "en",
+  "description": "Watson@Work",
+  "workspace": {
+  "intents": [
+    {
+      "intent": "Bot_Control-Approve_Response",
+      "examples": [
+        {
+          "text": "Affirmative. That's what I'm looking for."
+        },
+        {
+          "text": "All right"
+        },
+        {
+          "text": "Correct"
+        },
+        {
+          "text": "For sure!"
+        },
+        {
+          "text": "Got it"
+        },
+        {
+          "text": "Great"
+        },
+        {
+          "text": "I agree"
+        },
+        {
+          "text": "i do"
+        },
+        {
+          "text": "I like that"
+        },
+        {
+          "text": "Indeed!"
+        },
+        {
+          "text": "I think so"
+        },
+        {
+          "text": "sounds good"
+        },
+        {
+          "text": "Sure thing!"
+        },
+        {
+          "text": "Sweet"
+        },
+        {
+          "text": "That is precisely what I was looking for"
+        },
+        {
+          "text": "That is right"
+        },
+        {
+          "text": "That is the proper response."
+        },
+        {
+          "text": "That is what I need"
+        },
+        {
+          "text": "That's exactly what I want"
+        },
+        {
+          "text": "This is alright"
+        },
+        {
+          "text": "Very well. Let's do it."
+        },
+        {
+          "text": "Yeah, that's it!"
+        },
+        {
+          "text": "Yes"
+        },
+        {
+          "text": "You read my mind"
+        }
+      ],
+      "description": "Acknowledge that the response satisfies a question."
+    },
+    {
+      "intent": "Bot_Control-Change_Subject",
+      "examples": [
+        {
+          "text": "A different matter"
+        },
+        {
+          "text": "Another thing"
+        },
+        {
+          "text": "Can we talk about something else?"
+        },
+        {
+          "text": "Change topic"
+        },
+        {
+          "text": "Chat about something else"
+        },
+        {
+          "text": "Discuss something else"
+        },
+        {
+          "text": "Help me with this other question"
+        },
+        {
+          "text": "Here is another issue"
+        },
+        {
+          "text": "I have one more question"
+        },
+        {
+          "text": "Let us change the topic"
+        },
+        {
+          "text": "Let us talk about something else"
+        },
+        {
+          "text": "Talk about something else"
+        }
+      ],
+      "description": "Change to a different topic."
+    },
+    {
+      "intent": "Bot_Control-Clarification",
+      "examples": [
+        {
+          "text": "Can you say that again please?"
+        },
+        {
+          "text": "Come again?"
+        },
+        {
+          "text": "Explains"
+        },
+        {
+          "text": "I did not quite understand what you gave me"
+        },
+        {
+          "text": "I didn't catch that"
+        },
+        {
+          "text": "I didn't quite understand what you said"
+        },
+        {
+          "text": "I didn't understand that properly"
+        },
+        {
+          "text": "I don't get it"
+        },
+        {
+          "text": "I don't understand"
+        },
+        {
+          "text": "I don't understand what you're saying"
+        },
+        {
+          "text": "I need more information"
+        },
+        {
+          "text": "Let's try to say that again more clearly, shall we?"
+        },
+        {
+          "text": "ok"
+        },
+        {
+          "text": "please repeat"
+        },
+        {
+          "text": "repeat"
+        },
+        {
+          "text": "What are you referring to?"
+        },
+        {
+          "text": "What are you saying?"
+        },
+        {
+          "text": "What are you talking about?"
+        },
+        {
+          "text": "What do you mean?"
+        },
+        {
+          "text": "What do you mean by that?"
+        }
+      ],
+      "description": "Repeat or clarify last statement."
+    },
+    {
+      "intent": "Bot_Control-Confirm_Presence",
+      "examples": [
+        {
+          "text": "Am I talking to someone?"
+        },
+        {
+          "text": "Anyone there?"
+        },
+        {
+          "text": "Are you leaving me?"
+        },
+        {
+          "text": "Are you on?"
+        },
+        {
+          "text": "Are you still around?"
+        },
+        {
+          "text": "Are you still here with me?"
+        },
+        {
+          "text": "Are you there?"
+        },
+        {
+          "text": "Did you go somewhere?"
+        },
+        {
+          "text": "Did you hear what I said?"
+        },
+        {
+          "text": "Have I lost you?"
+        },
+        {
+          "text": "I am still holding"
+        },
+        {
+          "text": "Is anybody here?"
+        },
+        {
+          "text": "Is anybody home?"
+        },
+        {
+          "text": "Speak to me if you are there."
+        },
+        {
+          "text": "Where'd you go?"
+        },
+        {
+          "text": "You around?"
+        }
+      ],
+      "description": "Ask the bot to indicate that it is available."
+    },
+    {
+      "intent": "Bot_Control-Ignore_Undo",
+      "examples": [
+        {
+          "text": "Actually, I take that back"
+        },
+        {
+          "text": "Cancel"
+        },
+        {
+          "text": "Hold on! I think I want to do it differently."
+        },
+        {
+          "text": "I change my mind."
+        },
+        {
+          "text": "I did not mean that?"
+        },
+        {
+          "text": "I didn't mean to do that actually, let's go back"
+        },
+        {
+          "text": "Ignore this"
+        },
+        {
+          "text": "It's not what I mean"
+        },
+        {
+          "text": "Let us redo that again!"
+        },
+        {
+          "text": "Never"
+        },
+        {
+          "text": "Never mind"
+        },
+        {
+          "text": "Nothing"
+        },
+        {
+          "text": "Not yet"
+        },
+        {
+          "text": "Wait! Let's back up few steps and do that again"
+        }
+      ],
+      "description": "Ask the bot to take one step back."
+    },
+    {
+      "intent": "Bot_Control-Reject_Response",
+      "examples": [
+        {
+          "text": "Bad response"
+        },
+        {
+          "text": "I disagree"
+        },
+        {
+          "text": "I do not think it is the answer?"
+        },
+        {
+          "text": "I don't"
+        },
+        {
+          "text": "I don't need that"
+        },
+        {
+          "text": "I don't think so"
+        },
+        {
+          "text": "I don't want that"
+        },
+        {
+          "text": "It is not what I want"
+        },
+        {
+          "text": "It is not what I was looking for"
+        },
+        {
+          "text": "I wasn't looking for that"
+        },
+        {
+          "text": "No"
+        },
+        {
+          "text": "No I'm fine thanks"
+        },
+        {
+          "text": "nope"
+        },
+        {
+          "text": "Not the right response"
+        },
+        {
+          "text": "now"
+        },
+        {
+          "text": "That answer is incorrect"
+        },
+        {
+          "text": "That is not true"
+        },
+        {
+          "text": "That sounds like the wrong response"
+        },
+        {
+          "text": "That was not my intent"
+        },
+        {
+          "text": "That was wrong, try again"
+        },
+        {
+          "text": "Wrong response"
+        },
+        {
+          "text": "You did not understand what I asked"
+        },
+        {
+          "text": "You did not understand what I said"
+        },
+        {
+          "text": "You didn't understand me"
+        },
+        {
+          "text": "You're misunderstanding me"
+        }
+      ],
+      "description": "Indicate the bot's response does not address a question."
+    },
+    {
+      "intent": "Bot_Control-Standby",
+      "examples": [
+        {
+          "text": "Back again soon"
+        },
+        {
+          "text": "Be back later"
+        },
+        {
+          "text": "Be patient with me"
+        },
+        {
+          "text": "Can you give me a moment?"
+        },
+        {
+          "text": "Can you wait for me?"
+        },
+        {
+          "text": "Give me a few minutes to get together"
+        },
+        {
+          "text": "Give me a moment"
+        },
+        {
+          "text": "Give me a second"
+        },
+        {
+          "text": "Hold on"
+        },
+        {
+          "text": "In a moment"
+        },
+        {
+          "text": "I want stop a moment"
+        },
+        {
+          "text": "I will be back"
+        },
+        {
+          "text": "I would like to put you on hold"
+        },
+        {
+          "text": "Just a sec"
+        },
+        {
+          "text": "Just hold on"
+        },
+        {
+          "text": "Keep holding"
+        },
+        {
+          "text": "Let me see"
+        },
+        {
+          "text": "Need a minute here"
+        },
+        {
+          "text": "Out for a break"
+        },
+        {
+          "text": "Wait"
+        }
+      ],
+      "description": "Indicate a delay in providing input to the bot."
+    },
+    {
+      "intent": "Bot_Control-Start_Over",
+      "examples": [
+        {
+          "text": "Actually, let's start over"
+        },
+        {
+          "text": "Back to the beginning"
+        },
+        {
+          "text": "Back to the top"
+        },
+        {
+          "text": "Begin over!"
+        },
+        {
+          "text": "Can we please start over?"
+        },
+        {
+          "text": "How can I start over?"
+        },
+        {
+          "text": "I need to reset."
+        },
+        {
+          "text": "I want start from the beginning"
+        },
+        {
+          "text": "I would like to start all over"
+        },
+        {
+          "text": "Let's go back to square one"
+        },
+        {
+          "text": "Let's pick this up from the top again."
+        },
+        {
+          "text": "Let us reopen this again."
+        },
+        {
+          "text": "One more time from the beginning"
+        },
+        {
+          "text": "Please initiate from the beginning"
+        },
+        {
+          "text": "Please reset"
+        },
+        {
+          "text": "Please start a new chat"
+        },
+        {
+          "text": "Restart"
+        },
+        {
+          "text": "Start over"
+        },
+        {
+          "text": "We need a do-over"
+        },
+        {
+          "text": "We will need to begin again"
+        }
+      ],
+      "description": "Restart bot or current flow."
+    },
+    {
+      "intent": "Bot_Control-Unsure",
+      "examples": [
+        {
+          "text": "I don t know what you need"
+        },
+        {
+          "text": "I don t know what you want"
+        },
+        {
+          "text": "I have no idea, actually"
+        },
+        {
+          "text": "I have no idea what you are looking for"
+        },
+        {
+          "text": "I haven't got a clue"
+        },
+        {
+          "text": "I m not certain I get what you re saying"
+        },
+        {
+          "text": "I m not sure what will make you happy"
+        },
+        {
+          "text": "I m not yet convinced"
+        },
+        {
+          "text": "No clue"
+        },
+        {
+          "text": "No idea"
+        },
+        {
+          "text": "To be honest, I m really not sure"
+        },
+        {
+          "text": "You got me"
+        }
+      ],
+      "description": "Indicate no definite answer to a question."
+    },
+    {
+      "intent": "General_Conversation-About_The_VA",
+      "examples": [
+        {
+          "text": "do you know who you are"
+        },
+        {
+          "text": "I do not know who this is"
+        },
+        {
+          "text": "what are you called"
+        },
+        {
+          "text": "what is your designation"
+        },
+        {
+          "text": "what is your name"
+        },
+        {
+          "text": "what's your name"
+        },
+        {
+          "text": "who am I talking to"
+        },
+        {
+          "text": "who are you"
+        },
+        {
+          "text": "who are you again"
+        },
+        {
+          "text": "who is talking"
+        },
+        {
+          "text": "you did not introduce yourself"
+        },
+        {
+          "text": "you did not tell me your name"
+        },
+        {
+          "text": "your name please"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-About_VAs",
+      "examples": [
+        {
+          "text": "are virtual agents real people"
+        },
+        {
+          "text": "are virtual assistants robots"
+        },
+        {
+          "text": "what can a virtual assistant do"
+        },
+        {
+          "text": "what does the virtual agent mean"
+        },
+        {
+          "text": "what is an online assistant"
+        },
+        {
+          "text": "what is a virtual agent"
+        },
+        {
+          "text": "what is a virtual assistant"
+        }
+      ]
+    },
+    {
+      "intent": "General_Conversation-Anaphora_Why",
+      "examples": [
+        {
+          "text": "?"
+        },
+        {
+          "text": "okay but why"
+        },
+        {
+          "text": "this why"
+        },
+        {
+          "text": "why"
+        },
+        {
+          "text": "why this"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Anaphora_Why_Needed",
+      "examples": [
+        {
+          "text": "can we go without this"
+        },
+        {
+          "text": "do you need this"
+        },
+        {
+          "text": "I don't want to provide this"
+        },
+        {
+          "text": "why do you need this"
+        },
+        {
+          "text": "why is this needed"
+        },
+        {
+          "text": "you don't need this"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Control_Go_Back",
+      "examples": [
+        {
+          "text": "can i change my answer"
+        },
+        {
+          "text": "can i change the answer I just gave"
+        },
+        {
+          "text": "can i change what I just said"
+        },
+        {
+          "text": "Can I go back"
+        },
+        {
+          "text": "can i go back one step"
+        },
+        {
+          "text": "can we go to the previous step"
+        },
+        {
+          "text": "Go back"
+        },
+        {
+          "text": "go baclk"
+        },
+        {
+          "text": "i changed my mind"
+        },
+        {
+          "text": "i want to change the previous answer"
+        },
+        {
+          "text": "I want to go back"
+        },
+        {
+          "text": "I want to go back to the last question"
+        },
+        {
+          "text": "take a step back"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Control_Skip_Step",
+      "examples": [
+        {
+          "text": "can i go to the next step"
+        },
+        {
+          "text": "can I skip this"
+        },
+        {
+          "text": "just move on"
+        },
+        {
+          "text": "move on"
+        },
+        {
+          "text": "skip over this"
+        },
+        {
+          "text": "skip this"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Control_Stop_Conversation",
+      "examples": [
+        {
+          "text": "can we end this early"
+        },
+        {
+          "text": "can we finish this"
+        },
+        {
+          "text": "can we stop"
+        },
+        {
+          "text": "can we talk about something else"
+        },
+        {
+          "text": "I am not interested"
+        },
+        {
+          "text": "i don't want to"
+        },
+        {
+          "text": "I don't want to continue"
+        },
+        {
+          "text": "I want to change the subject"
+        },
+        {
+          "text": "i want to stop"
+        },
+        {
+          "text": "let's talk about something else"
+        },
+        {
+          "text": "put a top to this"
+        },
+        {
+          "text": "stop"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Customer_Emotion_Anger",
+      "examples": [
+        {
+          "text": "I am angry"
+        },
+        {
+          "text": "I am enraged"
+        },
+        {
+          "text": "i am fed up"
+        },
+        {
+          "text": "I am feeling very angry"
+        },
+        {
+          "text": "I am getting annoyed"
+        },
+        {
+          "text": "I am so angry"
+        },
+        {
+          "text": "I am so annoyed"
+        },
+        {
+          "text": "I am so mad right now"
+        },
+        {
+          "text": "I feel fed up"
+        },
+        {
+          "text": "Right now I'm enraged"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Customer_Emotion_Joy",
+      "examples": [
+        {
+          "text": "I am feeling happy"
+        },
+        {
+          "text": "I am feeling much happier"
+        },
+        {
+          "text": "I am full of joy"
+        },
+        {
+          "text": "I am happy"
+        },
+        {
+          "text": "I am the happiest"
+        },
+        {
+          "text": "I am thrilled"
+        },
+        {
+          "text": "I feel ecstatic today"
+        },
+        {
+          "text": "My mood has improved"
+        },
+        {
+          "text": "So happy right now"
+        },
+        {
+          "text": "You made me feel happy"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Farewells",
+      "examples": [
+        {
+          "text": "bye"
+        },
+        {
+          "text": "farewell"
+        },
+        {
+          "text": "goodbye"
+        },
+        {
+          "text": "good night"
+        },
+        {
+          "text": "I have got to go now"
+        },
+        {
+          "text": "I'll be going now"
+        },
+        {
+          "text": "let's end this"
+        },
+        {
+          "text": "see ya later"
+        },
+        {
+          "text": "so long"
+        }
+      ]
+    },
+    {
+      "intent": "General_Conversation-Feedback_Negative",
+      "examples": [
+        {
+          "text": "I do not like you"
+        },
+        {
+          "text": "i hate this"
+        },
+        {
+          "text": "i hate you"
+        },
+        {
+          "text": "this is trash"
+        },
+        {
+          "text": "This is useless"
+        },
+        {
+          "text": "This thing is rubbish"
+        },
+        {
+          "text": "you are annoying"
+        },
+        {
+          "text": "you are bad"
+        },
+        {
+          "text": "you are good for nothing"
+        },
+        {
+          "text": "you are horrible"
+        },
+        {
+          "text": "you are not smart"
+        },
+        {
+          "text": "you are repeating yourself"
+        },
+        {
+          "text": "you are repetitive"
+        },
+        {
+          "text": "You are rubbish"
+        },
+        {
+          "text": "You are talking rubbish"
+        },
+        {
+          "text": "You are useless"
+        },
+        {
+          "text": "you did not answer the question"
+        },
+        {
+          "text": "you irritate me"
+        },
+        {
+          "text": "you let me down"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Feedback_Positive",
+      "examples": [
+        {
+          "text": "how cool is this"
+        },
+        {
+          "text": "i like this"
+        },
+        {
+          "text": "i like you"
+        },
+        {
+          "text": "that was a great answer"
+        },
+        {
+          "text": "this is cool"
+        },
+        {
+          "text": "this is fantastic"
+        },
+        {
+          "text": "this is great"
+        },
+        {
+          "text": "you are awesome"
+        },
+        {
+          "text": "you are doing quite well"
+        },
+        {
+          "text": "you are doing really well"
+        },
+        {
+          "text": "you are fabulous"
+        },
+        {
+          "text": "You are good"
+        },
+        {
+          "text": "you are intelligent"
+        },
+        {
+          "text": "you are mesmerizing"
+        },
+        {
+          "text": "You are one of the coolest"
+        },
+        {
+          "text": "you are really smart"
+        },
+        {
+          "text": "You really are good"
+        },
+        {
+          "text": "you rock"
+        },
+        {
+          "text": "you sound good"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Greetings",
+      "examples": [
+        {
+          "text": "and helllo to you"
+        },
+        {
+          "text": "good afternoon"
+        },
+        {
+          "text": "good evening"
+        },
+        {
+          "text": "good morning"
+        },
+        {
+          "text": "greetings"
+        },
+        {
+          "text": "hello"
+        },
+        {
+          "text": "hi there"
+        },
+        {
+          "text": "wassup"
+        },
+        {
+          "text": "what is up"
+        },
+        {
+          "text": "what's up"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Movies",
+      "examples": [
+        {
+          "text": "Do you enjoy watching films"
+        },
+        {
+          "text": "Do you like movies"
+        },
+        {
+          "text": "Do you like watching films"
+        },
+        {
+          "text": "have you seen any good movies"
+        },
+        {
+          "text": "let's go to the movies!"
+        },
+        {
+          "text": "Let us talk about movies"
+        },
+        {
+          "text": "What are your thoughts on movies?"
+        },
+        {
+          "text": "What are your thoughts on movies generally?"
+        },
+        {
+          "text": "What are your thoughts on watching films"
+        },
+        {
+          "text": "What do you like about movies"
+        },
+        {
+          "text": "What do you think about movies?"
+        },
+        {
+          "text": "What was the last movie you saw?"
+        },
+        {
+          "text": "You said you liked movies"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-search",
+      "examples": [
+        {
+          "text": "can you help me search"
+        },
+        {
+          "text": "can you look up"
+        },
+        {
+          "text": "search for bandai new products"
+        },
+        {
+          "text": "Search Knowledge Base"
+        },
+        {
+          "text": "search the internet"
+        },
+        {
+          "text": "search the knowledge base"
+        },
+        {
+          "text": "search to repository"
+        }
+      ],
+      "description": "intent for search skill"
+    },
+    {
+      "intent": "General_Conversation-Start_Over",
+      "examples": [
+        {
+          "text": "can we start again"
+        },
+        {
+          "text": "can we start from the beginning"
+        },
+        {
+          "text": "go back to the start"
+        },
+        {
+          "text": "let's restart"
+        },
+        {
+          "text": "reset this"
+        },
+        {
+          "text": "restart please"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Thanks",
+      "examples": [
+        {
+          "text": "cool"
+        },
+        {
+          "text": "coolies"
+        },
+        {
+          "text": "coolio"
+        },
+        {
+          "text": "ta"
+        },
+        {
+          "text": "Thanks"
+        },
+        {
+          "text": "thank you"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-Time",
+      "examples": [
+        {
+          "text": "do you have the time"
+        },
+        {
+          "text": "do you know the time"
+        },
+        {
+          "text": "is it dinner time now"
+        },
+        {
+          "text": "is it evening yet"
+        },
+        {
+          "text": "is it morning"
+        },
+        {
+          "text": "is it time for lunch"
+        },
+        {
+          "text": "it is breakfast time yet"
+        },
+        {
+          "text": "what is the time"
+        },
+        {
+          "text": "What time is it?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "General_Conversation-translate",
+      "examples": [
+        {
+          "text": "can you translate this"
+        },
+        {
+          "text": "can you translate this for me?"
+        },
+        {
+          "text": "can you translate this into french"
+        },
+        {
+          "text": "can you translate this into spanish"
+        },
+        {
+          "text": "how do you say that in chinese"
+        },
+        {
+          "text": "how do you say that in french"
+        },
+        {
+          "text": "how do you say that in german"
+        },
+        {
+          "text": "how do you say that in japanese"
+        },
+        {
+          "text": "how do you say that in russian"
+        }
+      ],
+      "description": "how do you say that in spanish"
+    },
+    {
+      "intent": "General_Conversation-VA_State",
+      "examples": [
+        {
+          "text": "are you doing alright"
+        },
+        {
+          "text": "are you fine"
+        },
+        {
+          "text": "everything is ok?"
+        },
+        {
+          "text": "have you been good"
+        },
+        {
+          "text": "have you been well"
+        },
+        {
+          "text": "how are things with you"
+        },
+        {
+          "text": "How are you?"
+        },
+        {
+          "text": "how are you feeling"
+        },
+        {
+          "text": "how are you this evening"
+        },
+        {
+          "text": "how goes it"
+        },
+        {
+          "text": "how is everything"
+        },
+        {
+          "text": "how is your day going"
+        },
+        {
+          "text": "how is yourself"
+        },
+        {
+          "text": "how was your day"
+        },
+        {
+          "text": "how you doing"
+        },
+        {
+          "text": "how you going"
+        },
+        {
+          "text": "is everything alright"
+        }
+      ],
+      "description": "Asking the VA how they are"
+    },
+    {
+      "intent": "General_Conversation-Work",
+      "examples": [
+        {
+          "text": "do you enjoy working"
+        },
+        {
+          "text": "do you enjoy your work"
+        },
+        {
+          "text": "do you feel happy about your job?"
+        },
+        {
+          "text": "do you hate your job?"
+        },
+        {
+          "text": "do you like what you do"
+        },
+        {
+          "text": "Do you like your work?"
+        },
+        {
+          "text": "how do you feel about your job"
+        },
+        {
+          "text": "how do you feel about your work"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Help-Agent_Capabilities",
+      "examples": [
+        {
+          "text": "are you a real person"
+        },
+        {
+          "text": "are you real"
+        },
+        {
+          "text": "can you help me with"
+        },
+        {
+          "text": "do you know about"
+        },
+        {
+          "text": "what are you"
+        },
+        {
+          "text": "what can you answer"
+        },
+        {
+          "text": "what can you do"
+        },
+        {
+          "text": "what can you help with"
+        },
+        {
+          "text": "what can you talk about"
+        },
+        {
+          "text": "what do you know"
+        },
+        {
+          "text": "what information do you know"
+        }
+      ]
+    },
+    {
+      "intent": "Help-Connect_to_Agent",
+      "examples": [
+        {
+          "text": "can I be connected to a real person"
+        },
+        {
+          "text": "can i talk to someone who is real"
+        },
+        {
+          "text": "can you connect me to a person"
+        },
+        {
+          "text": "Can you connect me with an humant agent?"
+        },
+        {
+          "text": "connect me with a real person"
+        },
+        {
+          "text": "give me a human agent"
+        },
+        {
+          "text": "give me a person"
+        },
+        {
+          "text": "i want a human to help"
+        },
+        {
+          "text": "i want a live agent"
+        },
+        {
+          "text": "I want to talk to a customer service representative please."
+        },
+        {
+          "text": "I want to talk to a live person"
+        },
+        {
+          "text": "i want to talk to someone real"
+        },
+        {
+          "text": "I would like to chat to a human please."
+        },
+        {
+          "text": "I would like to talk to a manager"
+        },
+        {
+          "text": "May I speak with somebody?"
+        },
+        {
+          "text": "need help from a real person"
+        },
+        {
+          "text": "need someone real"
+        },
+        {
+          "text": "real person"
+        },
+        {
+          "text": "talk to a human"
+        },
+        {
+          "text": "talk to an actual person"
+        },
+        {
+          "text": "transfer me to a live agent"
+        },
+        {
+          "text": "transfer me to a person"
+        },
+        {
+          "text": "transfer me to someone real"
+        },
+        {
+          "text": "Where are the actual people?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Help-Filter",
+      "examples": [
+        {
+          "text": "filter"
+        },
+        {
+          "text": "how do I filter"
+        },
+        {
+          "text": "how do I filter answers?"
+        },
+        {
+          "text": "how do i refine my search"
+        },
+        {
+          "text": "how to filter"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Help-Guidance_Requested",
+      "examples": [
+        {
+          "text": "I don't know what to do"
+        },
+        {
+          "text": "I'm confused here"
+        },
+        {
+          "text": "I'm confused now"
+        },
+        {
+          "text": "I'm lost"
+        },
+        {
+          "text": "is that it?"
+        },
+        {
+          "text": "now what"
+        },
+        {
+          "text": "tell me what I type here"
+        },
+        {
+          "text": "tell me what to do"
+        },
+        {
+          "text": "This is confused"
+        },
+        {
+          "text": "what do I do"
+        },
+        {
+          "text": "what happens next"
+        },
+        {
+          "text": "what happens now"
+        },
+        {
+          "text": "what next"
+        },
+        {
+          "text": "what now"
+        },
+        {
+          "text": "what's next"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Help-Security_Assurance",
+      "examples": [
+        {
+          "text": "can I provide personal information safely in this conversation"
+        },
+        {
+          "text": "do you protect my privacy"
+        },
+        {
+          "text": "how secure is this information"
+        },
+        {
+          "text": "is it safe givign you secure data"
+        },
+        {
+          "text": "is it safe to talk to a virtual assistant"
+        },
+        {
+          "text": "is this conversation secure"
+        },
+        {
+          "text": "should i provide personal information"
+        },
+        {
+          "text": "tell me about the security for this chat"
+        }
+      ]
+    },
+    {
+      "intent": "Help-Tech",
+      "examples": [
+        {
+          "text": "get tech help"
+        },
+        {
+          "text": "i need tech help"
+        },
+        {
+          "text": "i need technical help"
+        },
+        {
+          "text": "tech help please"
+        },
+        {
+          "text": "technical help"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Task-Escalate",
+      "examples": [
+        {
+          "text": "escalate task"
+        },
+        {
+          "text": "i need help on this task"
+        },
+        {
+          "text": "send task to manager"
+        },
+        {
+          "text": "This task needs a manager"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Task-Get",
+      "examples": [
+        {
+          "text": "get a new task"
+        },
+        {
+          "text": "get task"
+        },
+        {
+          "text": "get tasks"
+        },
+        {
+          "text": "I have no work"
+        },
+        {
+          "text": "i need a task"
+        },
+        {
+          "text": "I need more work"
+        },
+        {
+          "text": "more tasks"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "update-PIData",
+      "examples": [
+        {
+          "text": "change my address"
+        },
+        {
+          "text": "change my married name"
+        },
+        {
+          "text": "update my marital status"
+        },
+        {
+          "text": "update my personal information"
+        },
+        {
+          "text": "update my residence"
+        }
+      ]
+    },
+    {
+      "intent": "Vacation-Policy",
+      "examples": [
+        {
+          "text": "how much vacation will I have"
+        },
+        {
+          "text": "I need time away"
+        },
+        {
+          "text": "information about time off"
+        },
+        {
+          "text": "paid time off"
+        },
+        {
+          "text": "what is the vacation policy"
+        }
+      ]
+    },
+    {
+      "intent": "withheld",
+      "examples": []
+    },
+    {
+      "intent": "withholdings",
+      "examples": [
+        {
+          "text": "change my tax status"
+        },
+        {
+          "text": "change my w2"
+        },
+        {
+          "text": "change my withholding"
+        },
+        {
+          "text": "EditW2"
+        },
+        {
+          "text": "update my number of dependents"
+        },
+        {
+          "text": "update my withholdings"
+        },
+        {
+          "text": "Update Withholdings"
+        }
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "entity": "acc_numbers",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "acc_num",
+          "patterns": [
+            "\\b\\d+\\b"
+          ]
+        }
+      ],
+      "fuzzy_match": false
+    },
+    {
+      "entity": "Address",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "zip",
+          "patterns": [
+            "(\\b|\\s)\\d{5}(\\b|\\s)"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "BankingProduct",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "CCard",
+          "synonyms": [
+            "a credit card",
+            "bank credit card",
+            "cc",
+            "chip credit card",
+            "credit card",
+            "credit cards",
+            "credit card with a chip",
+            "credit card with a microchip",
+            "master card",
+            "mastercard",
+            "my credit card",
+            "the credit card",
+            "visa",
+            "visa card",
+            "visacard"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "CheckingAcc",
+          "synonyms": [
+            "a check account",
+            "a cheque account",
+            "check account",
+            "check accounts",
+            "checking account",
+            "checking accounts",
+            "cheque account",
+            "cheque accounts",
+            "chequing account",
+            "chequing accounts",
+            "my checking account",
+            "my cheque account",
+            "my chequing account",
+            "the check account",
+            "the checking account",
+            "the checking accounts",
+            "the cheque account",
+            "the cheque accounts",
+            "the chequing accounts"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "SavingsAcc",
+          "synonyms": [
+            "a savings account",
+            "investment accounts",
+            "my investment account",
+            "my investments savings accounts",
+            "my saving account",
+            "my savings deposit account",
+            "saver account",
+            "saver accounts",
+            "saving account",
+            "saving accounts",
+            "saving deposit account",
+            "savings account",
+            "savings accounts",
+            "savings bank account",
+            "savings bank accounts",
+            "savings deposit account",
+            "savings deposit accounts",
+            "savings investment account",
+            "the investments savings account",
+            "the savings accounts",
+            "the savings deposit accounts",
+            "the savings deposits accounts"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "branchLocation",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "105 Madison Avenue",
+          "synonyms": [
+            "105 Madison Ave",
+            "105 Madison Avenue"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "164 Stanton Street",
+          "synonyms": [
+            "164 Stanton",
+            "164 Stanton St",
+            "164 Stanton Street"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "51 Astor Place",
+          "synonyms": [
+            "51 Astor",
+            "51 Astor Pl",
+            "51 Astor Place"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "590 Madison Avenue",
+          "synonyms": [
+            "590 Madison",
+            "590 Madison Ave",
+            "590 Madison Avenue"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "63 Madison Avenue",
+          "synonyms": [
+            "63 Madison",
+            "63 Madison Ave",
+            "63 Madison Avenue"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "claimdependent",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "dependent",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "no dependent",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "Comparisons",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "high",
+          "synonyms": [
+            "a lot",
+            "high",
+            "over the",
+            "too high",
+            "too much",
+            "very high"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "long",
+          "synonyms": [
+            "large",
+            "large time span",
+            "long",
+            "longest time",
+            "long time",
+            "not short",
+            "too long"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "low",
+          "synonyms": [
+            "a little bit",
+            "low",
+            "not enough",
+            "too low",
+            "under the",
+            "very low"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "short",
+          "synonyms": [
+            "not long",
+            "short",
+            "short time",
+            "small",
+            "small time span",
+            "too short"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "contact_type",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "address",
+          "synonyms": [
+            "address",
+            "branch",
+            "branches",
+            "drop in",
+            "face to face",
+            "in person",
+            "located",
+            "location",
+            "locations",
+            "office",
+            "offices",
+            "physical location",
+            "physical locations",
+            "shop front",
+            "shopfront",
+            "shop fronts",
+            "shopfronts",
+            "situated",
+            "stop by"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "call",
+          "synonyms": [
+            "0800",
+            "1 800",
+            "contact number",
+            "number",
+            "phone",
+            "phone number",
+            "phone numbers",
+            "ring",
+            "service number",
+            "talk to",
+            "toll free",
+            "toll free number"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "email",
+          "synonyms": [
+            "contact email",
+            "electronic mail",
+            "email address"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "SMS",
+          "synonyms": [
+            "phone message",
+            "text message"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "social_media",
+          "synonyms": [
+            "facebook",
+            "google +",
+            "google plus",
+            "instagram",
+            "linked in",
+            "linkedin",
+            "social page",
+            "twitter",
+            "you tube",
+            "youtube"
+          ]
+        }
+      ]
+    },
+    {
+      "entity": "dependents",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "1",
+          "patterns": [
+            "(\\d{1,2})"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "employee_type",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Regular Employee",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Supplemental Employee",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "filingstatus",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Head of Household",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Married filing jointly",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Married filing separately",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Qualifying widow(er)",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Single",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "language",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "english",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "french",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "german",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "japanese",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "korean",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "russian",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "spanish",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "option",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "fifth",
+          "synonyms": [
+            "5th",
+            "farthest",
+            "fifth",
+            "furthest",
+            "last",
+            "lowest rated",
+            "worst"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "first",
+          "synonyms": [
+            "1st",
+            "any",
+            "best",
+            "close by",
+            "closeby",
+            "closest",
+            "finest",
+            "first",
+            "highest rated",
+            "near",
+            "nearby",
+            "nearest",
+            "recommended",
+            "top rated",
+            "whatever"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "fourth",
+          "synonyms": [
+            "4th",
+            "fourth",
+            "penultimate",
+            "second to last"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "second",
+          "synonyms": [
+            "2nd",
+            "second",
+            "second best",
+            "second rated"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "third",
+          "synonyms": [
+            "3rd",
+            "average",
+            "cheap",
+            "cheapest",
+            "middle",
+            "third"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "unspecified",
+          "synonyms": [
+            "any",
+            "any near",
+            "Any of them.",
+            "any one",
+            "anything",
+            "anything is fine",
+            "anything u like",
+            "anything would do",
+            "as a matter of",
+            "but it doesn't really",
+            "do anything",
+            "doesn't matter",
+            "no preference",
+            "Pick any",
+            "whatever you feel like",
+            "Whatever you like",
+            "whatever you want",
+            "you can go with your favorite",
+            "you decide",
+            "your favorite"
+          ]
+        }
+      ],
+      "fuzzy_match": false
+    },
+    {
+      "entity": "PayTypes",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "InPerson",
+          "synonyms": [
+            "at a branch",
+            "at an office",
+            "in person",
+            "real person"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Online",
+          "synonyms": [
+            "electronically",
+            "internet",
+            "mobile",
+            "online",
+            "on my computer",
+            "tablet"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "pension",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "no pension",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "pension",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "person_data",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "address",
+          "synonyms": [
+            "apartment",
+            "billing address",
+            "home",
+            "house",
+            "location",
+            "mailing address",
+            "street address",
+            "unit"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "name",
+          "synonyms": [
+            "first name",
+            "given name",
+            "husband's name",
+            "maiden name",
+            "married name",
+            "middle name",
+            "partner's name",
+            "second name",
+            "spouse's name",
+            "surname",
+            "wife's name"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "password",
+          "synonyms": [
+            "pass word",
+            "pass-word"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "phone_number",
+          "synonyms": [
+            "contact number",
+            "number",
+            "phone"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "username",
+          "synonyms": [
+            "login ID",
+            "login name",
+            "login-name",
+            "system login",
+            "user name",
+            "user-name"
+          ]
+        }
+      ]
+    },
+    {
+      "entity": "phone",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "phone",
+          "patterns": [
+            "(\\d{3})-(\\d{3})-(\\d{4})",
+            "^(\\(?\\+?[0-9]*\\)?)?[0-9_\\- \\(\\)]*$"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "ResponseTypes",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "negative",
+          "synonyms": [
+            "definitely not",
+            "don't do it",
+            "don't do that",
+            "don't even think about it",
+            "incorrect",
+            "is that a joke",
+            "n",
+            "na",
+            "nah",
+            "no",
+            "nope",
+            "nopers",
+            "noppers",
+            "not at all",
+            "not even close",
+            "no way",
+            "sure isn't",
+            "you're joking"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Other",
+          "synonyms": [
+            "different",
+            "neither of",
+            "none",
+            "none of the above",
+            "not any of",
+            "not there",
+            "other"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "positive",
+          "synonyms": [
+            "100%",
+            "absolutely",
+            "correct",
+            "definitely",
+            "go ahead",
+            "go on",
+            "go right ahead",
+            "mhm",
+            "ok",
+            "okay",
+            "sounds about right",
+            "sounds right",
+            "sure",
+            "sure is",
+            "totally",
+            "y",
+            "ya",
+            "yah",
+            "yeah",
+            "yep",
+            "yeppers",
+            "yer",
+            "yes",
+            "you bet",
+            "you betcha",
+            "yup"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "uncertain",
+          "synonyms": [
+            "could be",
+            "don't know",
+            "i guess it is",
+            "i guess so",
+            "i think it is",
+            "i think so",
+            "maybe",
+            "no idea",
+            "not sure",
+            "on the fence",
+            "uncertain",
+            "unknown",
+            "unsure"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-currency",
+      "values": []
+    },
+    {
+      "entity": "sys-date",
+      "values": []
+    },
+    {
+      "entity": "sys-number",
+      "values": []
+    },
+    {
+      "entity": "sys-percentage",
+      "values": []
+    },
+    {
+      "entity": "sys-time",
+      "values": []
+    },
+    {
+      "entity": "Valid_States",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "CA",
+          "synonyms": [
+            "CA",
+            "cali",
+            "calif",
+            "California"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "FL",
+          "synonyms": [
+            "FL",
+            "Flda",
+            "Flor",
+            "Florida",
+            "Flr"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "NY",
+          "synonyms": [
+            "New York",
+            "newyork",
+            "NY",
+            "n york",
+            "nyork"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "TX",
+          "synonyms": [
+            "5 star state",
+            "Tex",
+            "Texas",
+            "TX"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "zero_match",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "valuezero",
+          "patterns": [
+            "^0$",
+            "^zero$",
+            "\\b0\\b",
+            "\\s0\\b",
+            "\\szero\\b"
+          ]
+        },
+        {
+          "type": "patterns",
+          "value": "valuezero2",
+          "patterns": [
+            "\\bzero\\b"
+          ]
+        }
+      ],
+      "fuzzy_match": false
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    },
+    "digressions": true
+  },
+  "webhooks": [
+    {
+      "url": "https://948376593648263452/translate",
+      "name": "main_webhook",
+      "headers": []
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_7_1612493244742",
+      "context": {
+        "language": "@language"
+      },
+      "conditions": "@language",
+      "event_name": "input",
+      "dialog_node": "handler_10_1612493244757"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_4_1621512025675",
+      "context": {
+        "withheld": "#Bot_Control-Approve_Response"
+      },
+      "conditions": "#Bot_Control-Approve_Response",
+      "event_name": "input",
+      "dialog_node": "handler_10_1621512025677"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sure, which language do you want me to translate to?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1612493218066",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1612493244453",
+      "previous_sibling": "response_5_1612493670823"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1621512132192",
+      "context": {
+        "pension": "@pension"
+      },
+      "conditions": "@pension",
+      "event_name": "input",
+      "dialog_node": "handler_1_1621512132194"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1621510886965",
+      "context": {
+        "filingstatus": "@filingstatus"
+      },
+      "conditions": "@filingstatus",
+      "event_name": "input",
+      "dialog_node": "handler_2_1621510886997"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "How many dependents? (e.g. 1 to 10)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_7_1621511276657",
+      "event_name": "focus",
+      "dialog_node": "handler_2_1621511276662",
+      "previous_sibling": "handler_9_1621511276662"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Which Language?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_7_1612493244742",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "event_name": "focus",
+      "dialog_node": "handler_4_1612493244757",
+      "previous_sibling": "handler_10_1612493244757"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_1_1621511610716",
+      "context": {
+        "claimdependent": "@claimdependent"
+      },
+      "conditions": "@claimdependent",
+      "event_name": "input",
+      "dialog_node": "handler_6_1621511610721"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Will you or your spouse receive income from a pension this year? (e.g. pension or no pension)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_8_1621512132192",
+      "event_name": "focus",
+      "dialog_node": "handler_6_1621512132194",
+      "previous_sibling": "handler_1_1621512132194"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "May another taxpayer claim you as a dependent on their tax return? (e.g. dependent or no dependent)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_1_1621511610716",
+      "event_name": "focus",
+      "dialog_node": "handler_8_1621511610721",
+      "previous_sibling": "handler_6_1621511610721"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Do you (or will you) or your spouse hold a job this year with paychecks from which federal income tax is regularly withheld?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_4_1621512025675",
+      "event_name": "focus",
+      "dialog_node": "handler_8_1621512025677",
+      "previous_sibling": "handler_10_1621512025677"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "What filing status will you use for your tax return? (e.g. Single, Married filing jointly, Married filing separately, Head of Household,Qualifying widow(er))"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_8_1621510886965",
+      "event_name": "focus",
+      "dialog_node": "handler_9_1621510886997",
+      "previous_sibling": "handler_2_1621510886997"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_7_1621511276657",
+      "context": {
+        "dependents_2": "@dependents"
+      },
+      "conditions": "@dependents",
+      "event_name": "input",
+      "dialog_node": "handler_9_1621511276662"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_6_1518402889388",
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "#General_Conversation-Control_Go_Back",
+      "dialog_node": "node_10_1518147016660"
+    },
+    {
+      "type": "folder",
+      "title": "Vacation Policy",
+      "dialog_node": "node_10_1620316380204",
+      "previous_sibling": "node_9_1623374879322"
+    },
+    {
+      "type": "folder",
+      "title": "PI Data",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_10_1620317543160",
+      "previous_sibling": "node_10_1620316380204"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_10_1518147016660",
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$current_process == \"CC_Bill_Payment\"",
+      "dialog_node": "node_11_1518147071518",
+      "previous_sibling": "node_21_1518149391023"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Hello!"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_34_1517953592593",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "#General_Conversation-Greetings",
+      "dialog_node": "node_1_1518575308706",
+      "previous_sibling": "node_35_1517953626335"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "title": "I can provide information about Vacation Policy!  94729873749632 Vacation Policy will be in accordance with the state and terms of employment.",
+            "options": [
+              {
+                "label": "Regular and Regular Part-time employees (other than California) (click to expand or collapse) ",
+                "value": {
+                  "input": {
+                    "text": "Regular Employee"
+                  }
+                }
+              },
+              {
+                "label": "Supplemental employees (other than California) (click to expand or collapse)  California vacation plan (click to expand or collapse)",
+                "value": {
+                  "input": {
+                    "text": "Supplemental employee"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_10_1620316380204",
+      "conditions": "#Vacation-Policy",
+      "dialog_node": "node_1_1620316401879"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sure, you can send this task for escalation by clicking here: <button onclick=\"getTask()\" >Get a new Task</button>"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Task-Get",
+      "dialog_node": "node_1_1623374845161",
+      "previous_sibling": "node_3_1616002490180"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_9_1518146863348",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#General_Conversation-Control_Skip_Step",
+      "dialog_node": "node_13_1518406499059",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Unfortunately to complete the credit card payment process we need this information."
+          ]
+        }
+      },
+      "parent": "node_13_1518406499059",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Bill_Payment\"",
+      "dialog_node": "node_14_1518406670813"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Unfortunately to complete making an appointment, we need this information."
+          ]
+        }
+      },
+      "parent": "node_13_1518406499059",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"Appointments\"",
+      "dialog_node": "node_15_1518406694023",
+      "previous_sibling": "node_14_1518406670813"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "I'm not sure what you mean. You may benefit from talking to a 94729873749632 Customer Service agent."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_2_1487301792316",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$off_topic_counter > 5",
+      "dialog_node": "node_16_1516311593513",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Unfortunately to complete the credit card selection process we need this information."
+          ]
+        }
+      },
+      "parent": "node_13_1518406499059",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Selection_Process\"",
+      "dialog_node": "node_16_1518406703536",
+      "previous_sibling": "node_15_1518406694023"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Sure, we can go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"CCNumberCorrectAccReason\" || $current_step == \"IssueCCNumberWrongAcc\" || $current_step == \"CCNumberAccUncertainCompleted\"",
+      "dialog_node": "node_16_1518492662496",
+      "previous_sibling": "node_7_1518487646010"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Unfortunately to complete the billing dispute process we need this information."
+          ]
+        }
+      },
+      "parent": "node_13_1518406499059",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"Bill_Dispute\"",
+      "dialog_node": "node_17_1518406711040",
+      "previous_sibling": "node_16_1518406703536"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed the credit card dispute process, but we can go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"CCNumberCorrectAccCompleted\"",
+      "dialog_node": "node_17_1518492772162",
+      "previous_sibling": "node_16_1518492662496"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed the credit card dispute process, but we can go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"CCNumberWrongAccCompleted\" || $current_step == \"CCNumberClosedAccCompleted\"",
+      "dialog_node": "node_19_1518493213696",
+      "previous_sibling": "node_17_1518492772162"
+    },
+    {
+      "type": "standard",
+      "title": "Sample Customized Responses To Assist User",
+      "output": {},
+      "parent": "node_2_1487301792316",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "true",
+      "dialog_node": "node_20_1516312171869",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_16_1516311593513"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"IssueBillDatesStartDate\" || $current_step == \"IssueBillDatesEndDate\" || $current_step == \"IssueBillDatesLengthCompleted\"",
+      "dialog_node": "node_20_1518493723794",
+      "previous_sibling": "node_19_1518493213696"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            ""
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1516679473977",
+      "context": {
+        "lastresponse": "<? output ?>",
+        "liveagent_transfer": "yes"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_2_1518731420715"
+      },
+      "conditions": "@ResponseTypes:positive",
+      "dialog_node": "node_21_1516678462050"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We're at the start of this process. If you'd like to go back to a previous demonstration pathway simply click on one of the tiles."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_10_1518147016660",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$current_step == \"Start\"",
+      "dialog_node": "node_21_1518149391023"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "context": {
+        "off_topic_counter": "<? context['off_topic_counter'] + 1 ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "anything_else",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_2_1487301792316",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_2_1518731420715"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We can stop talking about bill payments. If you want to go back to the demonstration, simply click on one of the tiles."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_8_1518146280321",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Bill_Payment\"",
+      "dialog_node": "node_2_1518402394448"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "I'm happy to help!"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_34_1517953592593",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "#General_Conversation-Thanks",
+      "dialog_node": "node_2_1518575329766",
+      "previous_sibling": "node_1_1518575308706"
+    },
+    {
+      "type": "standard",
+      "title": "Live Agent Transfer - No Digressions Return",
+      "output": {
+        "generic": [
+          {
+            "response_type": "connect_to_agent",
+            "transfer_info": {
+              "target": {}
+            },
+            "agent_available": {
+              "message": "An agent will join you shortly."
+            },
+            "agent_unavailable": {
+              "message": "Looks like no agents are available at this moment."
+            }
+          }
+        ],
+        "ui_action": {
+          "connect_agent": {}
+        }
+      },
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$liveagent_transfer == \"yes\" || #Help-Connect_to_Agent",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_2_1518731420715",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_6_1518402889388"
+    },
+    {
+      "type": "standard",
+      "title": "Search",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sure, what should I search for?"
+              },
+              {
+                "text": "What would you like me to look up?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "conditions": "#General_Conversation-search",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_2_1612395907959",
+      "previous_sibling": "node_2_1612493218066"
+    },
+    {
+      "type": "frame",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "data": "$lastresponse",
+            "language": "$language"
+          },
+          "result_variable": "webhook_result_1"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#General_Conversation-translate",
+      "digress_in": "returns",
+      "dialog_node": "node_2_1612493218066",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_6_1620317771062",
+      "digress_out_slots": "allow_returning"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "You can filter search results by collection (group of documents) or by facet. Facets are created dynamically by your searches"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "Here is a screenshot of filtering",
+            "source": "https://daidemos.com/static/img/filterSS.png",
+            "response_type": "image"
+          }
+        ]
+      },
+      "parent": "node_9_1623374879322",
+      "conditions": "#Help-Filter",
+      "dialog_node": "node_2_1623374923625"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sure, you can send this task for escalation by clicking here: <button onclick=\"removeTask()\" >Escalate Task</button>"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Task-Escalate",
+      "dialog_node": "node_2_1623375102894",
+      "previous_sibling": "node_1_1623374845161"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "For demonstration purposes I'm only trained to pass the conversation off to a 94729873749632 live agent at this point. Simply refresh the page to start a new conversation, or to re-start the scenario tell me to \"Start over\"."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1516679473977",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "@ResponseTypes:negative || @ResponseTypes:uncertain || @ResponseTypes:Other",
+      "dialog_node": "node_22_1516678490511",
+      "previous_sibling": "node_21_1516678462050"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"BillDatesAfterFirstCompleted\" || $current_step == \"BillDatesNotAfterFirst\" || $current_step == \"BillDatesUnknownAfterFirst\"",
+      "dialog_node": "node_22_1518494338942",
+      "previous_sibling": "node_20_1518493723794"
+    },
+    {
+      "type": "standard",
+      "parent": "node_6_1518402889388",
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "Start and Initialize Context"
+      },
+      "conditions": "#General_Conversation-Start_Over",
+      "dialog_node": "node_22_1518581571267",
+      "previous_sibling": "node_8_1518146280321"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_10_1518147016660",
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$current_process == \"Appointments\"",
+      "dialog_node": "node_23_1518149586145",
+      "previous_sibling": "node_11_1518147071518"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed the credit card dispute process, but we can go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"BillDatesNotAfterFirstCompleted\"",
+      "dialog_node": "node_23_1518494482666",
+      "previous_sibling": "node_22_1518494338942"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_10_1518147016660",
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$current_process == \"CC_Selection_Process\"",
+      "dialog_node": "node_24_1518149613463",
+      "previous_sibling": "node_23_1518149586145"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed the credit card dispute process, but we can go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"BillDatesUnknownAfterFirstCompleted\"",
+      "dialog_node": "node_24_1518494585442",
+      "previous_sibling": "node_23_1518494482666"
+    },
+    {
+      "type": "standard",
+      "title": "Confirming Live Agent Transfer",
+      "output": {
+        "text": {
+          "values": [
+            "Should I transfer you now?"
+          ],
+          "selection_policy": "sequential"
+        },
+        "ui_action": {
+          "notification_display": {
+            "DisplayText": "The virtual assistant can hand off seamlessly to a 94729873749632 live agent who can then address the user."
+          }
+        }
+      },
+      "parent": "node_16_1516311593513",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_25_1516679473977"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_10_1518147016660",
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$current_process == \"Bill_Dispute\"",
+      "dialog_node": "node_25_1518149630462",
+      "previous_sibling": "node_24_1518149613463"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, we can go back and change the feature you selected."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_24_1518149613463",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"SavingFirst\" || $current_step == \"RewardsFirst\" || $current_step == \"CreditFirst\"",
+      "dialog_node": "node_25_1518411233827"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back and choose a statement."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"Select_Issue\"",
+      "dialog_node": "node_26_1518149978237"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_24_1518149613463",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "$current_step == \"SavingFirstRewardsPositive\" || $current_step == \"SavingFirstCompleted\"",
+      "dialog_node": "node_26_1518411486824",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_25_1518411233827"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed the credit card dispute process, but we can go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"CCBalanceLowCompleted\" || $current_step == \"CCBalanceHighCompleted\" || $current_step == \"CCBalanceUnknownCompleted\"",
+      "dialog_node": "node_26_1518494978229",
+      "previous_sibling": "node_24_1518494585442"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": []
+        }
+      },
+      "parent": "Start and Initialize Context",
+      "context": {
+        "change_type": "",
+        "lastresponse": "<? output ?>",
+        "office_location": "",
+        "contact_requested": "",
+        "location_mentioned": ""
+      },
+      "disabled": true,
+      "metadata": {},
+      "conditions": "",
+      "dialog_node": "node_27_1487303778095"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We're at the start of this process. Let's find a date that suits you."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_23_1518149586145",
+      "context": {
+        "app_date": null,
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"Gather_Date\"",
+      "dialog_node": "node_27_1518150002500"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We completed the credit card selection process, but we can go back one step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_24_1518149613463",
+      "context": {
+        "lastresponse": "<? output ?>",
+        "ccpsp_criteria": [
+          "Saving"
+        ]
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"SavingFirstRewardsCompleted\"",
+      "dialog_node": "node_27_1518411508735",
+      "previous_sibling": "node_26_1518411486824"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed the credit card dispute process, but we can go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"IssueMinPaymentHighCompleted\" || $current_step == \"IssueMinPaymentLowCompleted\" || $current_step == \"IssueMinPaymentUnsureCompleted\"",
+      "dialog_node": "node_27_1518495181117",
+      "previous_sibling": "node_26_1518494978229"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_34_1517953592593",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Help-Guidance_Requested",
+      "dialog_node": "node_27_1519790056439",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_41_1519081265360"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back to your zip."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_23_1518149586145",
+      "context": {
+        "app_zip": null,
+        "current_step": "Gather_Zip",
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"Collect_Purpose\"",
+      "dialog_node": "node_28_1518150041098",
+      "previous_sibling": "node_41_1518150526252"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_25_1518149630462",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "$current_step == \"PayDueTooSoon\" || $current_step == \"PayDueNotTooSoonCompleted\" || $current_step == \"PayDueTooSoonUnsureCompleted\"",
+      "dialog_node": "node_28_1518495352792",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_27_1518495181117"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_34_1517953592593",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@ResponseTypes",
+      "dialog_node": "node_28_1518664452240",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_2_1518575329766"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed making an appointment, but we can go back."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_23_1518149586145",
+      "context": {
+        "app_purpose": null,
+        "current_step": "Collect_Purpose",
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"Completed\"",
+      "dialog_node": "node_29_1518150069297",
+      "previous_sibling": "node_28_1518150041098"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, we can go back a step."
+          ]
+        }
+      },
+      "parent": "node_28_1518495352792",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"PayDueTooSoon\"",
+      "dialog_node": "node_29_1518495421513"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Yes? Let's talk a bit more about 092384274278423847512625."
+          ]
+        }
+      },
+      "parent": "node_28_1518664452240",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "@ResponseTypes:positive",
+      "dialog_node": "node_29_1518664472916"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We completed the credit card selection process, but we can go back one step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_24_1518149613463",
+      "context": {
+        "lastresponse": "<? output ?>",
+        "ccpsp_criteria": []
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"RewardsFirstCompleted\"",
+      "dialog_node": "node_30_1518411557938",
+      "previous_sibling": "node_27_1518411508735"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed the credit card dispute process, but we can go back a step."
+          ]
+        }
+      },
+      "parent": "node_28_1518495352792",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"PayDueNotTooSoonCompleted\" || $current_step == \"PayDueTooSoonUnsureCompleted\"",
+      "dialog_node": "node_30_1518495437425",
+      "previous_sibling": "node_29_1518495421513"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "No? Let's talk a bit more about 092384274278423847512625."
+          ]
+        }
+      },
+      "parent": "node_28_1518664452240",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "@ResponseTypes:negative",
+      "dialog_node": "node_30_1518664482851",
+      "previous_sibling": "node_29_1518664472916"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back to the previous step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_24_1518149613463",
+      "context": {
+        "lastresponse": "<? output ?>",
+        "ccpsp_credlvl": null
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"CreditFirstRewards\"",
+      "dialog_node": "node_31_1518411579071",
+      "previous_sibling": "node_30_1518411557938"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_25_1518149630462",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "$current_step == \"PayDueFirstStatement\" || $current_step == \"PayDueFirstStatementUnsure\" || $current_step == \"PayDueMultiStatementCompleted\"",
+      "dialog_node": "node_31_1518495591067",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_28_1518495352792"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Not sure? Let's talk a bit more about 092384274278423847512625."
+          ]
+        }
+      },
+      "parent": "node_28_1518664452240",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "@ResponseTypes:uncertain",
+      "dialog_node": "node_31_1518664493416",
+      "previous_sibling": "node_30_1518664482851"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We can stop talking about making an appointment. If you want to go back to the demonstration, simply click on one of the tiles."
+          ]
+        }
+      },
+      "parent": "node_8_1518146280321",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"Appointments\"",
+      "dialog_node": "node_3_1518402466014",
+      "previous_sibling": "node_2_1518402394448"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_22_1516678490511",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "Start and Initialize Context"
+      },
+      "conditions": "#General_Conversation-Start_Over",
+      "dialog_node": "node_3_1563326800084"
+    },
+    {
+      "type": "standard",
+      "title": "welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Welcome to your 94729873749632 AskHR Virtual Agent.  I’m ready to help!\n\nI can help you answer a wide variety of HR-related at 94729873749632 such as questions or initiate a series of HR transactions. I am always learning and if I am not able to answer your question, I will help you find the support you need (create a support ticket/connect to a live chat agent).\nShort questions in English with a single topic and keywords work best."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {
+        "party_time": false,
+        "lastresponse": "<? output ?>"
+      },
+      "conditions": "welcome",
+      "dialog_node": "node_3_1616002490180",
+      "previous_sibling": "Start and Initialize Context"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back to the previous step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_24_1518149613463",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"CreditFirstRewardsPositive\"",
+      "dialog_node": "node_32_1518411594074",
+      "previous_sibling": "node_31_1518411579071"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed the credit card dispute process, but we can go back a step."
+          ]
+        }
+      },
+      "parent": "node_31_1518495591067",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"PayDueMultiStatementCompleted\"",
+      "dialog_node": "node_32_1518495642317"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We completed the credit card selection process, but we can go back one step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_24_1518149613463",
+      "context": {
+        "lastresponse": "<? output ?>",
+        "ccpsp_criteria": [
+          "Credit Level"
+        ]
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"CreditFirstRewardsCompleted\"",
+      "dialog_node": "node_33_1518411607481",
+      "previous_sibling": "node_32_1518411594074"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, we can go back a step."
+          ]
+        }
+      },
+      "parent": "node_31_1518495591067",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"PayDueFirstStatement\" || $current_step == \"PayDueFirstStatementUnsure\"",
+      "dialog_node": "node_33_1518495657130",
+      "previous_sibling": "node_32_1518495642317"
+    },
+    {
+      "type": "folder",
+      "title": "General Conversation",
+      "metadata": {},
+      "digress_in": "returns",
+      "dialog_node": "node_34_1517953592593",
+      "previous_sibling": "node_2_1612395907959"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We completed the credit card selection process, but we can go back one step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_24_1518149613463",
+      "context": {
+        "lastresponse": "<? output ?>",
+        "ccpsp_criteria": [
+          "Credit Level"
+        ]
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"CreditFirstCompleted\"",
+      "dialog_node": "node_34_1518411620721",
+      "previous_sibling": "node_33_1518411607481"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed the credit card dispute process, but we can go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"PayDueCardSwitchedCompleted\" || $current_step == \"PayDueCardNotSwitchedCompleted\"",
+      "dialog_node": "node_34_1518495869307",
+      "previous_sibling": "node_31_1518495591067"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Goodbye, thank you for choosing 94729873749632!"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_34_1517953592593",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "#General_Conversation-Farewells",
+      "dialog_node": "node_35_1517953626335"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_25_1518149630462",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "$current_step == \"StatementsIssuedPresent\" || $current_step == \"StatementsIssuedMissingCompleted\"",
+      "dialog_node": "node_35_1518496120345",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_34_1518495869307"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back a step."
+          ]
+        }
+      },
+      "parent": "node_35_1518496120345",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"StatementsIssuedPresent\"",
+      "dialog_node": "node_36_1518496154718"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed the credit card dispute process, but we can go back a step."
+          ]
+        }
+      },
+      "parent": "node_35_1518496120345",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"StatementsIssuedMissingCompleted\"",
+      "dialog_node": "node_37_1518496175269",
+      "previous_sibling": "node_36_1518496154718"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed the credit card dispute process, but we can go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"StatementsIssuedPresentCompleted\"",
+      "dialog_node": "node_39_1518496518877",
+      "previous_sibling": "node_35_1518496120345"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "A virtual agent (sometimes called a virtual assistant) is an online system designed to help your find information quickly and easily."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_34_1517953592593",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "#General_Conversation-About_VAs",
+      "dialog_node": "node_39_1519081164195",
+      "previous_sibling": "node_27_1519790056439"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back to the previous step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_26_1518411486824",
+      "context": {
+        "lastresponse": "<? output ?>",
+        "ccpsp_criteria": []
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"SavingFirstRewardsPositive\"",
+      "dialog_node": "node_40_1518497099243"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "You just need to enter a valid zip code at this stage."
+          ]
+        }
+      },
+      "parent": "node_27_1519790056439",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"Appointments\" && $current_step == \"Gather_Time\"",
+      "dialog_node": "node_40_1519790226030"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back to finding a time that suits you."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_23_1518149586145",
+      "context": {
+        "app_zip": null,
+        "app_time": null,
+        "current_step": "Gather_Time",
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"Gather_Zip\"",
+      "dialog_node": "node_41_1518150526252",
+      "previous_sibling": "node_42_1518150599431"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We completed the credit card selection process, but we can go back one step."
+          ]
+        }
+      },
+      "parent": "node_26_1518411486824",
+      "context": {
+        "lastresponse": "<? output ?>",
+        "ccpsp_criteria": []
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"SavingFirstCompleted\"",
+      "dialog_node": "node_41_1518497145949",
+      "previous_sibling": "node_40_1518497099243"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I can help you with questions about our products."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "You can talk to me about:",
+            "options": [
+              {
+                "label": "Making a payment",
+                "value": {
+                  "input": {
+                    "text": "I want to make a payment"
+                  }
+                }
+              },
+              {
+                "label": "Choosing a credit card",
+                "value": {
+                  "input": {
+                    "text": "Help me choose a credit card"
+                  }
+                }
+              },
+              {
+                "label": "Booking an appointment",
+                "value": {
+                  "input": {
+                    "text": "I want to book an appointment"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          },
+          {
+            "values": [
+              {
+                "text": "Remember, while you're in one of these processes you can also ask me to go back a step, or start over."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_34_1517953592593",
+      "metadata": {},
+      "conditions": "#Help-Agent_Capabilities",
+      "dialog_node": "node_41_1519081265360",
+      "previous_sibling": "node_28_1518664452240"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "You just need to provide a time with an am/pm indicator, or in 24 hour time. For example, 2:30pm, or 14:30."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_27_1519790056439",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"Appointments\" && $current_step == \"Gather_Date\"",
+      "dialog_node": "node_41_1519790247733",
+      "previous_sibling": "node_40_1519790226030"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We can stop talking about selecting a credit card. If you want to go back to the demonstration, simply click on one of the tiles."
+          ]
+        }
+      },
+      "parent": "node_8_1518146280321",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Selection_Process\"",
+      "dialog_node": "node_4_1518402473659",
+      "previous_sibling": "node_3_1518402466014"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back a step and find a time that suits you."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_23_1518149586145",
+      "context": {
+        "app_date": null,
+        "app_time": null,
+        "current_step": "Gather_Date",
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"Gather_Time\"",
+      "dialog_node": "node_42_1518150599431",
+      "previous_sibling": "node_27_1518150002500"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_9_1518146863348",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "#General_Conversation-Anaphora_Why || #General_Conversation-Anaphora_Why_Needed",
+      "dialog_node": "node_42_1519081327322",
+      "previous_sibling": "node_13_1518406499059"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Simply enter a day or date for the payment. For example, Next Wednesday or March 24th. Don't enter both a day and date such as Friday 23rd March."
+          ]
+        }
+      },
+      "parent": "node_27_1519790056439",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Bill_Payment\" && $current_step == \"Payment_Date\"",
+      "dialog_node": "node_42_1519790258499",
+      "previous_sibling": "node_41_1519790247733"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Simply click on one of the credit card account buttons or enter the credit card account number."
+          ]
+        }
+      },
+      "parent": "node_27_1519790056439",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Bill_Payment\" && $current_step == \"Start\"",
+      "dialog_node": "node_43_1519790267985",
+      "previous_sibling": "node_42_1519790258499"
+    },
+    {
+      "type": "standard",
+      "title": "Exmaple of Anaphora Responses",
+      "output": {},
+      "parent": "node_42_1519081327322",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "$current_step == \"Start\"",
+      "dialog_node": "node_44_1519081719394",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Simply enter the amount you'd like to pay off your credit card."
+          ]
+        }
+      },
+      "parent": "node_27_1519790056439",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Bill_Payment\" && $current_step == \"Payment_Amount\"",
+      "dialog_node": "node_44_1519790277113",
+      "previous_sibling": "node_43_1519790267985"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Simply confirm if the payment information is correct - type Yes or No once you have reviewed the information."
+          ]
+        }
+      },
+      "parent": "node_27_1519790056439",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Bill_Payment\" && $current_step == \"Payment_Confirmation\"",
+      "dialog_node": "node_45_1519790286748",
+      "previous_sibling": "node_44_1519790277113"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Simply choose from a card which can help improve credit scores, provide rewards for customers, and help you save money."
+          ]
+        }
+      },
+      "parent": "node_27_1519790056439",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Selection_Process\" && $current_step == \"Start\"",
+      "dialog_node": "node_46_1519790294994",
+      "previous_sibling": "node_45_1519790286748"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Simply tell me if you have a problem with the statement period issues, card number, card balance, minimum payment or payment due date."
+          ]
+        }
+      },
+      "parent": "node_27_1519790056439",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"Bill_Dispute\" && $current_step == \"Select_Issue\"",
+      "dialog_node": "node_47_1519790303447",
+      "previous_sibling": "node_46_1519790294994"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Simply provide a description of your credit score  - for example, low, high, medium - or you can enter a credit score."
+          ]
+        }
+      },
+      "parent": "node_27_1519790056439",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Selection_Process\" && $current_step == \"CreditFirst\"",
+      "dialog_node": "node_48_1519790311104",
+      "previous_sibling": "node_47_1519790303447"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We're at the start of this process, I need to know which account you're referring to in order to help with payments."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_44_1519081719394",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Bill_Payment\"",
+      "dialog_node": "node_49_1519082342614"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Simply follow the prompts to provide information about your appointment - such as date, time etc."
+          ]
+        }
+      },
+      "parent": "node_27_1519790056439",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"Appointments\"",
+      "dialog_node": "node_49_1519790328087",
+      "previous_sibling": "node_48_1519790311104"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We're at the start of this process, I just need to know in which feature you're most interested to help determine which card is best suited to your needs."
+          ]
+        }
+      },
+      "parent": "node_44_1519081719394",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Selection_Process\"",
+      "dialog_node": "node_50_1519082347120",
+      "previous_sibling": "node_49_1519082342614"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Simply follow the prompts to provide the required information."
+          ]
+        }
+      },
+      "parent": "node_27_1519790056439",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_50_1519790331229",
+      "previous_sibling": "node_49_1519790328087"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We're at the start of this process, I just need to know which statement you're referring to in order to help you with your query."
+          ]
+        }
+      },
+      "parent": "node_44_1519081719394",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"Bill_Dispute\"",
+      "dialog_node": "node_51_1519082354848",
+      "previous_sibling": "node_50_1519082347120"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We can stop talking about your bill dispute. If you want to go back to the demonstration, simply click on one of the tiles."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_8_1518146280321",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"Bill_Dispute\"",
+      "dialog_node": "node_5_1518402486042",
+      "previous_sibling": "node_4_1518402473659"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "query": "",
+            "filter": "",
+            "query_type": "natural_language",
+            "response_type": "search_skill"
+          }
+        ]
+      },
+      "parent": "node_2_1612395907959",
+      "conditions": "true",
+      "dialog_node": "node_5_1612396716935"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "For supplemental employees there are five personal days that are paid and can be taken anytime during the year."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1620316401879",
+      "conditions": "@employee_type:(Supplemental Employee)",
+      "dialog_node": "node_5_1621486167670",
+      "previous_sibling": "node_7_1621486023927"
+    },
+    {
+      "type": "frame",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thank you.  Your updated W4 information has been saved.  Is there anything else that I can do for you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_6_1620317778128",
+      "conditions": "#withholdings",
+      "dialog_node": "node_5_1621486925374"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "We're at the start of this process and I need to collect some information, in order to make an appointment we would need to know which date you would like to meet with our banker."
+          ]
+        }
+      },
+      "parent": "node_44_1519081719394",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"Appointments\"",
+      "dialog_node": "node_52_1519082363001",
+      "previous_sibling": "node_51_1519082354848"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "For demonstration purposes we need the information to continue to the next step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_42_1519081327322",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_59_1519082625747",
+      "previous_sibling": "node_44_1519081719394"
+    },
+    {
+      "type": "folder",
+      "title": "Conversation Controls - No Return",
+      "metadata": {},
+      "digress_in": "does_not_return",
+      "dialog_node": "node_6_1518402889388",
+      "previous_sibling": "node_9_1518146863348"
+    },
+    {
+      "type": "folder",
+      "title": "Payroll",
+      "dialog_node": "node_6_1620317771062",
+      "previous_sibling": "node_10_1620317543160"
+    },
+    {
+      "type": "standard",
+      "title": "Payroll Information",
+      "output": {
+        "generic": [
+          {
+            "title": "You are able to view and manage your payroll tax withholding elections, number of dependents, exemptions, and forms using the IRS withholding calculator <a target=\"_blank\" href=\"https://www.irs.gov/individuals/tax-withholding-estimator\">IRS Withholding Calculator</a>. Payroll cannot provide tax advise on how to fill out tax forms. We recommend you speaking to your personal tax advisor. ",
+            "options": [
+              {
+                "label": "Update Withholdings ",
+                "value": {
+                  "input": {
+                    "text": "EditW2"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_6_1620317771062",
+      "conditions": "#withholdings",
+      "dialog_node": "node_6_1620317778128"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "It looks like there may be a problem, I can't find the topic we were talking about. You can easily start one of our demonstration pathways by clicking on the tiles."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_10_1518147016660",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_process == \"\" || $current_process == null",
+      "dialog_node": "node_66_1518429877791",
+      "previous_sibling": "node_25_1518149630462"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back and select an account."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_11_1518147071518",
+      "context": {
+        "cc_chosen": "",
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"Payment_Date\" || $current_step == \"Invalid_Account\"",
+      "dialog_node": "node_67_1518430449006"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_21_1518149391023",
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Bill_Payment\"",
+      "dialog_node": "node_68_1518430918196"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_21_1518149391023",
+      "metadata": {},
+      "conditions": "$current_process == \"CC_Selection_Process\"",
+      "dialog_node": "node_69_1518431045135",
+      "previous_sibling": "node_68_1518430918196"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_21_1518149391023",
+      "metadata": {},
+      "conditions": "$current_process == \"Bill_Dispute\"",
+      "dialog_node": "node_70_1518431110588",
+      "previous_sibling": "node_69_1518431045135"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back to choosing the issue you're experiencing."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_25_1518149630462",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"SelectedIssueCCNumber\" || $current_step == \"SelectedIssueBillDates\" || $current_step == \"SelectedIssueCCBalance\" || $current_step == \"SelectedIssueMinPayment\" || $current_step == \"SelectedIssuePayDue\"",
+      "dialog_node": "node_7_1518487646010",
+      "previous_sibling": "node_26_1518149978237"
+    },
+    {
+      "type": "standard",
+      "title": "PI Data",
+      "output": {
+        "generic": [
+          {
+            "title": "Would you like me to help you update your personal information? I can guide you to update one or more of the following values: Marital status, Race/Ethnicity, Citizenship, Sexual orientation & Gender Identity, Pronoun. Please note: You will only be able to update the Personal Information values that are available in your country.",
+            "options": [
+              {
+                "label": "Update Personal Information",
+                "value": {
+                  "input": {
+                    "text": "Update PI"
+                  }
+                }
+              },
+              {
+                "label": "Update Payroll & Tax Information",
+                "value": {
+                  "input": {
+                    "text": "Update Payroll"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_10_1620317543160",
+      "conditions": "#update-PIData",
+      "dialog_node": "node_7_1620317564419"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "For regular employees there are two full weeks of paid vacation plus five personal days that are also paid."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1620316401879",
+      "conditions": "@employee_type:(Regular Employee)",
+      "dialog_node": "node_7_1621486023927"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_11_1518147071518",
+      "context": {
+        "cc_paydate": null,
+        "current_step": "Payment_Date",
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"Payment_Amount\"",
+      "dialog_node": "node_73_1518431341442",
+      "previous_sibling": "node_67_1518430449006"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Okay, let's go back a step."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_11_1518147071518",
+      "context": {
+        "cc_payamt": null,
+        "current_step": "Payment_Amount",
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"Payment_Confirmation\"",
+      "dialog_node": "node_74_1518431480922",
+      "previous_sibling": "node_73_1518431341442"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "We've completed setting up a credit card payment, but we can go back."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_11_1518147071518",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "$current_step == \"Completed\"",
+      "dialog_node": "node_75_1518431623888",
+      "previous_sibling": "node_74_1518431480922"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "I don't know the time where you are, my system says the time is <? now().reformatDateTime('h:mm a') ?>. "
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_34_1517953592593",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "#General_Conversation-Time",
+      "dialog_node": "node_76_1519098077834",
+      "previous_sibling": "node_39_1519081164195"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "Unfortunately I don't have a chance to watch movies."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_34_1517953592593",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "#General_Conversation-Movies",
+      "dialog_node": "node_77_1519098560755",
+      "previous_sibling": "node_76_1519098077834"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "I love answering questions and making sure you get the information you need!"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_34_1517953592593",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "#General_Conversation-Work",
+      "dialog_node": "node_78_1519099085637",
+      "previous_sibling": "node_77_1519098560755"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "I'm sorry to hear that, we take customer satisfaction very seriously. You should talk to one of our helpful Customer Service Agents to help you get the information you need."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_34_1517953592593",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_25_1516679473977"
+      },
+      "conditions": "#General_Conversation-Customer_Emotion_Anger || #General_Conversation-Feedback_Negative",
+      "dialog_node": "node_79_1519099258303",
+      "previous_sibling": "node_78_1519099085637"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "I am glad to hear that! We take customer satisfaction very seriously."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_34_1517953592593",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "metadata": {},
+      "conditions": "#General_Conversation-Customer_Emotion_Joy || #General_Conversation-Feedback_Positive",
+      "dialog_node": "node_80_1519099536094",
+      "previous_sibling": "node_79_1519099258303"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_6_1518402889388",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#General_Conversation-Control_Stop_Conversation",
+      "dialog_node": "node_8_1518146280321",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_10_1518147016660"
+    },
+    {
+      "type": "folder",
+      "title": "Conversation Controls",
+      "metadata": {},
+      "digress_in": "returns",
+      "dialog_node": "node_9_1518146863348",
+      "previous_sibling": "node_34_1517953592593"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sure, I can help. What are you having a problem with?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Help-Tech",
+      "dialog_node": "node_9_1623374879322",
+      "previous_sibling": "node_2_1623375102894"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "<? $webhook_result_1.translation ?>."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_2_1612493218066",
+      "context": {},
+      "conditions": "$webhook_result_1",
+      "dialog_node": "response_1_1612493703572"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "I'm not sure how to say that..."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_2_1612493218066",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "conditions": "anything_else",
+      "dialog_node": "response_5_1612493670823",
+      "previous_sibling": "response_1_1612493703572"
+    },
+    {
+      "type": "response_condition",
+      "title": "response_6_1563328606618",
+      "output": {
+        "text": {
+          "values": [
+            "For demonstration purposes I can only talk about credit cards. If you want to go back to the demonstration, simply refresh the page."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_8_1518146280321",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "conditions": "true",
+      "dialog_node": "response_6_1563328606618",
+      "previous_sibling": "node_5_1518402486042"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "query": "",
+            "filter": "",
+            "query_type": "natural_language",
+            "response_type": "search_skill"
+          }
+        ]
+      },
+      "parent": "node_20_1516312171869",
+      "conditions": "true",
+      "dialog_node": "response_7_1612395674049"
+    },
+    {
+      "type": "slot",
+      "parent": "node_5_1621486925374",
+      "variable": "$claimdependent",
+      "dialog_node": "slot_1_1621511610716",
+      "previous_sibling": "slot_7_1621511276657"
+    },
+    {
+      "type": "slot",
+      "parent": "node_5_1621486925374",
+      "variable": "$withheld",
+      "dialog_node": "slot_4_1621512025675",
+      "previous_sibling": "slot_1_1621511610716"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_2_1612493218066",
+      "variable": "$language",
+      "dialog_node": "slot_7_1612493244742",
+      "previous_sibling": "handler_1_1612493244453"
+    },
+    {
+      "type": "slot",
+      "parent": "node_5_1621486925374",
+      "variable": "$dependents_2",
+      "dialog_node": "slot_7_1621511276657",
+      "previous_sibling": "slot_8_1621510886965"
+    },
+    {
+      "type": "slot",
+      "parent": "node_5_1621486925374",
+      "variable": "$filingstatus",
+      "dialog_node": "slot_8_1621510886965"
+    },
+    {
+      "type": "slot",
+      "parent": "node_5_1621486925374",
+      "variable": "$pension",
+      "dialog_node": "slot_8_1621512132192",
+      "previous_sibling": "slot_4_1621512025675"
+    },
+    {
+      "type": "standard",
+      "title": "Conversation Start and Initialize Context",
+      "output": {
+        "generic": []
+      },
+      "context": {
+        "change_type": "",
+        "current_process": "",
+        "office_location": "",
+        "contact_requested": "",
+        "off_topic_counter": 0,
+        "location_mentioned": ""
+      },
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_3_1616002490180"
+      },
+      "conditions": "conversation_start || #General_Conversation-Start_Over",
+      "digress_in": "does_not_return",
+      "dialog_node": "Start and Initialize Context",
+      "digress_out": "allow_all"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "intent_classification": {
+      "training_backend_version": "v2"
+    },
+    "spelling_auto_correct": true
+  }
+}
+}
