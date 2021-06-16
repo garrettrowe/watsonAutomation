@@ -4,7 +4,7 @@
   "language": "en",
   "description": "Watson@Work",
   "workspace": {
-  "intents": [
+    "intents": [
     {
       "intent": "Bot_Control-Approve_Response",
       "examples": [
@@ -1503,6 +1503,45 @@
       "description": ""
     },
     {
+      "intent": "Help-HR",
+      "examples": [
+        {
+          "text": "HR Support"
+        },
+        {
+          "text": "human resource help"
+        },
+        {
+          "text": "I need HR help"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Help-Reset_Password",
+      "examples": [
+        {
+          "text": "change password"
+        },
+        {
+          "text": "i need a new password"
+        },
+        {
+          "text": "i need to reset my password"
+        },
+        {
+          "text": "password change"
+        },
+        {
+          "text": "password reset please"
+        },
+        {
+          "text": "reset password"
+        }
+      ],
+      "description": ""
+    },
+    {
       "intent": "Help-Security_Assurance",
       "examples": [
         {
@@ -1548,6 +1587,15 @@
         },
         {
           "text": "technical help"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "save_phone_number",
+      "examples": [
+        {
+          "text": "save phone number"
         }
       ],
       "description": ""
@@ -2525,6 +2573,17 @@
     },
     {
       "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1623798607858",
+      "context": {
+        "phone": "@phone.literal"
+      },
+      "conditions": "@phone.literal",
+      "event_name": "input",
+      "dialog_node": "handler_10_1623798607868"
+    },
+    {
+      "type": "event_handler",
       "output": {
         "generic": [
           {
@@ -2587,6 +2646,13 @@
     },
     {
       "type": "event_handler",
+      "parent": "node_5_1623798447174",
+      "event_name": "focus",
+      "dialog_node": "handler_2_1623798607591",
+      "previous_sibling": "node_7_1623798820313"
+    },
+    {
+      "type": "event_handler",
       "output": {
         "text": {
           "values": [
@@ -2602,6 +2668,35 @@
       "event_name": "focus",
       "dialog_node": "handler_4_1612493244757",
       "previous_sibling": "handler_10_1612493244757"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "For demo purposes, please input the phone number to send the text validation in this exact format: 1-123-456-7890"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "I'll save this number for all future SMS.  If you need to change it. ask me to \"Save phone number\""
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_10_1623798607858",
+      "event_name": "focus",
+      "dialog_node": "handler_5_1623798607868",
+      "previous_sibling": "handler_10_1623798607868"
     },
     {
       "type": "event_handler",
@@ -2809,7 +2904,7 @@
       },
       "conditions": "#Task-Get",
       "dialog_node": "node_1_1623374845161",
-      "previous_sibling": "node_3_1616002490180"
+      "previous_sibling": "node_2_1623798409094"
     },
     {
       "type": "standard",
@@ -3235,6 +3330,115 @@
     },
     {
       "type": "standard",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "validate": "getNum"
+          },
+          "result_variable": "getPhone"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "#Help-Reset_Password",
+      "dialog_node": "node_2_1623798409094",
+      "previous_sibling": "node_6_1623802179975"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Great, thank you for validating your identity."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Let's reset your password now."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "user_defined": {
+              "template_name": "password"
+            },
+            "response_type": "user_defined"
+          }
+        ]
+      },
+      "parent": "node_7_1623798820313",
+      "context": {
+        "lastresponse": "<? output ?>",
+        "send_to_upsell": "true"
+      },
+      "conditions": "$user_validated.validated == \"true\"",
+      "dialog_node": "node_2_1623798904846"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sorry, That was the wrong code."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1623798820313",
+      "context": {
+        "lastresponse": "<? output ?>"
+      },
+      "conditions": "anything_else",
+      "dialog_node": "node_2_1623798907258",
+      "previous_sibling": "node_2_1623798904846"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Sure, I can answer questions about vacation policy and can update your personal information."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Help-HR",
+      "dialog_node": "node_2_1623803488240",
+      "previous_sibling": "node_3_1616002490180"
+    },
+    {
+      "type": "standard",
       "output": {
         "text": {
           "values": [
@@ -3641,7 +3845,7 @@
       "output": {
         "text": {
           "values": [
-            "Yes? Let's talk a bit more about 092384274278423847512625."
+            "Yes? Let's talk a bit more about 94729873749632 products."
           ]
         }
       },
@@ -3696,7 +3900,7 @@
       "output": {
         "text": {
           "values": [
-            "No? Let's talk a bit more about 092384274278423847512625."
+            "No? Let's talk a bit more about 94729873749632 products."
           ]
         }
       },
@@ -3748,7 +3952,7 @@
       "output": {
         "text": {
           "values": [
-            "Not sure? Let's talk a bit more about 092384274278423847512625."
+            "Not sure? Let's talk a bit more about 94729873749632 products."
           ]
         }
       },
@@ -4565,6 +4769,29 @@
       "dialog_node": "node_5_1621486925374"
     },
     {
+      "type": "frame",
+      "parent": "node_2_1623798409094",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "phone": "$phone",
+            "validate": "send"
+          },
+          "result_variable": "webhook_result_2"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "true",
+      "dialog_node": "node_5_1623798447174",
+      "previous_sibling": "response_8_1623800640118"
+    },
+    {
       "type": "response_condition",
       "output": {
         "text": {
@@ -4639,6 +4866,47 @@
       "parent": "node_6_1620317771062",
       "conditions": "#withholdings",
       "dialog_node": "node_6_1620317778128"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "For demo purposes, please input the phone number to send the text validation in this exact format: 1-123-456-7890"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#save_phone_number",
+      "dialog_node": "node_6_1623802179975",
+      "previous_sibling": "node_2_1623803488240"
+    },
+    {
+      "type": "standard",
+      "parent": "node_6_1623802179975",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "phone": "@phone.literal",
+            "validate": "setNum"
+          },
+          "result_variable": "webhook_result_3"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@phone",
+      "dialog_node": "node_6_1623802193658"
     },
     {
       "type": "standard",
@@ -4774,6 +5042,31 @@
       "parent": "node_1_1620316401879",
       "conditions": "@employee_type:(Regular Employee)",
       "dialog_node": "node_7_1621486023927"
+    },
+    {
+      "type": "standard",
+      "parent": "node_5_1623798447174",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "code": "@sys-number.numeric_value",
+            "validate": "check"
+          },
+          "result_variable": "user_validated"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "true",
+      "dialog_node": "node_7_1623798820313"
     },
     {
       "type": "standard",
@@ -4995,6 +5288,52 @@
     {
       "type": "response_condition",
       "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "First, let's verify your identity.  I just texted you a code.  Please tell me the code I just sent."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_5_1623798447174",
+      "conditions": "",
+      "dialog_node": "response_1_1623798474757",
+      "previous_sibling": "slot_10_1623798607858"
+    },
+    {
+      "type": "response_condition",
+      "parent": "node_5_1623798447174",
+      "conditions": "anything_else",
+      "dialog_node": "response_4_1623798475447",
+      "previous_sibling": "response_1_1623798474757"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Set phone number to $webhook_result_3.phone"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_6_1623802193658",
+      "conditions": "$webhook_result_3",
+      "dialog_node": "response_4_1623802198870"
+    },
+    {
+      "type": "response_condition",
+      "output": {
         "text": {
           "values": [
             "I'm not sure how to say that..."
@@ -5009,6 +5348,35 @@
       "conditions": "anything_else",
       "dialog_node": "response_5_1612493670823",
       "previous_sibling": "response_1_1612493703572"
+    },
+    {
+      "type": "response_condition",
+      "parent": "node_7_1623798820313",
+      "conditions": "anything_else",
+      "dialog_node": "response_5_1623798843298",
+      "previous_sibling": "response_8_1623798842644"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sure, I can help you reset your password."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1623798409094",
+      "context": {
+        "phone": "$getPhone.phone",
+        "lastresponse": "<? output ?>"
+      },
+      "dialog_node": "response_5_1623800639372"
     },
     {
       "type": "response_condition",
@@ -5044,6 +5412,44 @@
       "parent": "node_20_1516312171869",
       "conditions": "true",
       "dialog_node": "response_7_1612395674049"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1623798820313",
+      "conditions": "$user_validated",
+      "dialog_node": "response_8_1623798842644",
+      "previous_sibling": "node_2_1623798907258"
+    },
+    {
+      "type": "response_condition",
+      "parent": "node_2_1623798409094",
+      "conditions": "anything_else",
+      "dialog_node": "response_8_1623800640118",
+      "previous_sibling": "response_5_1623800639372"
+    },
+    {
+      "type": "response_condition",
+      "parent": "node_6_1623802193658",
+      "conditions": "anything_else",
+      "dialog_node": "response_9_1623802199565",
+      "previous_sibling": "response_4_1623802198870"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_5_1623798447174",
+      "variable": "$phone",
+      "dialog_node": "slot_10_1623798607858",
+      "previous_sibling": "handler_2_1623798607591"
     },
     {
       "type": "slot",
