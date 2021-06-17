@@ -1,6 +1,6 @@
 {
   "type":"dialog",
-  "name": "Assistant Skill",
+  "name": "CustomerCare",
   "language": "en",
   "description": "Support Agent",
   "workspace": {
