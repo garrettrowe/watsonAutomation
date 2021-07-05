@@ -10,6 +10,8 @@
     "puppeteer-extra-plugin-stealth": "^2.7.6",
     "simplecrawler": "1.1.9",
     "fs-extra": "0.26.7",
-    "request": "*"
+    "request": "*",
+    "http-proxy-middleware": "^2.0.1",
+    "express": "^4.17.1"
   }
 }
