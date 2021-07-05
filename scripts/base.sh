@@ -50,6 +50,7 @@ openssl x509 -req -in /root/.node-red/node-csr.pem -signkey /root/.node-red/node
 curl -d "Instance=$(< /root/instnum.txt)&Log=Starting Data Aggregator" -X POST https://daidemos.com/log
 wget -O /root/da/package.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/package.json
 wget -O /root/da/data_aggregator.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/data_aggregator.js
+wget -O /root/da/pmw.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/pmw.js
 wget -O /root/da/bg.js https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/dataAggregator/bg.js
 wget -O /root/tsend https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/scripts/tsend
 chmod +x /root/tsend
