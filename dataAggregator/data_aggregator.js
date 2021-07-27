@@ -108,7 +108,7 @@ crawler.on("fetchstart", async function(queueItem, responseBuffer, response) {
 
 crawler.on("complete", function() {
     console.log("Queue Complete");
-    crawler.queueURL(myArgs[0].replace(/^http:\/\//i, "https://"));
+    crawler.queueURL(encodeURI(myArgs[0].replace(/^http:\/\//i, "https://")));
     setInterval(function() {
         crawler.queue.countItems({
             status: "queued"
@@ -293,7 +293,7 @@ async function getPandL(url) {
         });
 
         links.forEach(function(item, index) {
-            crawler.queueURL(item);
+            crawler.queueURL(encodeURI(item));
         });
         console.log("added: " + links.length + ", queue length: " + crawler.queue.length + " at " + url);
 
