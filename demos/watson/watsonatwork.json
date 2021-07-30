@@ -549,6 +549,42 @@
       "description": "Indicate no definite answer to a question."
     },
     {
+      "intent": "Bot_Control-Upload_File",
+      "examples": [
+        {
+          "text": "i need to upload a file"
+        },
+        {
+          "text": "upload"
+        },
+        {
+          "text": "upload file"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Bot_Control-Upload_File_Complete",
+      "examples": [
+        {
+          "text": "asdfg.txt securely uploaded to Box"
+        },
+        {
+          "text": "qwerweqr.xls securely uploaded to Box"
+        },
+        {
+          "text": "securely uploaded to Box"
+        },
+        {
+          "text": "tax.csv securely uploaded to Box"
+        },
+        {
+          "text": "waf.jpg securely uploaded to Box"
+        }
+      ],
+      "description": ""
+    },
+    {
       "intent": "General_Conversation-About_The_VA",
       "examples": [
         {
@@ -1094,9 +1130,6 @@
         },
         {
           "text": "can you look up"
-        },
-        {
-          "text": "search for bandai new products"
         },
         {
           "text": "Search Knowledge Base"
@@ -3435,6 +3468,26 @@
       },
       "conditions": "#Help-HR",
       "dialog_node": "node_2_1623803488240",
+      "previous_sibling": "node_2_1627625201134"
+    },
+    {
+      "type": "standard",
+      "title": "Upload a file",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please upload your file here: <input id=\"boxUpload\" type=\"file\" />"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Bot_Control-Upload_File",
+      "dialog_node": "node_2_1627625201134",
       "previous_sibling": "node_3_1616002490180"
     },
     {
@@ -4790,6 +4843,25 @@
       "conditions": "true",
       "dialog_node": "node_5_1623798447174",
       "previous_sibling": "response_8_1623800640118"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Great, Thank you!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1627625201134",
+      "conditions": "#Bot_Control-Upload_File_Complete",
+      "dialog_node": "node_5_1627625234180"
     },
     {
       "type": "response_condition",
