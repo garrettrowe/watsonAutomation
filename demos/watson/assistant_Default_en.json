@@ -4,6 +4,7 @@
   "language": "en",
   "description": "Support Agent",
   "workspace": {
+    
   "intents": [
     {
       "intent": "Account_Access-Authorized_User",
@@ -3159,6 +3160,42 @@
         }
       ],
       "description": "Indicate no definite answer to a question."
+    },
+    {
+      "intent": "Bot_Control-Upload_File",
+      "examples": [
+        {
+          "text": "i need to upload a file"
+        },
+        {
+          "text": "upload"
+        },
+        {
+          "text": "upload file"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Bot_Control-Upload_File_Complete",
+      "examples": [
+        {
+          "text": "asdfg.txt securely uploaded to Box"
+        },
+        {
+          "text": "qwerweqr.xls securely uploaded to Box"
+        },
+        {
+          "text": "securely uploaded to Box"
+        },
+        {
+          "text": "tax.csv securely uploaded to Box"
+        },
+        {
+          "text": "waf.jpg securely uploaded to Box"
+        }
+      ],
+      "description": ""
     },
     {
       "intent": "Business_Information-About_Company",
@@ -10329,6 +10366,45 @@
     },
     {
       "type": "standard",
+      "title": "Upload a file",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please upload your file here: <input id=\"boxUpload\" type=\"file\" />"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Bot_Control-Upload_File",
+      "dialog_node": "node_3_1627624326086",
+      "previous_sibling": "node_3_1616002490180"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Great, Thank you!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1627624326086",
+      "conditions": "#Bot_Control-Upload_File_Complete",
+      "dialog_node": "node_3_1627624452262"
+    },
+    {
+      "type": "standard",
       "output": {
         "text": {
           "values": [
@@ -10747,7 +10823,7 @@
       "output": {
         "text": {
           "values": [
-            "For more information about 94729873749632 Products or Services, simply go to our website. We have a great range of accounts and services to suit your needs. You can also speak to one of our Customer Service Agents."
+            "For more information about 092384274278423847512625 or Services, simply go to our website. We have a great range of accounts and services to suit your needs. You can also speak to one of our Customer Service Agents."
           ],
           "selection_policy": "sequential"
         }
@@ -11260,7 +11336,7 @@
       "type": "folder",
       "title": "Upsell",
       "dialog_node": "node_4_1618562913973",
-      "previous_sibling": "node_3_1616002490180"
+      "previous_sibling": "node_3_1627624326086"
     },
     {
       "type": "standard",
@@ -13391,5 +13467,6 @@
       "training_backend_version": "v2"
     },
     "spelling_auto_correct": true
-  }}
+  }
+  }
 }
