@@ -18,11 +18,14 @@ while [ ! -f /root/companycompact.txt ]; do
     sleep 1
 done
 curl -d "Instance=$(< /root/instnum.txt)&Log=Booting VSI" -X POST https://daidemos.com/log
+
 mkdir /root/demo
 mkdir /root/da
 wget -O /root/logosmall.png https://daidemos.com/$(< /root/companycompact.txt).small.png
 wget -O /root/logo.png https://daidemos.com/$(< /root/companycompact.txt).png
 wget -O /root/ip.txt icanhazip.com
+
+echo "$(< /root/ip.txt)  $(< /root/instnum.txt).daidemos.com" >> /etc/hosts
 
 apt-get update
 curl -d "Instance=$(< /root/instnum.txt)&Log=Patching VSI" -X POST https://daidemos.com/log
