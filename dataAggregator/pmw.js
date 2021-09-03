@@ -1,6 +1,8 @@
 const express = require('express');
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const { createProxyMiddleware, responseInterceptor } = require('http-proxy-middleware');
 var myArgs = process.argv.slice(2);
+const url = new URL(myArgs[0]);
+const uReg = new RegExp(url.origin, 'gim');
 const app = express();
 
 function onProxyRes(proxyRes, req, res) {
@@ -15,10 +17,14 @@ function onProxyRes(proxyRes, req, res) {
 }
 
 const options = {
-  target: myArgs[0],
+  target: url.origin,
   changeOrigin: true,
   ws: true,
-  onProxyRes: onProxyRes,
+  selfHandleResponse: true,
+  onProxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
+    const response = responseBuffer.toString('utf8'); // convert buffer to string
+    return response.replace(uReg, "");
+  }),
 };
 const ep = createProxyMiddleware(options);
 
