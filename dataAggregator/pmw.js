@@ -26,7 +26,7 @@ const options = {
     res.header("Content-Security-Policy", " frame-ancestors https://*.daidemos.com");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     const response = responseBuffer.toString('utf8'); // convert buffer to string
-    return response.replace(uReg, "");
+    return response.replace(uReg, "").replace(/target="_blank"/gim , "");
   }),
 };
 const ep = createProxyMiddleware(options);
