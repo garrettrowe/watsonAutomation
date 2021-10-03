@@ -190,8 +190,8 @@ async function getPage() {
 		} catch(err) {}
 	    }).catch((err) => {console.log(err);});
 	
-	await page.screenshot({path: '/root/zzzsavtr1'}).catch((err) => {});
-    await page.screenshot({path: '/root/zzzsavtr2'}).catch((err) => {});
-    await page.screenshot({path: '/root/zzzsavtr3'}).catch((err) => {});
+	await page.screenshot({path: '/root/zzzsavtr1.png'}).catch((err) => {});
+    await page.screenshot({path: '/root/zzzsavtr2.png'}).catch((err) => {});
+    await page.screenshot({path: '/root/zzzsavtr3.png'}).catch((err) => {});
 	await browser.close().catch((err) => {});
 })();
