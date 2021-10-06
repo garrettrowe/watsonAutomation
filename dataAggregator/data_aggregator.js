@@ -364,6 +364,7 @@ async function getPandL(url) {
         phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
         phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
         phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
+        phtml = phtml.replace(/<\/?strong([\S\s]*?)>/gi, "");
         phtml = phtml.replace(/<!--([\S\s]*?)>([\S\s]*?)<\/s-->/gi, "");
 
         let summarizeitems = [];
@@ -372,7 +373,10 @@ async function getPandL(url) {
             phtml.match(/<p([\S\s]*?)>([\S\s]*?)<\/p>/gi).forEach(element => summarizeitems.push("<html><body><div><p>" + element + "</p></div></body></html>"));
         }catch(fail){}
         try{
-            phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi).forEach(element => summarizeitems.push("<html><body><div><p>" + element + "</p></div></body></html>"));
+            phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi).forEach(element => summarizeitems.push("<html><body><div>" + element + "</div></body></html>"));
+        }catch(fail){}
+        try{
+            phtml.match(/<div([\S\s]*?)section([\S\s]*?)>([\S\s]*?)<\/div>/gi).forEach(element => summarizeitems.push("<html><body><div>" + element + "</div></body></html>"));
         }catch(fail){}
 
         for (var i = 0; i < summarizeitems.length; i++) {
