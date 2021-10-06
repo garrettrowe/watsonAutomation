@@ -287,6 +287,15 @@ async function getPandL(url) {
                 await new Promise(r => setTimeout(r, 500));
             }
 
+            var ready = false;
+            $(document).ready(function () {
+                ready = true;
+            });
+
+            while(!ready){}
+                
+            $("head").remove();
+
             return  $('a').map(function(i,el) { return $(el).attr('href'); }).get();
         }).catch((err) => {
             console.log(err);
