@@ -221,9 +221,9 @@ async function getPandL(url) {
             console.log(err);
         });
         
-        const maxRetryNumber = 10;
+        const maxRetryNumber = 3;
         for (let retryNumber = 1; retryNumber <= maxRetryNumber; retryNumber++) {
-            const response = await page.goto(url, {waitUntil: 'networkidle2'}).catch((err) => {console.log(err);});
+            const response = await page.goto(url, {waitUntil: 'networkidle2'}).catch((err) => {console.log("Caught error getting page");});
             if (response) {
                 console.log("Response: " + response.status() + " - " + url );
                 if (response.status() < 400) {
@@ -251,22 +251,6 @@ async function getPandL(url) {
                     return;
                 }
             }else{
-                if (page)
-                    await page.close().catch((err) => {
-                        console.error(err);
-                    });
-                if (browser) {
-                    await browser.close().catch((err) => {
-                        console.error(err);
-                    });
-                    browser = null;
-                }
-                browser = await launchHBrowser().catch((err) => {
-                    console.error(err);
-                });
-                page = await getPage().catch((err) => {
-                    console.log(err);
-                });
             }
             await new Promise(r => setTimeout(r, 5000));
         }
