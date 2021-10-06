@@ -444,8 +444,6 @@ async function getPandL(url) {
                 if (subtitle.length && summarizeitems[i].match(/<h[1-9]/i))
                     outJSON.title = pageTitle + ": " + subtitle;
 
-                console.log(outJSON.title);
-
                 var options = {
                     uri: wurl,
                     headers: header,
