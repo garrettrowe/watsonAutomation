@@ -378,6 +378,10 @@ async function getPandL(url) {
         try{
             phtml.match(/<div([\S\s]*?)section([\S\s]*?)>([\S\s]*?)<\/div>/gi).forEach(element => summarizeitems.push("<html><body><div>" + element + "</div></body></html>"));
         }catch(fail){}
+        try{
+            phtml.match(/<div([\S\s]*?)>([\S\s]*?)<p([\S\s]*?)<\/p>([\S\s]*?)<\/div>/gi).forEach(element => summarizeitems.push("<html><body><div>" + element + "</div></body></html>"));
+        }catch(fail){}
+
 
         for (var i = 0; i < summarizeitems.length; i++) {
             if (summarizeitems[i]) {
