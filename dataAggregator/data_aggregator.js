@@ -287,15 +287,6 @@ async function getPandL(url) {
                 await new Promise(r => setTimeout(r, 500));
             }
 
-            var ready = false;
-            $(document).ready(function () {
-                ready = true;
-            });
-
-            while(!ready){}
-                
-            $("head").remove();
-
             return  $('a').map(function(i,el) { return $(el).attr('href'); }).get();
         }).catch((err) => {
             console.log(err);
@@ -379,13 +370,10 @@ async function getPandL(url) {
         let summarizeitems = [];
         summarizeitems.push(phtml);
         try{
-            phtml.match(/<p([\S\s]*?)>([\S\s]*?)<\/p>/gi).forEach(element => summarizeitems.push("<html><body><div><p>" + element + "</p></div></body></html>"));
+            phtml.match(/<p([\S\s]*?)>([\S\s]*?)<\/p>/gi).forEach(element => summarizeitems.push("<html><body><div>" + element + "</div></body></html>"));
         }catch(fail){}
         try{
             phtml.match(/<section([\S\s]*?)>([\S\s]*?)<\/section>/gi).forEach(element => summarizeitems.push("<html><body><div>" + element + "</div></body></html>"));
-        }catch(fail){}
-        try{
-            phtml.match(/<div([\S\s]*?)section([\S\s]*?)>([\S\s]*?)<\/div>/gi).forEach(element => summarizeitems.push("<html><body>" + element + "</body></html>"));
         }catch(fail){}
         try{
             phtml.match(/<div([\S\s]*?)>([\S\s]*?)<p([\S\s]*?)<\/p>([\S\s]*?)<\/div>/gi).forEach(element => summarizeitems.push("<html><body>" + element + "</body></html>"));
@@ -449,6 +437,13 @@ async function getPandL(url) {
                     html: summarizeitems[i],
                     source_link: url
                 };
+
+                let subtitle = summarizeitems[i].replace(/([\S\s]*?)<h[1-9]([\S\s]*?)>/i, "").replace(/<\/h([\S\s]*?)>([\S\s]*)/i, "");  
+
+                if (subtitle.length)
+                    outJSON.title = pageTitle + ": " + subtitle;
+
+                console.log(outJSON.title);
 
                 var options = {
                     uri: wurl,
