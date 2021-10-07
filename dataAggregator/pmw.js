@@ -91,7 +91,7 @@ const options = {
         }
       });
       res.header("Access-Control-Allow-Origin", "*");
-      res.header("Content-Security-Policy", " frame-ancestors https://*.daidemos.com");
+      res.header("Content-Security-Policy", " frame-ancestors https://*.daidemos.com:*");
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
       var t = proxyRes.headers["location"];
