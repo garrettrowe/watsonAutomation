@@ -3,6 +3,7 @@ const { createProxyMiddleware, responseInterceptor } = require('http-proxy-middl
 var myArgs = process.argv.slice(2);
 const utarget = myArgs[1];
 const lurl = myArgs[0];
+
 const uReg = new RegExp(lurl, 'gim');
 const app = express();
 var lastHost = "";
@@ -83,24 +84,25 @@ const options = {
   },
   selfHandleResponse: true,
   onProxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
-    Object.keys(proxyRes.headers).forEach(function (key) {
-      if (  ["user-agent", "cookie", "accept", "accept-language", "content-type", "location","referer"].includes(key)){
-        res.header(key, proxyRes.headers[key]);
-      }
-    });
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Content-Security-Policy", " frame-ancestors https://*.daidemos.com");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
-    var t = proxyRes.headers["location"];
-    if (t != undefined) {
-      var tul = new URL(t);
-      const tulReg = new RegExp(tul.origin, 'gim')
-      res.header("location", t.replace(/https?:\/\//gim, lurl));
-    }
-    var response = responseBuffer.toString('utf8'); 
-    var rUrl = new URL("https://" + lastHost);
     try{
+      Object.keys(proxyRes.headers).forEach(function (key) {
+        if (  ["user-agent", "cookie", "accept", "accept-language", "content-type", "location","referer"].includes(key)){
+          res.header(key, proxyRes.headers[key]);
+        }
+      });
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Content-Security-Policy", " frame-ancestors https://*.daidemos.com");
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+      var t = proxyRes.headers["location"];
+      if (t != undefined) {
+        var tul = new URL(t);
+        const tulReg = new RegExp(tul.origin, 'gim')
+        res.header("location", t.replace(/https?:\/\//gim, lurl));
+      }
+      var response = responseBuffer.toString('utf8'); 
+      var rUrl = new URL("https://" + lastHost);
+
       if(proxyRes.headers["content-type"].includes("text")){
         rUrl = new URL(proxyRes.responseUrl);
         pageHost = rUrl.host;
@@ -115,7 +117,6 @@ const options = {
         return response;
       }
     }catch(f){
-      console.log("error " + f);
     }
     return responseBuffer;
   }),

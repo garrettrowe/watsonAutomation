@@ -46,4 +46,4 @@ npm --prefix /root/discoveryService install /root/discoveryService
 curl -d "Instance=$(< /root/instnum.txt)&Log=Starting Services" -X POST https://daidemos.com/log
 systemctl enable nodered.service
 systemctl start nodered.service
-node /root/da/pmw.js "https://$(< /root/instnum.txt)-target.daidemos.com" "$(< /root/companyurl.txt)" &
+node /root/da/pmw.js "https://$(< /root/instnum.txt)-target.daidemos.com/" "$(< /root/companyurl.txt)" &
