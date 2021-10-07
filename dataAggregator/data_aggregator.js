@@ -425,8 +425,10 @@ async function getPandL(url) {
                 let subtitle = summarizeitems[i].replace(/([\S\s]*?)<h[1-9]([\S\s]*?)>/i, "");
                 subtitle = subtitle.replace(/<\/h([\S\s]*?)>([\S\s]*)/i, "");  
 
-                if (subtitle.length && summarizeitems[i].match(/<h[1-9]/i))
+                if (subtitle.length && summarizeitems[i].match(/<h[1-9]/i)){
                     outJSON.title = pageTitle + ": " + subtitle;
+                    outJSON.title = outJSON.title.replace(/<([\S\s]*?)>/g, "");
+                }
 
                 var options = {
                     uri: wurl,
