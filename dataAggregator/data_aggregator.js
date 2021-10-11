@@ -363,30 +363,6 @@ async function getPandL(url) {
             phtml.match(/<div([\S\s]*?)>([\S\s]*?)<p([\S\s]*?)<\/p>([\S\s]*?)<\/div>/gi).forEach(element => summarizeitems.push("<html><body>" + element + "</body></html>"));
         }catch(fail){}
 
-        
-        let mout = phtml.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
-        mout = mout.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
-        mout = mout.replace(/&[a-z]+;/g, "");
-        mout = "." + mout.replace(/<.\w*[^>]*>/gi, ".").trim();
-        mout = mout.replace(/\.[\w \\/]{0,80}(?=\.)/gi, ".");
-        mout = mout.replace(/( )+/gi, " ");
-        mout = mout.replace(/([\t\n])+/gi, ".");
-        mout = mout.replace(/\..{0,60}\./gi, ".");
-        mout = mout.replace(/\. */gi, ".");
-        mout = mout.replace(/\.+/gi, ".");
-        mout = mout.replace(/\.+/gi, ". ");
-        mout = mout.replace(/^\. */, "");
-        mout = mout.replace(/<([\S\s]*?)>/g, "");
-
-        fse.outputFileSync("/root/da/crawl/" + pname + "_base.json", JSON.stringify(
-            {
-                title: pageTitle,
-                text: mout,
-                html: phtml,
-                source_link: url
-            }
-        ));
-
 
         for (var i = 0; i < summarizeitems.length; i++) {
             if (summarizeitems[i]) {
