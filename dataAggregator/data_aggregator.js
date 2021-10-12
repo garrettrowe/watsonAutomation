@@ -393,7 +393,7 @@ async function getPandL(url) {
 
                 let outJSON = {
                     title: pageTitle,
-                    text: summarizeitems[i],
+                    text: summarizeitems[i].replace(/<([\S\s]*?)>/g, ""),
                     html: summarizeitems[i],
                     source_link: url
                 };
