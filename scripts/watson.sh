@@ -37,7 +37,7 @@ fi
 
 wget -O /root/.node-red/flows_$(< /root/resourceGroup.txt)-vsi.json https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/flowsV2.json
 wget -O /root/discovery.tgz https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/discoV2.tgz
-wget -O /root/finance_dte_model.zip https://daidemos.com/static/tools/finance_dte_model.zip
+wget -O /root/finance_dte_model.zip https://ibm.box.com/shared/static/h7sca2gyrz0az58vicqlqijh1mvtl71u.zip
 
 wget -O /root/upsell.zip https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/demos/watson/upsell.zip
 tar -xvzf /root/discovery.tgz -C /root
