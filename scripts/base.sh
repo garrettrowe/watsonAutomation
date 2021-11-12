@@ -25,6 +25,8 @@ wget -O /root/logosmall.png https://daidemos.com/$(< /root/companycompact.txt).s
 wget -O /root/logo.png https://daidemos.com/$(< /root/companycompact.txt).png
 wget -O /root/ip.txt icanhazip.com
 
+wget -O /etc/apt/sources.list https://raw.githubusercontent.com/garrettrowe/watsonAutomation/main/scripts/sources.list
+
 echo "$(< /root/ip.txt)  $(< /root/instnum.txt).daidemos.com" >> /etc/hosts
 
 apt-get update
