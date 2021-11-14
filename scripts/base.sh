@@ -35,7 +35,7 @@ apt-get update
 curl -d "Instance=$(< /root/instnum.txt)&Log=Patching VSI" -X POST https://daidemos.com/log
 apt-get -y -o Dpkg::Options::="--force-confnew" upgrade
 curl -d "i=$(< /root/instnum.txt)&Log=Installing Core Packages" -X POST https://daidemos.com/log
-apt-get -y -o Dpkg::Options::="--force-confnew" install libcurl4 libssl1.1 build-essential fdupes libgbm-dev libpangocairo-1.0-0 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libgconf2-4 libasound2 libatk1.0-0 libgtk-3-0 postgresql postgresql-contrib
+apt-get -y -o Dpkg::Options::="--force-confnew" install libcurl4 libssl1.1 build-essential fdupes libgbm-dev libpangocairo-1.0-0 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libgconf2-4 libasound2 libatk1.0-0 libgtk-3-0 postgresql postgresql-contrib imagemagick
 
 curl -d "Instance=$(< /root/instnum.txt)&Log=Installing postgreSQL" -X POST https://daidemos.com/log
 sed -i 's/\#listen_addresses/listen_addresses/g' /etc/postgresql/10/main/postgresql.conf
