@@ -348,8 +348,12 @@ async function getPandL(url) {
         phtml = phtml.replace(/<head([\S\s]*?)>([\S\s]*?)<\/head>/gi, "");
         phtml = phtml.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/gi, "");
         phtml = phtml.replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/gi, "");
+        phtml = phtml.replace(/<button([\S\s]*?)>([\S\s]*?)<\/button>/gi, "");
+        phtml = phtml.replace(/<img([\S\s]*?)>/gi, "");
         phtml = phtml.replace(/<\/?strong([\S\s]*?)>/gi, "");
         phtml = phtml.replace(/<!--([\S\s]*?)>([\S\s]*?)<\/s-->/gi, "");
+        phtml = phtml.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gim, "");
+        phtml = phtml.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gim, "");
 
         let summarizeitems = [];
         summarizeitems.push(phtml);
@@ -376,14 +380,6 @@ async function getPandL(url) {
                 let bod = {
                     "html": summarizeitems[i],
                     "features": {
-                        'concepts': {
-                          'limit': 3
-                        },
-                        'keywords': {
-                          'sentiment': true,
-                          'emotion': true,
-                          'limit': 3
-                        },
                         "summarization": {
                             "limit": 8
                         }
@@ -393,7 +389,7 @@ async function getPandL(url) {
 
                 let outJSON = {
                     title: pageTitle,
-                    text: summarizeitems[i].replace(/<([\S\s]*?)>/g, ""),
+                    text: summarizeitems[i],
                     html: summarizeitems[i],
                     source_link: url
                 };
@@ -412,40 +408,73 @@ async function getPandL(url) {
                     method: 'POST',
                     json: bod
                 };
+                let out = "";
 
-                (async function(outJSON, pname, iterate, options) {
-                    try {
-                        request(options, function(error, response, body) {
-                            try {
-                                if (!error && response.statusCode == 200) {
-                                    let out = body;
-                                    if (typeof(out.summarization) != "undefined"){
-                                        outJSON.text = out.summarization.text;
-                                        outJSON.html = "<html><body><div><p>" + out.summarization.text.replace(/\&/g, "&amp;") + "</p></div></body></html>";
-                                        let ojsH = hashCode(outJSON.text);
-                                        if (!outitems.includes(ojsH) && outJSON.text.length > 150) {
-                                            outitems.push(ojsH);
-                                            fse.outputFileSync("/root/da/crawl/" + pname + iterate + ".json", JSON.stringify(outJSON));
-                                            console.log("wrote " + pname + iterate + ".json");
-                                            return;
-                                        } else {
-                                            console.log("Dupe hash, skipping " + pname);
-                                            return;
+
+                if( i == 0){
+                    (async function(outJSON, pname, iterate, options) {
+                        try {
+                            request(options, function(error, response, body) {
+                                try {
+                                    if (!error && response.statusCode == 200) {
+                                        out = body;
+                                        if (typeof(out.summarization) != "undefined"){
+                                            outJSON.text = out.summarization.text;
+                                            outJSON.html = "<html><body><div><p>" + out.summarization.text.replace(/\&/g, "&amp;") + "</p></div></body></html>";
+                                            let ojsH = hashCode(outJSON.text);
+                                            if (!outitems.includes(ojsH) && outJSON.text.length > 150) {
+                                                outitems.push(ojsH);
+                                                fse.outputFileSync("/root/da/crawl/" + pname + iterate + ".json", JSON.stringify(outJSON));
+                                                console.log("wrote " + pname + iterate + ".json");
+                                                return;
+                                            } else {
+                                                console.log("Dupe hash, skipping " + pname);
+                                                return;
+                                            }
+                                        }else{
+                                            out = outJSON.text;
+                                            out = out.replace(/&[a-z]+;/gim, "");
+                                            out = out.replace(/([\t\n])+/gi, ". ");
+                                            out = out.replace(/<\/div>/gim, ". ");
+                                            out = out.replace(/<\/span>/gim, ". ");
+                                            out = out.replace(/<\/td>/gim, ". ");
+                                            out = out.replace(/<([\S\s]*?)>/gim, " ");
+                                            out = out.replace(/ +\./gim, ". ");
+                                            out = out.replace(/\.+/gim, ".");
+                                            out = out.replace(/(\. \.)+/gim, ".");
+                                            out = out.replace(/ +\./gim, ".");
+                                            out = out.replace(/ +/gim, " ");
+                                           // out = out.replace(/\. *(\w+\s){0,2}\w+[.?!]/gim, "");
+                                            outJSON.text = out;
+                                            outJSON.html = "<html><body><div><p>" + out.replace(/\&/g, "&amp;") + "</p></div></body></html>";
+                                            let ojsH = hashCode(outJSON.text);
+                                            if (!outitems.includes(ojsH) && outJSON.text.length > 150) {
+                                                outitems.push(ojsH);
+                                                fse.outputFileSync("/root/da/crawl/" + pname + iterate + ".json", JSON.stringify(outJSON));
+                                                console.log("wrote " + pname + iterate + ".json");
+                                                return;
+                                            } else {
+                                                console.log("Dupe hash, skipping " + pname);
+                                                return;
+                                            }
                                         }
-                                    }else{
-                                        let out = outJSON.text.replace(/<ul([\S\s]*?)>([\S\s]*?)<\/ul>/gi, "");
-                                        out = out.replace(/<nav([\S\s]*?)>([\S\s]*?)<\/nav>/gi, "");
-                                        out = out.replace(/&[a-z]+;/g, "");
-                                        out = "." + out.replace(/<.\w*[^>]*>/gi, ".").trim();
-                                        out = out.replace(/\.[\w \\/]{0,80}(?=\.)/gi, ".");
-                                        out = out.replace(/( )+/gi, " ");
-                                        out = out.replace(/([\t\n])+/gi, ".");
-                                        out = out.replace(/\..{0,60}\./gi, ".");
-                                        out = out.replace(/\. */gi, ".");
-                                        out = out.replace(/\.+/gi, ".");
-                                        out = out.replace(/\.+/gi, ". ");
-                                        out = out.replace(/^\. */, "");
-                                        outJSON.text = out.replace(/<([\S\s]*?)>/g, "");
+
+                                    } else {
+                                        console.log("Error calling NLU on: " + pname + " : " + JSON.stringify(body));
+                                        out = outJSON.text;
+                                        out = out.replace(/&[a-z]+;/gim, "");
+                                        out = out.replace(/([\t\n])+/gi, ". ");
+                                        out = out.replace(/<\/div>/gim, ". ");
+                                        out = out.replace(/<\/span>/gim, ". ");
+                                        out = out.replace(/<\/td>/gim, ". ");
+                                        out = out.replace(/<([\S\s]*?)>/gim, " ");
+                                        out = out.replace(/ +\./gim, ". ");
+                                        out = out.replace(/\.+/gim, ".");
+                                        out = out.replace(/(\. \.)+/gim, ".");
+                                        out = out.replace(/ +\./gim, ".");
+                                        out = out.replace(/ +/gim, " ");
+                                        //out = out.replace(/\. *(\w+\s){0,2}\w+[.?!]/gim, "");
+                                        outJSON.text = out;
                                         outJSON.html = "<html><body><div><p>" + out.replace(/\&/g, "&amp;") + "</p></div></body></html>";
                                         let ojsH = hashCode(outJSON.text);
                                         if (!outitems.includes(ojsH) && outJSON.text.length > 150) {
@@ -457,43 +486,43 @@ async function getPandL(url) {
                                             console.log("Dupe hash, skipping " + pname);
                                             return;
                                         }
-                                    }
-
-                                } else {
-                                    console.log("Error calling NLU on: " + pname + " : " + JSON.stringify(body));
-                                    out = outJSON.text.replace(/&[a-z]+;/g, "");
-                                    out = "." + out.replace(/<.\w*[^>]*>/gi, ".").trim();
-                                    out = out.replace(/\.[\w \\/]{0,80}(?=\.)/gi, ".");
-                                    out = out.replace(/( )+/gi, " ");
-                                    out = out.replace(/([\t\n])+/gi, ".");
-                                    out = out.replace(/\..{0,60}\./gi, ".");
-                                    out = out.replace(/\. */gi, ".");
-                                    out = out.replace(/\.+/gi, ".");
-                                    out = out.replace(/\.+/gi, ". ");
-                                    out = out.replace(/^\. */, "");
-                                    outJSON.text = out.replace(/<([\S\s]*?)>/g, "");
-                                    outJSON.html = "<html><body><div><p>" + out.replace(/\&/g, "&amp;") + "</p></div></body></html>";
-                                    let ojsH = hashCode(outJSON.text);
-                                    if (!outitems.includes(ojsH) && outJSON.text.length > 150) {
-                                        outitems.push(ojsH);
-                                        fse.outputFileSync("/root/da/crawl/" + pname + iterate + ".json", JSON.stringify(outJSON));
-                                        console.log("wrote " + pname + iterate + ".json");
-                                        return;
-                                    } else {
-                                        console.log("Dupe hash, skipping " + pname);
                                         return;
                                     }
+                                } catch (err) {
+                                    console.error(err);
                                     return;
                                 }
-                            } catch (err) {
-                                console.error(err);
-                                return;
-                            }
-                        });
-                    } catch (err) {
-                        console.error(err);
+                            });
+                        } catch (err) {
+                            console.error(err);
+                        }
+                    })(outJSON, pname, iterate, options);
+                }
+                else{
+                    out = outJSON.text;
+                    out = out.replace(/&[a-z]+;/gim, "");
+                    out = out.replace(/([\t\n])+/gi, ". ");
+                    out = out.replace(/<\/div>/gim, ". ");
+                    out = out.replace(/<\/span>/gim, ". ");
+                    out = out.replace(/<\/td>/gim, ". ");
+                    out = out.replace(/<([\S\s]*?)>/gim, " ");
+                    out = out.replace(/ +\./gim, ". ");
+                    out = out.replace(/\.+/gim, ".");
+                    out = out.replace(/(\. \.)+/gim, ".");
+                    out = out.replace(/ +\./gim, ".");
+                    out = out.replace(/ +/gim, " ");
+                  ///  out = out.replace(/\. *(\w+\s){0,2}\w+[.?!]/gim, "");
+                    outJSON.text = out;
+                    outJSON.html = "<html><body><div><p>" + out.replace(/\&/g, "&amp;") + "</p></div></body></html>";
+                    let ojsH = hashCode(outJSON.text);
+                    if (!outitems.includes(ojsH) && outJSON.text.length > 150) {
+                        outitems.push(ojsH);
+                        fse.outputFileSync("/root/da/crawl/" + pname + iterate + ".json", JSON.stringify(outJSON));
+                        console.log("wrote " + pname + iterate + ".json");
+                    } else {
+                        console.log("Dupe hash, skipping " + pname);
                     }
-                })(outJSON, pname, iterate, options);
+                }
                 }
             } else {
             }
