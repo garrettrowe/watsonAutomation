@@ -82,10 +82,10 @@ async function getPage(browser){
 
 async function logon(page){
 	try {
-		await page.goto("https://us-south.assistant.watson.cloud.ibm.com/login", {waitUntil: 'networkidle0'}).catch((err) => { console.log(err); });
+		await page.goto("https://" + instJSON.depLocation + ".assistant.watson.cloud.ibm.com/login", {waitUntil: 'networkidle0'}).catch((err) => { console.log(err); });
 		console.log("Beginning logon"); 
 		const url = await page.url();
-		if ( url != "https://us-south.assistant.watson.cloud.ibm.com/login")
+		if ( url != "https://" + instJSON.depLocation + ".assistant.watson.cloud.ibm.com/login")
 			return true;
 		await page.waitForSelector('#app',{timeout: 500}).catch((err) => {});
 
@@ -116,18 +116,18 @@ async function logon(page){
 async function configSearch(page){
 	try {
 		let welcomeC = {
-			"en":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"collection_id":col,"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"I am unable to connect to the " + cname + " knowledge base at the moment.","no_result":"I searched the " + cname + " knowledge base, but did not find anything related to your query.","success":"I searched the " + cname + " knowledge base and found this information which might be useful:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
-			"es":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"collection_id":col,"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"No puedo conectarme a la base de conocimientos "+ cname +" en este momento.","no_result":"Busqué en la base de conocimientos "+ cname +", pero no encontré nada relacionado con su consulta.","success":"Busqué en la base de conocimientos "+ cname +" y encontré esta información que podría ser útil:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
-			"pt":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"collection_id":col,"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"Não consigo me conectar à base de conhecimento "+ cname +" no momento.","no_result":"Eu pesquisei a base de conhecimento "+ cname +", mas não encontrei nada relacionado à sua consulta.","success":"Eu pesquisei a base de conhecimento "+ cname +" e encontrei esta informação que pode ser útil:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
-			"de":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"collection_id":col,"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"Ich kann derzeit keine Verbindung zur Wissensdatenbank "+ cname +" herstellen.","no_result":"Ich habe die Wissensdatenbank "+ cname +" durchsucht, aber nichts im Zusammenhang mit Ihrer Anfrage gefunden.","success":"Ich habe die Wissensdatenbank "+ cname +" durchsucht und diese Informationen gefunden, die nützlich sein könnten:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
-			"fr":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"collection_id":col,"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"Je ne parviens pas à me connecter à la base de connaissances "+ cname +" pour le moment.","no_result":"J'ai cherché dans la base de connaissances "+ cname +", mais je n'ai rien trouvé en rapport avec votre requête.","success":"J'ai cherché dans la base de connaissances "+ cname +" et j'ai trouvé ces informations qui pourraient être utiles:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
-			"fi":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"collection_id":col,"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"En voi tällä hetkellä muodostaa yhteyttä "+ cname +" -tietokantaan.","no_result":"Etsin "+ cname +" -tietokannasta, mutta en löytänyt mitään kyselyyn liittyvää.","success":"Etsin "+ cname +" -tietokannasta ja löysin nämä hyödylliset tiedot:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
-			"ja":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"collection_id":col,"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"現在、 " + cname + " ナレッジベースに接続できません","no_result": cname + " ナレッジベースを検索しましたが、クエリに関連するものは見つかりませんでした。","success": cname + " ナレッジベースを検索したところ、役立つ可能性のある次の情報が見つかりました。"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}}
+			"en":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"I am unable to connect to the " + cname + " knowledge base at the moment.","no_result":"I searched the " + cname + " knowledge base, but did not find anything related to your query.","success":"I searched the " + cname + " knowledge base and found this information which might be useful:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
+			"es":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"No puedo conectarme a la base de conocimientos "+ cname +" en este momento.","no_result":"Busqué en la base de conocimientos "+ cname +", pero no encontré nada relacionado con su consulta.","success":"Busqué en la base de conocimientos "+ cname +" y encontré esta información que podría ser útil:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
+			"pt":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"Não consigo me conectar à base de conhecimento "+ cname +" no momento.","no_result":"Eu pesquisei a base de conhecimento "+ cname +", mas não encontrei nada relacionado à sua consulta.","success":"Eu pesquisei a base de conhecimento "+ cname +" e encontrei esta informação que pode ser útil:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
+			"de":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"Ich kann derzeit keine Verbindung zur Wissensdatenbank "+ cname +" herstellen.","no_result":"Ich habe die Wissensdatenbank "+ cname +" durchsucht, aber nichts im Zusammenhang mit Ihrer Anfrage gefunden.","success":"Ich habe die Wissensdatenbank "+ cname +" durchsucht und diese Informationen gefunden, die nützlich sein könnten:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
+			"fr":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"Je ne parviens pas à me connecter à la base de connaissances "+ cname +" pour le moment.","no_result":"J'ai cherché dans la base de connaissances "+ cname +", mais je n'ai rien trouvé en rapport avec votre requête.","success":"J'ai cherché dans la base de connaissances "+ cname +" et j'ai trouvé ces informations qui pourraient être utiles:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
+			"fi":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"En voi tällä hetkellä muodostaa yhteyttä "+ cname +" -tietokantaan.","no_result":"Etsin "+ cname +" -tietokannasta, mutta en löytänyt mitään kyselyyn liittyvää.","success":"Etsin "+ cname +" -tietokannasta ja löysin nämä hyödylliset tiedot:"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}},
+			"ja":{"name":"Search","description":"","type":"search","search_settings":{"discovery":{"project_id":dproj,"highlight":true,"instance_id":dcrn,"passages":false,"results_count":10,"url":durl,"assistant_version":"2020-09-24","max_primary_results":1,"max_total_results":10,"find_answers":true},"messages":{"error":"現在、 " + cname + " ナレッジベースに接続できません","no_result": cname + " ナレッジベースを検索しましたが、クエリに関連するものは見つかりませんでした。","success": cname + " ナレッジベースを検索したところ、役立つ可能性のある次の情報が見つかりました。"},"schema_mapping":{"body":"text","title":"title","url":"source_link"}}}
 		}	
 		let welcome = welcomeC[instJSON.language];
 		console.log("Configuring search"); 
-		await page.goto("https://us-south.assistant.watson.cloud.ibm.com/us-south/" + winstance , {waitUntil: 'networkidle0'}).catch((err) => { });
-		await page.waitForSelector('#AssistantCard-0').catch((err) => {page.screenshot({path: 'webchat_error.png'});return false;});
+		await page.goto("https://" + instJSON.depLocation + ".assistant.watson.cloud.ibm.com/" + instJSON.depLocation + "/" + winstance.replace("::/home", "::/skills") , {waitUntil: 'networkidle0'}).catch((err) => { });
+		await page.waitForSelector('#SkillsPage').catch((err) => {page.screenshot({path: 'webchat_error.png'});return false;});
 
 		console.log("Injecting Jquery"); 
 		await page.evaluate(async () => {
@@ -136,14 +136,20 @@ async function configSearch(page){
 
 			var retries = 0;
 
-            while (!window.jQuery && retries < 10){
-                retries += 1;
-                await new Promise(r => setTimeout(r, 500));
-            }
+      while (!window.jQuery && retries < 10){
+          retries += 1;
+          await new Promise(r => setTimeout(r, 500));
+      }
+
+      $.ajaxSetup({
+			  xhrFields: {
+			    withCredentials: true
+			  }
+			});
 		}).catch((err) => {console.log(err);});	
 
 		console.log("Beginning RPA"); 
-		var succ = await page.evaluate(({welcome, assistantId}) => {
+		var succ = await page.evaluate(({welcome, assistantId, instJSON}) => {
 			try {
 				function readCookie(name) {
 				    var nameEQ = name + "=";
@@ -155,20 +161,29 @@ async function configSearch(page){
 				    }
 				    return null;
 				}
-				var skill =  $.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/skills-v2?include_audit=true&verbose=true', {
+
+				var skill =  $.ajax('https://' + instJSON.depLocation + '.assistant.watson.cloud.ibm.com/rest/search?include_audit=true&verbose=true&new_ia=false', {
 							async:false,
 						   	type: 'POST',
 						  	contentType: "application/json; charset=utf-8",
 							dataType: 'json',
+							xhrFields: {
+							    withCredentials: true
+							},
 							headers: {"X-XSRF-TOKEN" : readCookie("XSRF-TOKEN")},
 						   	data: JSON.stringify(welcome)
 						});
 				var skillId = skill.responseJSON.skill_id;
-				var ur2 = $.ajax('https://us-south.assistant.watson.cloud.ibm.com/rest/v2/assistants/' + assistantId + '?include_audit=true&verbose=true&append=true', {
+				if (!skillId)
+					return(JSON.stringify({rc:skill, xrf:readCookie("XSRF-TOKEN")}));
+				var ur2 = $.ajax('https://' + instJSON.depLocation + '.assistant.watson.cloud.ibm.com/rest/v2/assistants/' + assistantId + '?include_audit=true&verbose=true&append=true&new_ia=false', {
 							async:false,
-						   	type: 'POST',
-						  	contentType: "application/json; charset=utf-8",
+						  type: 'POST',
+						  contentType: "application/json; charset=utf-8",
 							dataType: 'json',
+							xhrFields: {
+							    withCredentials: true
+							},
 							headers: {"X-XSRF-TOKEN" : readCookie("XSRF-TOKEN")},
 						   	data: JSON.stringify({"skill_references": [{"skill_id" : skillId}]})
 						});
@@ -177,7 +192,7 @@ async function configSearch(page){
 				return returnvalue;
 
 			} catch(err) {return err;}
-		    },{welcome, assistantId}).catch((err) => {console.log(err);});	
+		    },{welcome, assistantId, instJSON}).catch((err) => {console.log(err);});	
 		if (succ){
 			console.log(succ);
 			if (succ.status == 200){
@@ -201,6 +216,9 @@ async function main(){
 
 		cnamesafe = instJSON.companySafe;
 		cname = instJSON.company;
+
+		if (!instJSON.depLocation)
+			instJSON.depLocation = "us-south";
 
 		console.log("inst: " + myArgs[0]);
 		console.log("winst: " + myArgs[1]);
